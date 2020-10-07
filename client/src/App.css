@@ -1,0 +1,15 @@
+.App {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#main {
+  margin-top: 70px;
+}
