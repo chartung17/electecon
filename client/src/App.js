@@ -16,7 +16,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={() => <Map />} />
             <Route path="/graph" exact component={() => <Graph />} />
-            <Route path="/trends" component={() => <Trends />} />
+            <Route path="/trends" exact component={() => <Trends />} />
             <Route path="/county" component={() => <County />} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
