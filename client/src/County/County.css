@@ -1,0 +1,220 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/***********************************
+COUNTY FINDER
+************************************/
+.county-finder {
+    text-align: left;
+    font-family: sans-serif;
+    margin-bottom: 2vh;
+    border-radius: 1%;
+    padding: 20px;
+}
+.btn-state:hover, .btn-county:hover {
+    background-color: lightgray;
+}
+#county-finder-state-container, #county-finder-county-container {
+    border-bottom: 1pt solid lightgrey;
+    border-top: 1pt solid lightgrey;
+}
+
+/***********************************
+COUNTY DETAILS
+************************************/
+.county-details {
+    border: solid 1pt lightgray;
+    text-align: left;
+    font-family: sans-serif;
+    padding-bottom: 10vh;
+    border-radius: 1%;
+}
+.county-name {
+    margin-top: 3vh;
+    font: 24pt black;
+    padding-bottom: 5vh;
+    font-family: sans-serif;
+    background-image: linear-gradient(to right, lightskyblue,lightpink);
+    color: black;
+}
+
+/***********************************
+ECONOMIC PANEL
+************************************/
+.economy-panel {
+    /*border: solid 1pt red;*/
+    border-radius: 10px;
+}
+.economy-panel-title, .election-panel-title {
+    font: 20pt black;
+    font-family: sans-serif;
+    padding-bottom: 5vh;
+    text-align: center;
+    font-weight: bolder;
+}
+
+/* GDP Aggregate, first section on econ panel*/
+.gdp-aggr {
+    text-align: center;
+    border-top: solid 1pt lightgrey;
+}
+.gdp-aggr-title{
+    text-align: center;
+}
+.gdp-aggr-table, .election-table{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5vh;
+}
+.gdp-aggr-separator{
+    width: 3vw;
+}
+.total-gdp-number, .gdp-cagr-number, .top-industry-image-container {
+    width: 100px;
+    height: 80px;
+    color: black;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 26pt;
+    text-align: center;
+}
+.total-gdp-number:hover {
+    font-family: sans-serif;
+    font-size: 26pt;
+    text-align: center;
+    color: dimgrey;
+    background-color: #f3f3f3;
+}
+.gdp-cagr-number:hover {
+    font-family: sans-serif;
+    font-size: 26pt;
+    text-align: center;
+    color: dimgrey;
+    background-color: #f7f7f7;
+}
+.top-industry-image {
+    max-width: 80px;
+    max-height: 80px;
+}
+.top-industry-image-caption {
+    font-size: 14px
+}
+
+/* GDP Growth chart, second section on econ panel*/
+.gdp-growth-chart{
+    background-color: #f7f7f7;
+    margin-top: 5vh;
+    padding: 5px;
+}
+.gdp-growth-chart-title, .top-5-industries-title, .growing-industries-title {
+    font: 18pt black;
+    font-family: sans-serif;
+}
+.gdp-growth-chart:hover .top-5-industries-title {
+    text-decoration: underline;
+}
+
+/* Top 5 industries chart, second section on econ panel*/
+.top-5-industries {
+    margin-top: 5vh;
+    padding: 10px;
+}
+.top-5-industries:hover {
+    background-color: #f5f5f5;
+}
+.top-5-industries:hover .top-5-industries-title {
+    text-decoration: underline;
+}
+.top-gdp-industry-pct, .growing-industry-pct  {
+    text-align: center;
+}
+.top-gdp-bar-container, .growing-industries-bar-container {
+    width: 100%;
+    height: 100%;
+    padding-left: 30px;
+}
+.top-gdp-bar, .growing-industries-bar {
+    float: left;
+    display: inline-block;
+    height: 100%;
+    background: blue;
+}
+.top-gdp-bar:hover {
+    background-color: darkblue;
+}
+
+
+/* Fastest growing industries chart, second section on econ panel*/
+.growing-industries {
+    margin-top: 5vh;
+    padding: 10px;
+    border-top: solid 1pt lightgrey;
+    border-bottom: solid 1pt lightgrey;
+}
+
+/***********************************
+ELECTION PANEL
+************************************/
+.election-panel {
+    border-left: lightgray solid 1pt;
+}
+.election-table-year-container{
+    border-top:solid 1pt lightgrey;
+}
+.election-table-year{
+    text-align: center;
+}
+.election-table-result-container {
+    border-bottom:solid 1pt lightgrey
+}
+.headshot-container {
+    width: 100px;
+    text-align: center;
+    padding: 10px;
+}
+.headshot-container:hover {
+    position: relative;
+    top:-7px;
+}
+.headshot{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    /* make sure headshot is under the checkmark*/
+    z-index: -1;
+    position: relative;
+}
+.democrat-results-container {
+    width: 100px;
+    text-align: right;
+    padding-right: 0;
+    margin-right: 0;
+}
+.democrat-vote-checkmark {
+    float: left;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+}
+.democrat-vote-bar {
+     background-color: blue;
+     color: black;
+     font-weight: bold;
+     height: 40px;
+}
+.republican-results-container {
+    width: 100px;
+    text-align: left;
+}
+.republican-vote-checkmark {
+    float: right;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+}
+.republican-vote-bar {
+    background-color: red;
+    color: black;
+    height: 40px;
+}
