@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import './App.css';
 import Navbar from './Navbar';
-import County from './County';
+import County from './County/County';
 import Map from './Map';
 import Graph from './Graph';
 import Trends from './Trends';
