@@ -1,0 +1,22 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install dependencies
+              run: |
+                cd client && npm install && ls -la
+                cd ../server && npm install && ls -la
+
+            - name: Start servers
+              run: |
+                npm start --prefix client/ &
+                npm start --prefix server/ &
+
+            - name: Test
+              run: cd client && npm test
