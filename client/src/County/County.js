@@ -23,6 +23,7 @@ export default class County extends React.Component {
             topIndustry: C.PLACEHOLDER_TOP_INDUSTRY,
             electionResult: C.PLACEHOLDER_ELECTION_RESULT,
         }
+        document.title = 'County Details'
     }
 
     getNewCounty = (fips) => {
@@ -39,10 +40,13 @@ export default class County extends React.Component {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
                     this.setState({countyName: "County Name", countyState: "State"});
+                    document.title = `County Details`
                 } else {
                     this.setState({ countyName: row[0]["NAME"], countyState: row[0]["STATE"],
                     })
+
                 }
+                document.title = `${this.state.countyName}, ${this.state.countyState} - County Details`
             });
 
         // Get county elections result
