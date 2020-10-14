@@ -3,7 +3,6 @@ import logo from './logo.svg';
 
 function Navbar() {
   const navStyle = {
-    position: "fixed",
     top: 0,
     width: "100%",
     background: "#cc0000",
