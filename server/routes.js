@@ -166,8 +166,22 @@ function getAllCounties(req, res) {
 }
 
 /**
+ * Get the names of all political parties
+ *
+ * @param req
+ * @param res
+ */
+function getParties(req, res) {
+    const q = `
+    SELECT DISTINCT PARTY
+    FROM Candidate
+    `;
+    execQuery(q, res);
+}
+
+/**
  * Get the FIPS and the difference between the percentage of Republican votes
- * and the percentage Democrat votes for all counties
+ * and the percentage of Democrat votes for all counties
  *
  * @param req
  * @param res
@@ -182,17 +196,103 @@ function getRepDemDiff(req, res) {
     ), RepVotes AS (
       SELECT FIPS, CANDIDATE_VOTES AS Rep
       FROM Election NATURAL JOIN Candidate
-      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'republican'
+      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Republican'
     ), DemVotes AS (
       SELECT FIPS, CANDIDATE_VOTES AS Dem
       FROM Election NATURAL JOIN Candidate
-      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'democrat'
+      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
     ), Diff AS (
       SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Diff
       FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
     )
-    SELECT D.Diff
+    SELECT D.Diff AS Z
     FROM County C LEFT OUTER JOIN Diff D ON C.FIPS = D.FIPS
+    ORDER BY C.FIPS
+    `;
+    execQuery(q, res);
+}
+
+/**
+ * Get the FIPS and the percentage of Democrat votes for all counties
+ *
+ * @param req
+ * @param res
+ */
+function getDemVotes(req, res) {
+    const q = `
+    WITH TotalVotes AS (
+      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+      FROM Election
+      WHERE YEAR = ${pool.escape(req.query.year)}
+      GROUP BY FIPS
+    ), DemVotes AS (
+      SELECT FIPS, CANDIDATE_VOTES AS Dem
+      FROM Election NATURAL JOIN Candidate
+      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
+    ), Percent AS (
+      SELECT FIPS, ((Dem / Total) * 100) AS Percent
+      FROM TotalVotes NATURAL JOIN DemVotes
+    )
+    SELECT P.Percent AS Z
+    FROM County C LEFT OUTER JOIN Percent P ON C.FIPS = P.FIPS
+    ORDER BY C.FIPS
+    `;
+    execQuery(q, res);
+}
+
+/**
+ * Get the FIPS and the percentage of Republican votes for all counties
+ *
+ * @param req
+ * @param res
+ */
+function getRepVotes(req, res) {
+    const q = `
+    WITH TotalVotes AS (
+      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+      FROM Election
+      WHERE YEAR = ${pool.escape(req.query.year)}
+      GROUP BY FIPS
+    ), RepVotes AS (
+      SELECT FIPS, CANDIDATE_VOTES AS Rep
+      FROM Election NATURAL JOIN Candidate
+      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Republican'
+    ), Percent AS (
+      SELECT FIPS, ((Rep / Total) * 100) AS Percent
+      FROM TotalVotes NATURAL JOIN RepVotes
+    )
+    SELECT P.Percent AS Z
+    FROM County C LEFT OUTER JOIN Percent P ON C.FIPS = P.FIPS
+    ORDER BY C.FIPS
+    `;
+    execQuery(q, res);
+}
+
+/**
+ * Get the FIPS and the percentage of Other votes for all counties
+ *
+ * @param req
+ * @param res
+ */
+function getOtherVotes(req, res) {
+    const q = `
+    WITH TotalVotes AS (
+      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+      FROM Election
+      WHERE YEAR = ${pool.escape(req.query.year)}
+      GROUP BY FIPS
+    ), OtherVotes AS (
+      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Other
+      FROM Election NATURAL JOIN Candidate
+      WHERE YEAR = ${pool.escape(req.query.year)}
+        AND (PARTY IS NULL OR (PARTY != 'Republican' AND PARTY != 'Democrat'))
+      GROUP BY FIPS
+    ), Percent AS (
+      SELECT FIPS, ((Other / Total) * 100) AS Percent
+      FROM TotalVotes NATURAL JOIN OtherVotes
+    )
+    SELECT P.Percent AS Z
+    FROM County C LEFT OUTER JOIN Percent P ON C.FIPS = P.FIPS
     ORDER BY C.FIPS
     `;
     execQuery(q, res);
@@ -205,5 +305,9 @@ module.exports = {
     getTopIndustry: getTopIndustry,
     getGrowingIndustry: getGrowingIndustry,
     getAllCounties: getAllCounties,
-    getRepDemDiff: getRepDemDiff
+    getParties: getParties,
+    getRepDemDiff: getRepDemDiff,
+    getDemVotes: getDemVotes,
+    getRepVotes: getRepVotes,
+    getOtherVotes: getOtherVotes
 }

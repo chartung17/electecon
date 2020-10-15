@@ -15,8 +15,77 @@ export default class Choropleth extends React.Component {
     this.state = {
       fips: [],
       names: [],
-      z: []
+      z: [],
+      colorscale: '',
+      title: '',
+      zmin: 0,
+      zmax: 0,
+      zauto: true,
+      year: props.year,
+      queryURL: props.queryURL
     };
+  }
+
+  // query the specified URL and update state accordingly
+  queryZ(queryURL) {
+    if (queryURL === '') {
+      this.setState({
+        colorscale: 'RdBu',
+        title: '',
+        zmin: -100,
+        zmax: 100,
+        zauto: false
+      });
+      return;
+    } if (queryURL.search('/rep-dem-diff') === 0) {
+      this.setState({
+        colorscale: 'RdBu',
+        title: '% Republican votes - % Democrat votes in ' + this.state.year,
+        zmin: -100,
+        zmax: 100,
+        zauto: false
+      });
+    } else if (queryURL.search('/rep-votes') === 0) {
+      this.setState({
+        colorscale: [['0.0', 'white'], ['1.0', 'red']],
+        title: '% Republican votes in ' + this.state.year,
+        zmin: 0,
+        zmax: 100,
+        zauto: false
+      });
+    } else if (queryURL.search('/dem-votes') === 0) {
+      this.setState({
+        colorscale: [['0.0', 'white'], ['1.0', 'blue']],
+        title: '% Democrat votes in ' + this.state.year,
+        zmin: 0,
+        zmax: 100,
+        zauto: false
+      });
+    } else if (queryURL.search('/other-votes') === 0) {
+      this.setState({
+        colorscale: [['0.0', 'white'], ['1.0', 'green']],
+        title: '% Other votes in ' + this.state.year,
+        zmin: 0,
+        zmax: 100,
+        zauto: true
+      });
+    }
+    fetch(ENDPOINT.concat(queryURL),
+    {
+      method: 'GET'
+    }).then(res => {
+      return res.json();
+    }, err => {
+      console.log(err);
+    }).then(row => {
+      if (!row) return;
+      let z = row.map((rowObj, i) => rowObj.Z);
+      this.setState({
+        z: z
+      });
+    }, err => {
+      console.log(err);
+    });
   }
 
   // get names and fips for all counties and store in state
@@ -40,23 +109,23 @@ export default class Choropleth extends React.Component {
       console.log(err);
     });
 
-    // get rep-dem-diff for all counties and store in state
-    fetch(ENDPOINT.concat(`/rep-dem-diff?year=2016`),
-    {
-      method: 'GET'
-    }).then(res => {
-      return res.json();
-    }, err => {
-      console.log(err);
-    }).then(row => {
-      if (!row) return;
-      let diff = row.map((rowObj, i) => rowObj.Diff);
-      this.setState({
-        z: diff
-      });
-    }, err => {
-      console.log(err);
+    // execute default query
+    this.queryZ(this.state.queryURL + '?year=' + this.state.year);
+  }
+
+  // update graph when new info received from parent component
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      year: nextProps.year,
+      queryURL: nextProps.queryURL
     });
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props === prevProps) {
+      return;
+    }
+    this.queryZ(this.state.queryURL + '?year=' + this.state.year);
+    this.forceUpdate();
   }
 
   render() {
@@ -69,23 +138,19 @@ export default class Choropleth extends React.Component {
         locations: this.state.fips,
         z: this.state.z,
         text: this.state.names,
-        colorscale: 'RdBu',
-        zmin: -100,
-        zmax: 100,
-        colorbar: {y: 0, yanchor: "bottom", title: {text: "2016 % Republican votes - % Democrat votes", side: "right"}}}
+        colorscale: this.state.colorscale,
+        zmin: this.state.zmin,
+        zmax: this.state.zmax,
+        zauto: this.state.zauto,
+        colorbar: {y: 0, yanchor: "bottom", title: {text: this.state.title, side: "right"}}}
       ]}
-      onClick = {(data) => {
-        var pts = '';
-        for(var i=0; i < data.points.length; i++){
-          pts = data.points[i].location;
-        }
-        window.location.href = '/county/' + pts;
-      }}
+      onClick = {(data) => { window.location.href = '/county/' + data.points[0].location; }}
       layout = {{
         geo: {scope: 'usa'},
         width: 1200,
         height: 700,
-        margin: {t: 0, b: 0}
+        margin: {t: 0, b: 0},
+        title: {text: this.state.title, y: 0.95}
       }}
       />
       );

@@ -1,0 +1,21 @@
+.map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.selector {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  max-width: 90%;
+  justify-content: space-around;
+}
+
+.dropdown label {
+  padding-right: 5px;
+}
+
+select, button {
+  height: 30px;
+}
