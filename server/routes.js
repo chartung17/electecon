@@ -81,10 +81,10 @@ function getCounty(req, res) {
  */
 function getElections(req, res) {
     const q = `
-    SELECT YEAR, CANDIDATE_NAME, PARTY, CANDIDATE_VOTES 
-    FROM Election NATURAL JOIN Candidate 
-    WHERE FIPS=${pool.escape(req.query.fips)} 
-          AND PARTY IN ('Democrat', 'Republican') 
+    SELECT YEAR, CANDIDATE_NAME, PARTY, CANDIDATE_VOTES
+    FROM Election NATURAL JOIN Candidate
+    WHERE FIPS=${pool.escape(req.query.fips)}
+          AND PARTY IN ('Democrat', 'Republican')
     ORDER BY YEAR DESC, PARTY;
     `;
     execQuery(q, res);
@@ -98,9 +98,9 @@ function getElections(req, res) {
  */
 function getAnnualGDP(req, res) {
     const q = `
-    SELECT YEAR, GDP 
-    FROM GDP 
-    WHERE INDUSTRY_ID=0 
+    SELECT YEAR, GDP
+    FROM GDP
+    WHERE INDUSTRY_ID=0
           AND FIPS=${pool.escape(req.query.fips)};
     `;
     execQuery(q, res);
@@ -114,10 +114,10 @@ function getAnnualGDP(req, res) {
  */
 function getTopIndustry(req, res) {
     const q = `
-    SELECT NAME AS Description, GDP 
+    SELECT NAME AS Description, GDP
     FROM GDP NATURAL JOIN Industry
-    WHERE YEAR=2018 
-          AND INDUSTRY_ID IN (2,3,4,5,7,8,9,10,11,12,14,15,17,18,19,21,22,24,25,26,27) 
+    WHERE YEAR=2018
+          AND INDUSTRY_ID IN (2,3,4,5,7,8,9,10,11,12,14,15,17,18,19,21,22,24,25,26,27)
           AND FIPS=${pool.escape(req.query.fips)}
     ORDER BY GDP DESC
     LIMIT 5;
@@ -137,15 +137,63 @@ function getGrowingIndustry(req, res) {
     WHERE FIPS=${pool.escape(req.query.fips)} AND YEAR=2001) ,
     B AS (SELECT INDUSTRY_ID, NAME, GDP FROM GDP NATURAL JOIN Industry
     WHERE FIPS=${pool.escape(req.query.fips)} AND YEAR=2018)
-    SELECT A.NAME AS Description, 
+    SELECT A.NAME AS Description,
            ROUND(100 * (POWER(B.GDP / A.GDP, 1 / 18) - 1),2) AS Growth
     FROM A JOIN B ON A.INDUSTRY_ID=B.INDUSTRY_ID
-    WHERE A.GDP IS NOT NULL 
+    WHERE A.GDP IS NOT NULL
           AND A.GDP != 0
           AND B.GDP IS NOT NULL
-          AND A.INDUSTRY_ID IN (2,3,4,5,7,8,9,10,11,12,14,15,17,18,19,21,22,24,25,26,27) 
+          AND A.INDUSTRY_ID IN (2,3,4,5,7,8,9,10,11,12,14,15,17,18,19,21,22,24,25,26,27)
     ORDER BY Growth DESC
     LIMIT 5;
+    `;
+    execQuery(q, res);
+}
+
+/**
+ * Get the FIPS and name of all counties
+ *
+ * @param req
+ * @param res
+ */
+function getAllCounties(req, res) {
+    const q = `
+    SELECT FIPS, CONCAT(NAME, ', ', STATE) AS NAME
+    FROM County
+    ORDER BY FIPS
+    `;
+    execQuery(q, res);
+}
+
+/**
+ * Get the FIPS and the difference between the percentage of Republican votes
+ * and the percentage Democrat votes for all counties
+ *
+ * @param req
+ * @param res
+ */
+function getRepDemDiff(req, res) {
+    const q = `
+    WITH TotalVotes AS (
+      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+      FROM Election
+      WHERE YEAR = ${pool.escape(req.query.year)}
+      GROUP BY FIPS
+    ), RepVotes AS (
+      SELECT FIPS, CANDIDATE_VOTES AS Rep
+      FROM Election NATURAL JOIN Candidate
+      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'republican'
+    ), DemVotes AS (
+      SELECT FIPS, CANDIDATE_VOTES AS Dem
+      FROM Election NATURAL JOIN Candidate
+      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'democrat'
+    ), Diff AS (
+      SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Diff
+      FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
+    )
+    SELECT D.Diff
+    FROM County C LEFT OUTER JOIN Diff D ON C.FIPS = D.FIPS
+    ORDER BY C.FIPS
     `;
     execQuery(q, res);
 }
@@ -155,5 +203,7 @@ module.exports = {
     getElections: getElections,
     getAnnualGDP: getAnnualGDP,
     getTopIndustry: getTopIndustry,
-    getGrowingIndustry: getGrowingIndustry
+    getGrowingIndustry: getGrowingIndustry,
+    getAllCounties: getAllCounties,
+    getRepDemDiff: getRepDemDiff
 }

@@ -23,7 +23,9 @@ router.get(API_V1 + '/county/annual-gdp', routes.getAnnualGDP);
 router.get(API_V1 + '/county/top-industry', routes.getTopIndustry);
 router.get(API_V1 + '/county/growing-industry', routes.getGrowingIndustry);
 
-
+// Map page routes 
+router.get(API_V1 + '/map/counties', routes.getAllCounties);
+router.get(API_V1 + '/map/rep-dem-diff', routes.getRepDemDiff);
 
 
 
