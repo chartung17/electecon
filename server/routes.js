@@ -186,31 +186,36 @@ function getParties(req, res) {
  * @param req
  * @param res
  */
-function getRepDemDiff(req, res) {
-    const q = `
-    WITH TotalVotes AS (
-      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
-      FROM Election
-      WHERE YEAR = ${pool.escape(req.query.year)}
-      GROUP BY FIPS
-    ), RepVotes AS (
-      SELECT FIPS, CANDIDATE_VOTES AS Rep
-      FROM Election NATURAL JOIN Candidate
-      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Republican'
-    ), DemVotes AS (
-      SELECT FIPS, CANDIDATE_VOTES AS Dem
-      FROM Election NATURAL JOIN Candidate
-      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
-    ), Diff AS (
-      SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Diff
-      FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
-    )
-    SELECT D.Diff AS Z
-    FROM County C LEFT OUTER JOIN Diff D ON C.FIPS = D.FIPS
-    ORDER BY C.FIPS
-    `;
-    execQuery(q, res);
-}
+ function getRepDemDiff(req, res) {
+   const q = `
+   WITH TotalVotes AS (
+     SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+     FROM Election
+     WHERE YEAR = ${pool.escape(req.query.year)}
+     GROUP BY FIPS
+   ), RepVotes AS (
+     SELECT FIPS, CANDIDATE_VOTES AS Rep
+     FROM Election NATURAL JOIN Candidate
+     WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Republican'
+   ), DemVotes AS (
+     SELECT FIPS, CANDIDATE_VOTES AS Dem
+     FROM Election NATURAL JOIN Candidate
+     WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
+   ), Result AS (
+     SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Z
+     FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
+   ), Filter AS (
+     ` + util.getFilterQuery(req) +
+     `
+   ), Filtered AS (
+     SELECT * FROM Result NATURAL JOIN Filter
+   )
+   SELECT F.Z
+   FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
+   ORDER BY C.FIPS
+   `;
+   execQuery(q, res);
+ }
 
 /**
  * Get the FIPS and the percentage of Democrat votes for all counties
@@ -218,27 +223,32 @@ function getRepDemDiff(req, res) {
  * @param req
  * @param res
  */
-function getDemVotes(req, res) {
-    const q = `
-    WITH TotalVotes AS (
-      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
-      FROM Election
-      WHERE YEAR = ${pool.escape(req.query.year)}
-      GROUP BY FIPS
-    ), DemVotes AS (
-      SELECT FIPS, CANDIDATE_VOTES AS Dem
-      FROM Election NATURAL JOIN Candidate
-      WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
-    ), Percent AS (
-      SELECT FIPS, ((Dem / Total) * 100) AS Percent
-      FROM TotalVotes NATURAL JOIN DemVotes
-    )
-    SELECT P.Percent AS Z
-    FROM County C LEFT OUTER JOIN Percent P ON C.FIPS = P.FIPS
-    ORDER BY C.FIPS
-    `;
-    execQuery(q, res);
-}
+ function getDemVotes(req, res) {
+   const q = `
+   WITH TotalVotes AS (
+     SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+     FROM Election
+     WHERE YEAR = ${pool.escape(req.query.year)}
+     GROUP BY FIPS
+   ), DemVotes AS (
+     SELECT FIPS, CANDIDATE_VOTES AS Dem
+     FROM Election NATURAL JOIN Candidate
+     WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
+   ), Result AS (
+     SELECT FIPS, ((Dem / Total) * 100) AS Z
+     FROM TotalVotes NATURAL JOIN DemVotes
+   ), Filter AS (
+     ` + util.getFilterQuery(req) +
+     `
+   ), Filtered AS (
+     SELECT * FROM Result NATURAL JOIN Filter
+   )
+   SELECT F.Z
+   FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
+   ORDER BY C.FIPS
+   `;
+   execQuery(q, res);
+ }
 
 /**
  * Get the FIPS and the percentage of Republican votes for all counties
@@ -257,12 +267,17 @@ function getRepVotes(req, res) {
       SELECT FIPS, CANDIDATE_VOTES AS Rep
       FROM Election NATURAL JOIN Candidate
       WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Republican'
-    ), Percent AS (
-      SELECT FIPS, ((Rep / Total) * 100) AS Percent
+    ), Result AS (
+      SELECT FIPS, ((Rep / Total) * 100) AS Z
       FROM TotalVotes NATURAL JOIN RepVotes
+    ), Filter AS (
+      ` + util.getFilterQuery(req) +
+      `
+    ), Filtered AS (
+      SELECT * FROM Result NATURAL JOIN Filter
     )
-    SELECT P.Percent AS Z
-    FROM County C LEFT OUTER JOIN Percent P ON C.FIPS = P.FIPS
+    SELECT F.Z
+    FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
     ORDER BY C.FIPS
     `;
     execQuery(q, res);
@@ -274,29 +289,34 @@ function getRepVotes(req, res) {
  * @param req
  * @param res
  */
-function getOtherVotes(req, res) {
-    const q = `
-    WITH TotalVotes AS (
-      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
-      FROM Election
-      WHERE YEAR = ${pool.escape(req.query.year)}
-      GROUP BY FIPS
-    ), OtherVotes AS (
-      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Other
-      FROM Election NATURAL JOIN Candidate
-      WHERE YEAR = ${pool.escape(req.query.year)}
-        AND (PARTY IS NULL OR (PARTY != 'Republican' AND PARTY != 'Democrat'))
-      GROUP BY FIPS
-    ), Percent AS (
-      SELECT FIPS, ((Other / Total) * 100) AS Percent
-      FROM TotalVotes NATURAL JOIN OtherVotes
-    )
-    SELECT P.Percent AS Z
-    FROM County C LEFT OUTER JOIN Percent P ON C.FIPS = P.FIPS
-    ORDER BY C.FIPS
-    `;
-    execQuery(q, res);
-}
+ function getOtherVotes(req, res) {
+   const q = `
+   WITH TotalVotes AS (
+     SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+     FROM Election
+     WHERE YEAR = ${pool.escape(req.query.year)}
+     GROUP BY FIPS
+   ), OtherVotes AS (
+     SELECT FIPS, SUM(CANDIDATE_VOTES) AS Other
+     FROM Election NATURAL JOIN Candidate
+     WHERE YEAR = ${pool.escape(req.query.year)}
+     AND (PARTY IS NULL OR (PARTY != 'Republican' AND PARTY != 'Democrat'))
+     GROUP BY FIPS
+   ), Result AS (
+     SELECT FIPS, ((Other / Total) * 100) AS Z
+     FROM TotalVotes NATURAL JOIN OtherVotes
+   ), Filter AS (
+     ` + util.getFilterQuery(req) +
+     `
+   ), Filtered AS (
+     SELECT * FROM Result NATURAL JOIN Filter
+   )
+   SELECT F.Z
+   FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
+   ORDER BY C.FIPS
+   `;
+   execQuery(q, res);
+ }
 
 module.exports = {
     getCounties: getCounty,

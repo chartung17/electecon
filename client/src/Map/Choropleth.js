@@ -1,4 +1,5 @@
 import React from 'react';
+import './Map.css';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
 import {ENDPOINT} from './Map';
@@ -21,13 +22,23 @@ export default class Choropleth extends React.Component {
       zmin: 0,
       zmax: 0,
       zauto: true,
+      width: 0,
+      height: 0,
       year: props.year,
-      queryURL: props.queryURL
+      queryURL: props.queryURL,
+      filter: props.filter,
+      filterYear: props.filterYear,
+      operand: props.operand,
+      val: props.val
     };
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   // query the specified URL and update state accordingly
-  queryZ(queryURL) {
+  queryZ() {
+    let queryURL = this.state.queryURL + '?year=' + this.state.year +
+      '&filter=' + this.state.filter + '&filteryear=' + this.state.filterYear +
+      '&operand=' + this.state.operand + '&val=' + this.state.val;
     if (queryURL === '') {
       this.setState({
         colorscale: 'RdBu',
@@ -109,22 +120,45 @@ export default class Choropleth extends React.Component {
       console.log(err);
     });
 
+    // set dimensions of graph based on window size, and add event listener in case of window resize
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
+
     // execute default query
-    this.queryZ(this.state.queryURL + '?year=' + this.state.year);
+    this.queryZ();
+  }
+
+  // update dimensions of map when window resized
+  updateDimensions() {
+  let width = Math.min(window.innerWidth, 1400);
+    let height = Math.min(window.innerWidth / 2, 700);
+    this.setState({
+      width: width,
+      height: height
+    });
+  }
+
+  // remove event listener on unmount
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
   // update graph when new info received from parent component
   componentWillReceiveProps(nextProps) {
     this.setState({
       year: nextProps.year,
-      queryURL: nextProps.queryURL
+      queryURL: nextProps.queryURL,
+      filter: nextProps.filter,
+      filterYear: nextProps.filterYear,
+      operand: nextProps.operand,
+      val: nextProps.val
     });
   }
   componentDidUpdate(prevProps) {
     if (this.props === prevProps) {
       return;
     }
-    this.queryZ(this.state.queryURL + '?year=' + this.state.year);
+    this.queryZ();
     this.forceUpdate();
   }
 
@@ -147,11 +181,13 @@ export default class Choropleth extends React.Component {
       onClick = {(data) => { window.location.href = '/county/' + data.points[0].location; }}
       layout = {{
         geo: {scope: 'usa'},
-        width: 1200,
-        height: 700,
+        width: this.state.width,
+        height: this.state.height,
+        autosize: true,
         margin: {t: 0, b: 0},
         title: {text: this.state.title, y: 0.95}
       }}
+      config = {{responsive: true}}
       />
       );
     }

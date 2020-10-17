@@ -35,7 +35,6 @@ export default class YearDropdown extends React.Component {
     if (this.props === prevProps) {
       return;
     }
-    console.log('test');
     this.forceUpdate();
   }
 
