@@ -26,6 +26,12 @@ export default class County extends React.Component {
         document.title = 'County Details'
     }
 
+    componentDidMount () {
+        if (this.props.match !== undefined && this.props.match.params.fips !== undefined){
+            this.getNewCounty(this.props.match.params.fips)
+        }
+    }
+
     getNewCounty = (fips) => {
         let ERR_HANDLER = (err) => {
             console.log(err)
@@ -41,10 +47,11 @@ export default class County extends React.Component {
                     // revert to default data
                     this.setState({countyName: "County Name", countyState: "State"});
                     document.title = `County Details`
+                    this.props.history.push(`/county`)
                 } else {
                     this.setState({ countyName: row[0]["NAME"], countyState: row[0]["STATE"],
                     })
-
+                    this.props.history.push(`/county/${fips}`)
                 }
                 document.title = `${this.state.countyName}, ${this.state.countyState} - County Details`
             });
@@ -137,7 +144,7 @@ export default class County extends React.Component {
         return (
             <Fragment>
                 <CountyFinder getNewCounty={this.getNewCounty}/>
-                <div id={"county-profile-title"} style={{paddingBottom: "10vh"}}/>
+                <div id={"county-profile"}/>
                 <h2>County Profile</h2>
                 <div className={"county-details container"}>
                     <div className={"county-name jumbotron"}>

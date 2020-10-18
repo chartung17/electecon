@@ -178,7 +178,7 @@ export default class Choropleth extends React.Component {
         zauto: this.state.zauto,
         colorbar: {y: 0, yanchor: "bottom", title: {text: this.state.title, side: "right"}}}
       ]}
-      onClick = {(data) => { window.location.href = '/county/' + data.points[0].location; }}
+      onClick = {(data) => { window.location.href = '/county/' + data.points[0].location + '#county-profile'; }}
       layout = {{
         geo: {scope: 'usa'},
         width: this.state.width,

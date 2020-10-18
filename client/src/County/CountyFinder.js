@@ -28,7 +28,7 @@ export default class CountyFinder extends React.Component {
                             <a
                                 id={`btn-county-${county.NAME}`}
                                 className={"btn btn-county"}
-                                href="#county-profile-title"
+                                href="#county-profile"
                                 key={index}
                                 onClick={() => this.props.getNewCounty(county.FIPS)}>
                                 {county.NAME}

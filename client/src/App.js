@@ -17,7 +17,8 @@ function App() {
             <Route path="/" exact component={() => <Map />} />
             <Route path="/graph" exact component={() => <Graph />} />
             <Route path="/trends" exact component={() => <Trends />} />
-            <Route path="/county" component={() => <County />} />
+            <Route path="/county/:fips" component={(props) => <County {...props}/>} />
+            <Route path="/county/" component={(props) => <County {...props}/>} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </div>
