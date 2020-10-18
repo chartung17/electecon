@@ -70,7 +70,7 @@ export default class County extends React.Component {
                                 "RepCandidate": d_rep["CANDIDATE_NAME"],
                                 "DemVote": d_dem["CANDIDATE_VOTES"],
                                 "RepVote": d_rep["CANDIDATE_VOTES"],
-                                "TotalVote": d_dem["CANDIDATE_VOTES"] + d_rep["CANDIDATE_VOTES"]
+                                "TotalVote": d_dem["TOTAL_VOTES"]      // same as d_rep["TOTAL_VOTES"]
                             }
                         );
                     }

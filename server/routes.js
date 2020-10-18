@@ -81,10 +81,16 @@ function getCounty(req, res) {
  */
 function getElections(req, res) {
     const q = `
-    SELECT YEAR, CANDIDATE_NAME, PARTY, CANDIDATE_VOTES
-    FROM Election NATURAL JOIN Candidate
-    WHERE FIPS=${pool.escape(req.query.fips)}
-          AND PARTY IN ('Democrat', 'Republican')
+    WITH Total_Votes AS (SELECT YEAR, FIPS, SUM(CANDIDATE_VOTES) AS TOTAL_VOTES 
+			   FROM Election 
+			   WHERE FIPS=${pool.escape(req.query.fips)} 
+               GROUP BY YEAR, FIPS)
+    SELECT E.YEAR, CANDIDATE_NAME, PARTY, CANDIDATE_VOTES, TOTAL_VOTES
+    FROM Election E
+    	NATURAL JOIN Candidate C
+        NATURAL JOIN Total_Votes TV
+    WHERE E.FIPS=${pool.escape(req.query.fips)} AND 
+    	  PARTY IN ('Democrat', 'Republican')
     ORDER BY YEAR DESC, PARTY;
     `;
     execQuery(q, res);
