@@ -23,6 +23,9 @@ COUNTY FINDER
 /***********************************
 COUNTY DETAILS
 ************************************/
+#county-profile {
+    padding-bottom: 5vh
+}
 .county-details {
     border: solid 1pt lightgray;
     text-align: left;
