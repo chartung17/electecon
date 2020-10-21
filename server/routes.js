@@ -81,15 +81,15 @@ function getCounty(req, res) {
  */
 function getElections(req, res) {
     const q = `
-    WITH Total_Votes AS (SELECT YEAR, FIPS, SUM(CANDIDATE_VOTES) AS TOTAL_VOTES 
-			   FROM Election 
-			   WHERE FIPS=${pool.escape(req.query.fips)} 
+    WITH Total_Votes AS (SELECT YEAR, FIPS, SUM(CANDIDATE_VOTES) AS TOTAL_VOTES
+			   FROM Election
+			   WHERE FIPS=${pool.escape(req.query.fips)}
                GROUP BY YEAR, FIPS)
     SELECT E.YEAR, CANDIDATE_NAME, PARTY, CANDIDATE_VOTES, TOTAL_VOTES
     FROM Election E
     	NATURAL JOIN Candidate C
         NATURAL JOIN Total_Votes TV
-    WHERE E.FIPS=${pool.escape(req.query.fips)} AND 
+    WHERE E.FIPS=${pool.escape(req.query.fips)} AND
     	  PARTY IN ('Democrat', 'Republican')
     ORDER BY YEAR DESC, PARTY;
     `;
@@ -186,7 +186,22 @@ function getParties(req, res) {
 }
 
 /**
- * Get the FIPS and the difference between the percentage of Republican votes
+ * Get the names and IDs of all industries (excluding total)
+ *
+ * @param req
+ * @param res
+ */
+function getIndustries(req, res) {
+    const q = `
+    SELECT *
+    FROM Industry
+    WHERE INDUSTRY_ID > 0
+    `;
+    execQuery(q, res);
+}
+
+/**
+ * Get the difference between the percentage of Republican votes
  * and the percentage of Democrat votes for all counties
  *
  * @param req
@@ -224,7 +239,7 @@ function getParties(req, res) {
  }
 
 /**
- * Get the FIPS and the percentage of Democrat votes for all counties
+ * Get the percentage of Democrat votes for all counties
  *
  * @param req
  * @param res
@@ -257,7 +272,7 @@ function getParties(req, res) {
  }
 
 /**
- * Get the FIPS and the percentage of Republican votes for all counties
+ * Get the percentage of Republican votes for all counties
  *
  * @param req
  * @param res
@@ -290,7 +305,7 @@ function getRepVotes(req, res) {
 }
 
 /**
- * Get the FIPS and the percentage of Other votes for all counties
+ * Get the percentage of Other votes for all counties
  *
  * @param req
  * @param res
@@ -324,6 +339,63 @@ function getRepVotes(req, res) {
    execQuery(q, res);
  }
 
+ /**
+  * Get the total GDP for all counties
+  *
+  * @param req
+  * @param res
+  */
+ function getTotalGDP(req, res) {
+     const q = `
+     WITH Result AS (
+       SELECT FIPS, (GDP / 1000) AS Z
+       FROM GDP
+       WHERE INDUSTRY_ID = 0 AND YEAR = ${pool.escape(req.query.year)}
+     ), Filter AS (
+       ` + util.getFilterQuery(req) +
+       `
+     ), Filtered AS (
+       SELECT * FROM Result NATURAL JOIN Filter
+     )
+     SELECT F.Z
+     FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
+     ORDER BY C.FIPS
+     `;
+     execQuery(q, res);
+ }
+
+ /**
+  * Get the percentage of GDP from the specified industry for all counties
+  *
+  * @param req
+  * @param res
+  */
+ function getIndustryGDP(req, res) {
+     const q = `
+     WITH TotalGDP AS (
+       SELECT FIPS, GDP AS Total
+       FROM GDP
+       WHERE INDUSTRY_ID = 0 AND YEAR = ${pool.escape(req.query.year)}
+     ), IndustryGDP AS (
+       SELECT FIPS, GDP
+       FROM GDP
+       WHERE YEAR = ${pool.escape(req.query.year)} AND INDUSTRY_ID = ${pool.escape(req.query.industry)}
+     ), Result AS (
+       SELECT FIPS, ((GDP / Total) * 100) AS Z
+       FROM TotalGDP NATURAL JOIN IndustryGDP
+     ), Filter AS (
+       ` + util.getFilterQuery(req) +
+       `
+     ), Filtered AS (
+       SELECT * FROM Result NATURAL JOIN Filter
+     )
+     SELECT F.Z
+     FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
+     ORDER BY C.FIPS
+     `;
+     execQuery(q, res);
+ }
+
 module.exports = {
     getCounties: getCounty,
     getElections: getElections,
@@ -335,5 +407,8 @@ module.exports = {
     getRepDemDiff: getRepDemDiff,
     getDemVotes: getDemVotes,
     getRepVotes: getRepVotes,
-    getOtherVotes: getOtherVotes
+    getOtherVotes: getOtherVotes,
+    getTotalGDP: getTotalGDP,
+    getIndustryGDP: getIndustryGDP,
+    getIndustries: getIndustries
 }

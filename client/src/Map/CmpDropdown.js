@@ -11,17 +11,17 @@ export default class CmpDropdown extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  // add operators to dropdown
   componentDidMount() {
     var operators = [];
     operators.push(<option value='gt' selected>&gt;</option>);
     operators.push(<option value='lt'>&lt;</option>);
-
-
     this.setState({
       operators: operators
     });
   }
 
+  // handle change in state
   handleChange(e) {
     this.setState({
       selectedOp: e.target.value
@@ -29,6 +29,7 @@ export default class CmpDropdown extends React.Component {
     this.props.handleOpChange(e.target.value);
   }
 
+  // force update when props change
   componentDidUpdate(prevProps) {
     if (this.props === prevProps) {
       return;

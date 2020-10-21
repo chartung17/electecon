@@ -30,6 +30,9 @@ router.get(API_V1 + '/map/rep-dem-diff', routes.getRepDemDiff);
 router.get(API_V1 + '/map/dem-votes', routes.getDemVotes);
 router.get(API_V1 + '/map/rep-votes', routes.getRepVotes);
 router.get(API_V1 + '/map/other-votes', routes.getOtherVotes);
+router.get(API_V1 + '/map/industries', routes.getIndustries);
+router.get(API_V1 + '/map/total-gdp', routes.getTotalGDP);
+router.get(API_V1 + '/map/industry-gdp', routes.getIndustryGDP);
 
 
 

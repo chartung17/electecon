@@ -17,6 +17,7 @@ export default class Choropleth extends React.Component {
       fips: [],
       names: [],
       z: [],
+      industries: [],
       colorscale: '',
       title: '',
       zmin: 0,
@@ -29,16 +30,37 @@ export default class Choropleth extends React.Component {
       filter: props.filter,
       filterYear: props.filterYear,
       operand: props.operand,
-      val: props.val
+      val: props.val,
+      industry: props.industry
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
+
+  // colorscale used for plotting GDP variables
+  gdpColorscale = [
+    ['0.0', 'black'],
+    ['0.0025', '#300030'],
+    ['0.005', 'indigo'],
+    ['0.01', 'blue'],
+    ['0.02', 'darkcyan'],
+    ['0.03', 'cyan'],
+    ['0.06', 'chartreuse'],
+    ['0.1', 'greenyellow'],
+    ['0.15', 'yellow'],
+    ['0.2', 'gold'],
+    ['0.3', 'goldenrod'],
+    ['0.45', 'orange'],
+    ['0.6', 'orangered'],
+    ['0.8', 'red'],
+    ['1.0', 'maroon']
+  ]
 
   // query the specified URL and update state accordingly
   queryZ() {
     let queryURL = this.state.queryURL + '?year=' + this.state.year +
       '&filter=' + this.state.filter + '&filteryear=' + this.state.filterYear +
-      '&operand=' + this.state.operand + '&val=' + this.state.val;
+      '&operand=' + this.state.operand + '&val=' + this.state.val +
+      '&industry=' + this.state.industry;
     if (queryURL === '') {
       this.setState({
         colorscale: 'RdBu',
@@ -48,7 +70,7 @@ export default class Choropleth extends React.Component {
         zauto: false
       });
       return;
-    } if (queryURL.search('/rep-dem-diff') === 0) {
+    } if (queryURL.startsWith('/rep-dem-diff')) {
       this.setState({
         colorscale: 'RdBu',
         title: '% Republican votes - % Democrat votes in ' + this.state.year,
@@ -56,7 +78,7 @@ export default class Choropleth extends React.Component {
         zmax: 100,
         zauto: false
       });
-    } else if (queryURL.search('/rep-votes') === 0) {
+    } else if (queryURL.startsWith('/rep-votes')) {
       this.setState({
         colorscale: [['0.0', 'white'], ['1.0', 'red']],
         title: '% Republican votes in ' + this.state.year,
@@ -64,7 +86,7 @@ export default class Choropleth extends React.Component {
         zmax: 100,
         zauto: false
       });
-    } else if (queryURL.search('/dem-votes') === 0) {
+    } else if (queryURL.startsWith('/dem-votes')) {
       this.setState({
         colorscale: [['0.0', 'white'], ['1.0', 'blue']],
         title: '% Democrat votes in ' + this.state.year,
@@ -72,10 +94,26 @@ export default class Choropleth extends React.Component {
         zmax: 100,
         zauto: false
       });
-    } else if (queryURL.search('/other-votes') === 0) {
+    } else if (queryURL.startsWith('/other-votes')) {
       this.setState({
         colorscale: [['0.0', 'white'], ['1.0', 'green']],
         title: '% Other votes in ' + this.state.year,
+        zmin: 0,
+        zmax: 100,
+        zauto: true
+      });
+    } else if (queryURL.startsWith('/total-gdp')) {
+      this.setState({
+        colorscale: this.gdpColorscale,
+        title: 'Total GDP (millions of dollars) in ' + this.state.year,
+        zmin: 0,
+        zmax: 100,
+        zauto: true
+      });
+    } else if (queryURL.startsWith('/industry-gdp')) {
+      this.setState({
+        colorscale: this.gdpColorscale,
+        title: '% GDP from ' + this.getIndustryName(this.state.industry) + ' in ' + this.state.year,
         zmin: 0,
         zmax: 100,
         zauto: true
@@ -99,8 +137,13 @@ export default class Choropleth extends React.Component {
     });
   }
 
-  // get names and fips for all counties and store in state
+  // get the name of the industry with the specified id
+  getIndustryName(indID) {
+    return this.state.industries[indID-1];
+  }
+
   componentDidMount() {
+    // get names and fips for all counties and store in state
     fetch(ENDPOINT.concat(`/counties`),
     {
       method: 'GET'
@@ -120,6 +163,33 @@ export default class Choropleth extends React.Component {
       console.log(err);
     });
 
+    // get names and IDs for all industries and store in state
+    fetch(ENDPOINT.concat(`/industries`),
+    {
+      method: 'GET'
+    }).then(res => {
+      return res.json();
+    }, err => {
+      console.log(err);
+    }).then(row => {
+      if (!row) return;
+      let industries = row.map((rowObj, i) => rowObj.NAME);
+      let indIDs = row.map((rowObj, i) => rowObj.INDUSTRY_ID);
+      let i;
+      for (i = 0; i < industries.length; i++) {
+        if (industries[i].includes('2/')) {
+          industries[i] = industries[i].substring(0, industries[i].indexOf('2/'));
+        } else if (industries[i].includes('3/')) {
+          industries[i] = industries[i].substring(0, industries[i].indexOf('3/'));
+        }
+      }
+      this.setState({
+        industries: industries
+      })
+    }, err => {
+      console.log(err);
+    });
+
     // set dimensions of graph based on window size, and add event listener in case of window resize
     this.updateDimensions();
     window.addEventListener('resize', this.updateDimensions);
@@ -130,8 +200,8 @@ export default class Choropleth extends React.Component {
 
   // update dimensions of map when window resized
   updateDimensions() {
-  let width = Math.min(window.innerWidth, 1400);
-    let height = Math.min(window.innerWidth / 2, 700);
+  let width = Math.min(window.innerWidth * 0.9, 1400);
+    let height = width / 2;
     this.setState({
       width: width,
       height: height
@@ -151,7 +221,8 @@ export default class Choropleth extends React.Component {
       filter: nextProps.filter,
       filterYear: nextProps.filterYear,
       operand: nextProps.operand,
-      val: nextProps.val
+      val: nextProps.val,
+      industry: nextProps.industry
     });
   }
   componentDidUpdate(prevProps) {
@@ -176,7 +247,7 @@ export default class Choropleth extends React.Component {
         zmin: this.state.zmin,
         zmax: this.state.zmax,
         zauto: this.state.zauto,
-        colorbar: {y: 0, yanchor: "bottom", title: {text: this.state.title, side: "right"}}}
+        colorbar: {y: 0, yanchor: "bottom", title: {side: "right"}}}
       ]}
       onClick = {(data) => { window.location.href = '/county/' + data.points[0].location + '#county-profile'; }}
       layout = {{
@@ -185,7 +256,8 @@ export default class Choropleth extends React.Component {
         height: this.state.height,
         autosize: true,
         margin: {t: 0, b: 0},
-        title: {text: this.state.title, y: 0.95}
+        title: {text: this.state.title, y: 0.95},
+        dragmode: false
       }}
       config = {{responsive: true}}
       />

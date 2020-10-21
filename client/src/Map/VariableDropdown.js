@@ -11,43 +11,43 @@ export default class VariableDropdown extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  // add variables to dropdown
   componentDidMount() {
     var vars = [];
     vars.push(<option value='RepDemDiff' selected>% Republican votes - % Democrat votes</option>);
     vars.push(<option value='Democrat'>% votes for Democrat</option>);
     vars.push(<option value='Republican'>% votes for Republican</option>);
     vars.push(<option value='Other'>% votes for Other</option>);
-    // fetch(ENDPOINT.concat(`/parties`),
-    // {
-    //   method: 'GET'
-    // }).then(res => {
-    //   return res.json();
-    // }, err => {
-    //   console.log(err);
-    // }).then(row => {
-    //   if (!row) return;
-    //   let parties = row.map((rowObj, i) => rowObj.PARTY);
-    //   let i;
-    //   for (i = 0; i < parties.length; i++) {
-    //     if (parties[i] === null) {
-    //       vars.push(<option value={'partyNULL'}>% votes for Other</option>);
-    //     } else {
-    //       vars.push(<option value={'party' + parties[i]}>% votes for {parties[i]}</option>);
-    //     }
-    //   }
-    //   this.setState({
-    //     vars: vars
-    //   })
-    // }, err => {
-    //   console.log(err);
-    // });
-
-
-    this.setState({
-      vars: vars
+    vars.push(<option value='TotalGDP'>Total GDP</option>);
+    fetch(ENDPOINT.concat(`/industries`),
+    {
+      method: 'GET'
+    }).then(res => {
+      return res.json();
+    }, err => {
+      console.log(err);
+    }).then(row => {
+      if (!row) return;
+      let industries = row.map((rowObj, i) => rowObj.NAME);
+      let indIDs = row.map((rowObj, i) => rowObj.INDUSTRY_ID);
+      let i;
+      for (i = 0; i < industries.length; i++) {
+        if (industries[i].includes('2/')) {
+          industries[i] = industries[i].substring(0, industries[i].indexOf('2/'));
+        } else if (industries[i].includes('3/')) {
+          industries[i] = industries[i].substring(0, industries[i].indexOf('3/'));
+        }
+        vars.push(<option value={'Industry' + indIDs[i]}>% GDP from {industries[i]}</option>);
+      }
+      this.setState({
+        vars: vars
+      })
+    }, err => {
+      console.log(err);
     });
   }
 
+  // handle change in state
   handleChange(e) {
     this.setState({
       selectedVar: e.target.value

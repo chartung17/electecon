@@ -28,10 +28,13 @@ export default class Map extends React.Component {
       nextFilterYear: '2016',
       filterVar: 'none',
       nextFilterVar: 'RepDemDiff',
+      filterLabel: '%',
       op: 'gt',
       nextOp: 'gt',
       val: 0,
-      nextVal: 0
+      nextVal: 0,
+      industry: 1,
+      nextIndustry: 1
     }
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleVarChange = this.handleVarChange.bind(this);
@@ -54,6 +57,12 @@ export default class Map extends React.Component {
     this.setState({
       nextVar: newVar
     });
+    if (newVar.startsWith('Industry')) {
+      let indID = Number(newVar.substr(8));
+      this.setState({
+        nextIndustry: indID
+      });
+    }
   }
 
   // handle state change in filter checkbox
@@ -89,6 +98,15 @@ export default class Map extends React.Component {
     this.setState({
       nextFilterVar: newVar
     });
+    if (newVar === 'TotalGDP') {
+      this.setState({
+        filterLabel: 'million dollars'
+      });
+    } else {
+      this.setState({
+        filterLabel: '%'
+      });
+    }
   }
 
   // when submit button is clicked, update state in order to re-render map
@@ -99,9 +117,13 @@ export default class Map extends React.Component {
     } else if (this.state.nextVar === 'Republican') {
       queryURL = '/rep-votes';
     } else if (this.state.nextVar === 'Other') {
-      queryURL = '/other-votes'
+      queryURL = '/other-votes';
     } else if (this.state.nextVar === 'RepDemDiff') {
-      queryURL = '/rep-dem-diff'
+      queryURL = '/rep-dem-diff';
+    } else if (this.state.nextVar === 'TotalGDP') {
+      queryURL = '/total-gdp';
+    } else if (this.state.nextVar.startsWith('Industry')) {
+      queryURL = '/industry-gdp';
     }
     if (this.state.nextFilter) {
       this.setState({
@@ -111,7 +133,8 @@ export default class Map extends React.Component {
         filterVar: this.state.nextFilterVar,
         op: this.state.nextOp,
         val: this.state.nextVal,
-        queryURL: queryURL
+        queryURL: queryURL,
+        industry: this.state.nextIndustry
       });
     } else {
       this.setState({
@@ -121,7 +144,8 @@ export default class Map extends React.Component {
         filterVar: 'none',
         op: this.state.nextOp,
         val: this.state.nextVal,
-        queryURL: queryURL
+        queryURL: queryURL,
+        industry: this.state.nextIndustry
       });
     }
   };
@@ -137,6 +161,7 @@ export default class Map extends React.Component {
           operand={this.state.op}
           val={this.state.val}
           queryURL={this.state.queryURL}
+          industry={this.state.industry}
         />
         <p>Select a year and variable, then click "Submit" to update the map.</p>
         <section className='selector'>
@@ -169,8 +194,13 @@ export default class Map extends React.Component {
             id='cmp-dropdown'
             handleOpChange={this.handleOpChange}
           />
-          <CmpInput id='cmp-input' handleValChange={this.handleValChange} />
+          <CmpInput
+            id='cmp-input'
+            handleValChange={this.handleValChange}
+            filterLabel={this.state.filterLabel}
+          />
         </section>
+        <p>Note: Election data is only available for election years (2000, 2004, 2008, 2012, and 2016). GDP data is not available for the year 2000.</p>
       </div>
     );
   }

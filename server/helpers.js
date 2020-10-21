@@ -105,6 +105,33 @@ function getFilterQuery(req) {
     WHERE Percent ${op} ${req.query.val}
     `;
     return q;
+  } else if (req.query.filter === 'TotalGDP') {
+    const q = `
+    SELECT FIPS
+    FROM GDP
+    WHERE INDUSTRY_ID = 0 AND YEAR = ${req.query.filteryear} AND (GDP / 1000) ${op} ${req.query.val}
+    `;
+    return q;
+  } else if (req.query.filter.startsWith('Industry')) {
+    let indID = req.query.filter.substr(8);
+    const q = `
+    WITH TotalGDP AS (
+      SELECT FIPS, GDP AS Total
+      FROM GDP
+      WHERE INDUSTRY_ID = 0 AND YEAR = ${req.query.filteryear}
+    ), IndustryGDP AS (
+      SELECT FIPS, GDP
+      FROM GDP
+      WHERE YEAR = ${req.query.filteryear} AND INDUSTRY_ID = ${indID}
+    ), Percent AS (
+      SELECT FIPS, ((GDP / Total) * 100) AS Percent
+      FROM TotalGDP NATURAL JOIN IndustryGDP
+    )
+    SELECT FIPS
+    FROM Percent
+    WHERE Percent ${op} ${req.query.val}
+    `;
+    return q;
   } else {
     return 'SELECT FIPS FROM Result';
   }

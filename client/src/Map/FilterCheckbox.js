@@ -9,6 +9,7 @@ export default class FilterCheckbox extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  // handle change in state
   handleChange(e) {
     let reverse = !(this.state.checked);
     this.setState({

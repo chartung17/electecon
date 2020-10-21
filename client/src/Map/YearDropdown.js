@@ -18,12 +18,14 @@ export default class YearDropdown extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  // add years to dropdown
   componentDidMount() {
     this.setState({
       years: years
     });
   }
 
+  // handle change in state
   handleChange(e) {
     this.setState({
       selectedYear: e.target.value
@@ -31,6 +33,7 @@ export default class YearDropdown extends React.Component {
     this.props.handleYearChange(e.target.value);
   }
 
+  // force update when props change
   componentDidUpdate(prevProps) {
     if (this.props === prevProps) {
       return;
