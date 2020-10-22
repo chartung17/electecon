@@ -36,15 +36,37 @@ export default class Choropleth extends React.Component {
     this.updateDimensions = this.updateDimensions.bind(this);
   }
 
-  // colorscale used for plotting GDP variables
-  gdpColorscale = [
-    ['0.0', '#0000ff'],
-    ['0.005', '#00ffff'],
-    ['0.05', '#00ff00'],
-    ['0.25', '#ffff00'],
-    ['0.6', '#ff0000'],
-    ['1.0', '#ff00ff']
-  ]
+  // responsive colorscale used for plotting GDP variables
+  gdpColorscale() {
+    let vals = [];
+    let len = this.state.z.length;
+    for (let i = 0; i < len; i++) {
+      if (typeof this.state.z[i] === 'number') {
+        vals.push(this.state.z[i]);
+      }
+    }
+    vals.sort((a, b) => {return (a - b)});
+    len = vals.length;
+    let min = vals[0];
+    let max = vals[len-1];
+    let range = max - min;
+    let p20 = vals[Math.floor(0.2 * len) - 1];
+    p20 = ((p20 - min) / range).toString();
+    let p40 = vals[Math.floor(0.4 * len) - 1];
+    p40 = ((p40 - min) / range).toString();
+    let p60 = vals[Math.floor(0.6 * len) - 1];
+    p60 = ((p60 - min) / range).toString();
+    let p80 = vals[Math.floor(0.8 * len) - 1];
+    p80 = ((p80 - min) / range).toString();
+    return [
+      ['0.0', '#0000ff'],
+      [p20, '#00ffff'],
+      [p40, '#00ff00'],
+      [p60, '#ffff00'],
+      [p80, '#ff0000'],
+      ['1.0', '#ff00ff']
+    ];
+  }
 
   // query the specified URL and update state accordingly
   queryZ() {
@@ -95,7 +117,6 @@ export default class Choropleth extends React.Component {
       });
     } else if (queryURL.startsWith('/total-gdp')) {
       this.setState({
-        colorscale: this.gdpColorscale,
         title: 'Total GDP (millions of dollars) in ' + this.state.year,
         zmin: 0,
         zmax: 100,
@@ -103,7 +124,6 @@ export default class Choropleth extends React.Component {
       });
     } else if (queryURL.startsWith('/industry-gdp')) {
       this.setState({
-        colorscale: this.gdpColorscale,
         title: '% GDP from ' + this.getIndustryName(this.state.industry) + ' in ' + this.state.year,
         zmin: 0,
         zmax: 100,
@@ -123,6 +143,11 @@ export default class Choropleth extends React.Component {
       this.setState({
         z: z
       });
+      if (queryURL.includes('gdp')) {
+        this.setState({
+          colorscale: this.gdpColorscale()
+        })
+      }
     }, err => {
       console.log(err);
     });
