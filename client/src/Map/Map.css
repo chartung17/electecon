@@ -37,6 +37,12 @@ select, button {
   text-align: left;
 }
 
+.error {
+  color: red;
+  height: 15px;
+  padding: 0;
+}
+
 @media (max-width: 1300px) {
   section, .filter {
     flex-direction: column;

@@ -34,7 +34,8 @@ export default class Map extends React.Component {
       val: 0,
       nextVal: 0,
       industry: 1,
-      nextIndustry: 1
+      nextIndustry: 1,
+      errorMsg: ''
     }
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleVarChange = this.handleVarChange.bind(this);
@@ -111,6 +112,39 @@ export default class Map extends React.Component {
 
   // when submit button is clicked, update state in order to re-render map
   handleClick = () => {
+    let electionYears = ['2000', '2004', '2008', '2012', '2016'];
+    if ((this.state.nextVar === 'TotalGDP') || (this.state.nextVar.startsWith('Industry'))) {
+      if (this.state.nextYear === '2000') {
+        this.setState({
+          errorMsg: 'GDP data is not available for the year 2000'
+        });
+        return;
+      }
+    } else {
+      if (!electionYears.includes(this.state.nextYear)) {
+        this.setState({
+          errorMsg: 'Election data is not available for the year ' + this.state.nextYear
+        });
+        return;
+      }
+    }
+    if (this.state.nextFilter) {
+      if ((this.state.nextFilterVar === 'TotalGDP') || (this.state.nextFilterVar.startsWith('Industry'))) {
+        if (this.state.nextFilterYear === '2000') {
+          this.setState({
+            errorMsg: 'GDP data is not available for the year 2000'
+          });
+          return;
+        }
+      } else {
+        if (!electionYears.includes(this.state.nextFilterYear)) {
+          this.setState({
+            errorMsg: 'Election data is not available for the year ' + this.state.nextFilterYear
+          });
+          return;
+        }
+      }
+    }
     let queryURL = this.state.queryURL;
     if (this.state.nextVar === 'Democrat') {
       queryURL = '/dem-votes';
@@ -134,7 +168,8 @@ export default class Map extends React.Component {
         op: this.state.nextOp,
         val: this.state.nextVal,
         queryURL: queryURL,
-        industry: this.state.nextIndustry
+        industry: this.state.nextIndustry,
+        errorMsg: ''
       });
     } else {
       this.setState({
@@ -145,7 +180,8 @@ export default class Map extends React.Component {
         op: this.state.nextOp,
         val: this.state.nextVal,
         queryURL: queryURL,
-        industry: this.state.nextIndustry
+        industry: this.state.nextIndustry,
+        errorMsg: ''
       });
     }
   };
@@ -163,6 +199,7 @@ export default class Map extends React.Component {
           queryURL={this.state.queryURL}
           industry={this.state.industry}
         />
+        <p className='error'>{this.state.errorMsg}</p>
         <p>Select a year and variable, then click "Submit" to update the map.</p>
         <section className='selector'>
           <YearDropdown
