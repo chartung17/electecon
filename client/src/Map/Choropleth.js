@@ -38,21 +38,12 @@ export default class Choropleth extends React.Component {
 
   // colorscale used for plotting GDP variables
   gdpColorscale = [
-    ['0.0', 'black'],
-    ['0.0025', '#300030'],
-    ['0.005', 'indigo'],
-    ['0.01', 'blue'],
-    ['0.02', 'darkcyan'],
-    ['0.03', 'cyan'],
-    ['0.06', 'chartreuse'],
-    ['0.1', 'greenyellow'],
-    ['0.15', 'yellow'],
-    ['0.2', 'gold'],
-    ['0.3', 'goldenrod'],
-    ['0.45', 'orange'],
-    ['0.6', 'orangered'],
-    ['0.8', 'red'],
-    ['1.0', 'maroon']
+    ['0.0', '#0000ff'],
+    ['0.005', '#00ffff'],
+    ['0.05', '#00ff00'],
+    ['0.25', '#ffff00'],
+    ['0.6', '#ff0000'],
+    ['1.0', '#ff00ff']
   ]
 
   // query the specified URL and update state accordingly

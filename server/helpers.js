@@ -115,17 +115,17 @@ function getFilterQuery(req) {
   } else if (req.query.filter.startsWith('Industry')) {
     let indID = req.query.filter.substr(8);
     const q = `
-    WITH TotalGDP AS (
+    WITH TotalGDP2 AS (
       SELECT FIPS, GDP AS Total
       FROM GDP
       WHERE INDUSTRY_ID = 0 AND YEAR = ${req.query.filteryear}
-    ), IndustryGDP AS (
+    ), IndustryGDP2 AS (
       SELECT FIPS, GDP
       FROM GDP
       WHERE YEAR = ${req.query.filteryear} AND INDUSTRY_ID = ${indID}
     ), Percent AS (
       SELECT FIPS, ((GDP / Total) * 100) AS Percent
-      FROM TotalGDP NATURAL JOIN IndustryGDP
+      FROM TotalGDP2 NATURAL JOIN IndustryGDP2
     )
     SELECT FIPS
     FROM Percent
