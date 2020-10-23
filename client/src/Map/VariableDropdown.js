@@ -19,6 +19,9 @@ export default class VariableDropdown extends React.Component {
     vars.push(<option value='Republican'>% votes for Republican</option>);
     vars.push(<option value='Other'>% votes for Other</option>);
     vars.push(<option value='TotalGDP'>Total GDP</option>);
+    if (this.props.includeCategorical) {
+      vars.push(<option value='TopIndustry'>Top Industry (non-aggregate)</option>);
+    }
     fetch(ENDPOINT.concat(`/industries`),
     {
       method: 'GET'

@@ -1,5 +1,4 @@
 import React from 'react';
-import {ENDPOINT} from './Map';
 
 export default class CmpDropdown extends React.Component {
   constructor(props) {

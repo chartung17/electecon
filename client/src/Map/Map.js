@@ -159,6 +159,9 @@ export default class Map extends React.Component {
     } else if (this.state.nextVar.startsWith('Industry')) {
       queryURL = '/industry-gdp';
     }
+    else if (this.state.nextVar === 'TopIndustry') {
+      queryURL = '/top-industry';
+    }
     if (this.state.nextFilter) {
       this.setState({
         year: this.state.nextYear,
@@ -209,6 +212,7 @@ export default class Map extends React.Component {
           <VariableDropdown
             id='variable-dropdown'
             handleVarChange={this.handleVarChange}
+            includeCategorical={true}
           />
           <button id='submit' onClick={this.handleClick}>Submit</button>
         </section>

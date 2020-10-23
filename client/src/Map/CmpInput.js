@@ -1,5 +1,4 @@
 import React from 'react';
-import {ENDPOINT} from './Map';
 
 export default class CmpInput extends React.Component {
   constructor(props) {

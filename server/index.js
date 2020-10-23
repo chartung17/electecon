@@ -31,8 +31,10 @@ router.get(API_V1 + '/map/dem-votes', routes.getDemVotes);
 router.get(API_V1 + '/map/rep-votes', routes.getRepVotes);
 router.get(API_V1 + '/map/other-votes', routes.getOtherVotes);
 router.get(API_V1 + '/map/industries', routes.getIndustries);
+router.get(API_V1 + '/map/non-aggregate-industries', routes.getNonAggregateIndustries);
 router.get(API_V1 + '/map/total-gdp', routes.getTotalGDP);
 router.get(API_V1 + '/map/industry-gdp', routes.getIndustryGDP);
+router.get(API_V1 + '/map/top-industry', routes.getTopIndustries);
 
 
 

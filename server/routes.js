@@ -201,6 +201,21 @@ function getIndustries(req, res) {
 }
 
 /**
+ * Get the names and IDs of all non-aggregate industries
+ *
+ * @param req
+ * @param res
+ */
+function getNonAggregateIndustries(req, res) {
+    const q = `
+    SELECT *
+    FROM Industry
+    WHERE INDUSTRY_ID IN (2,3,4,5,7,8,9,10,11,12,14,15,17,18,19,21,22,24,25,26,27)
+    `;
+    execQuery(q, res);
+}
+
+/**
  * Get the difference between the percentage of Republican votes
  * and the percentage of Democrat votes for all counties
  *
@@ -396,6 +411,42 @@ function getRepVotes(req, res) {
      execQuery(q, res);
  }
 
+ /**
+  * Get largest industry (non-aggregate) for all counties
+  *
+  * @param req
+  * @param res
+  */
+ function getTopIndustries(req, res) {
+    const q = `
+    WITH IndustryGDP AS (
+      SELECT *
+      FROM GDP
+      WHERE YEAR = ${pool.escape(req.query.year)}
+        AND INDUSTRY_ID IN (2,3,4,5,7,8,9,10,11,12,14,15,17,18,19,21,22,24,25,26,27)
+     LIMIT 100000
+    ), Result AS (
+      SELECT I.FIPS, I.INDUSTRY_ID AS Z
+      FROM IndustryGDP I
+      WHERE I.INDUSTRY_ID =
+        (SELECT J.INDUSTRY_ID
+         FROM IndustryGDP J
+         WHERE I.FIPS = J.FIPS
+         ORDER BY J.GDP DESC
+         LIMIT 1)
+    ), Filter AS (
+      ` + util.getFilterQuery(req) +
+      `
+    ), Filtered AS (
+      SELECT * FROM Result NATURAL JOIN Filter
+    )
+    SELECT F.Z
+    FROM County C LEFT OUTER JOIN Filtered F ON C.FIPS = F.FIPS
+    ORDER BY C.FIPS
+    `;
+    execQuery(q, res);
+ }
+
 module.exports = {
     getCounties: getCounty,
     getElections: getElections,
@@ -410,5 +461,7 @@ module.exports = {
     getOtherVotes: getOtherVotes,
     getTotalGDP: getTotalGDP,
     getIndustryGDP: getIndustryGDP,
-    getIndustries: getIndustries
+    getIndustries: getIndustries,
+    getNonAggregateIndustries: getNonAggregateIndustries,
+    getTopIndustries: getTopIndustries
 }
