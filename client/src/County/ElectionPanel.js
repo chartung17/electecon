@@ -28,46 +28,61 @@ export default class ElectionPanel extends React.Component {
                             &nbsp;
                         </td>
                     </tr>
-                    <tr>
-                        <td colSpan={"5"}>
-                            {/* -3.5% is 0%; 96.5% is 100% */}
-                            <div className="arrow-up"
-                                 style={{marginLeft: `${preference - 3.5}%`}}>&nbsp;</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colSpan={"5"} style={{textAlign:"justify"}}>
-                            <ul>
-                                <li id={"elec-points-0"}>{stats["WinnerParty"]} candidates won {stats["WinnerCount"]} out of the
-                                    last 5 general elections in {this.props.countyName} County, {this.props.countyState}.
-                                </li>
-                                <li id={"elec-points-1"}>The {stats["WinnerParty"]} winners, on average, lead
-                                    by {stats["WinnerLead"].toFixed(1)} percentage point.
-                                </li>
-                                <li id={"elec-points-2"}>{stats["LastNumVotes"]} in {this.props.countyName} County voted 2016 election, a {(stats["NumVoteChangePct2012"]).toFixed(1)}% {stats["NumVoteChangePct2012"] > 0 ? 'increase' : 'decrease'} to that of
-                                    2012,
-                                    a {(stats["NumVoteChangePct2001"]).toFixed(1)}% {stats["NumVoteChangePct2001"] > 0 ? 'increase' : 'decrease'} to that of
-                                    2001.
-                                </li>
-                                {this.props.countyVotingForParty.length - 1 === 0 ?
-                                    <li id={"elec-points-3"}>
-                                        {this.props.countyName} County is the only county
-                                        (out of {this.props.numCountyInState}) in {this.props.countyState} where
-                                        the {stats["WinnerParty"]} candidate won.
-                                    </li>
-                                    :
-                                    <li id={"elec-points-3"}>
-                                        {this.props.countyName} County joins {this.props.countyVotingForParty.length - 1} other
-                                        counties in {this.props.countyState} that pre-dominantly voted for {stats["WinnerParty"]} candidate in 2016,
-                                        out of the {this.props.numCountyInState} counties in the {this.props.countyState}.
-                                    </li>
-                                }
-                            </ul>
-                        </td>
-                    </tr>
+                    {this.props.electionResult[0]["TotalVote"] === 0 ? null :
+                        <Fragment>
+                            <tr>
+                                <td colSpan={"5"}>
+                                    {/* -3.5% is 0%; 96.5% is 100% */}
+                                    <div className="arrow-up"
+                                         style={{marginLeft: `${preference - 3.5}%`}}>&nbsp;</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colSpan={"5"} style={{textAlign: "justify"}}>
+                                    <ul>
+                                        <li id={"elec-points-0"}>{stats["WinnerParty"]} candidates
+                                            won {stats["WinnerCount"]} out of the
+                                            last 5 general elections
+                                            in {this.props.countyName} County, {this.props.countyState}.
+                                        </li>
+                                        <li id={"elec-points-1"}>The {stats["WinnerParty"]} winners, on average, lead
+                                            by {stats["WinnerLead"].toFixed(1)} percentage point.
+                                        </li>
+                                        <li id={"elec-points-2"}>{stats["LastNumVotes"]} in {this.props.countyName} County
+                                            voted
+                                            2016 election,
+                                            a {(stats["NumVoteChangePct2012"]).toFixed(1)}% {stats["NumVoteChangePct2012"] > 0 ? 'increase' : 'decrease'} to
+                                            that of
+                                            2012,
+                                            a {(stats["NumVoteChangePct2001"]).toFixed(1)}% {stats["NumVoteChangePct2001"] > 0 ? 'increase' : 'decrease'} to
+                                            that of
+                                            2001.
+                                        </li>
+                                        {this.props.countyVotingForParty.length - 1 === 0 ?
+                                            <li id={"elec-points-3"}>
+                                                {this.props.countyName} County is the only county
+                                                (out of {this.props.numCountyInState}) in {this.props.countyState} where
+                                                the {stats["WinnerParty"]} candidate won.
+                                            </li>
+                                            :
+                                            <li id={"elec-points-3"}>
+                                                {this.props.countyName} County
+                                                joins {this.props.countyVotingForParty.length - 1} other
+                                                counties in {this.props.countyState} that pre-dominantly voted
+                                                for {stats["WinnerParty"]} candidate in 2016,
+                                                out of the {this.props.numCountyInState} counties in
+                                                the {this.props.countyState}.
+                                            </li>
+                                        }
+                                    </ul>
+                                </td>
+
+                            </tr>
+                        </Fragment>
+                    }
                     </tbody>
                 </table>
                 <table className={"election-table"}>
@@ -107,7 +122,7 @@ export default class ElectionPanel extends React.Component {
                                                 />
                                         }
                                         <div className={"democrat-vote-bar"}
-                                             style={{ marginLeft: `${100 - Math.round(demBarWidth)}%`}}>
+                                             style={{marginLeft: `${100 - Math.round(demBarWidth)}%`}}>
                                             &nbsp;
                                         </div>
                                         <div id={`elec-dem-pct-${index}`}>
@@ -132,7 +147,8 @@ export default class ElectionPanel extends React.Component {
                                             &nbsp; {(totalVote === 0 ? 0 : repPct.toFixed(1)) + "%"}
                                         </div>
                                         <div id={`elec-rep-vote-${index}`}
-                                        >&nbsp; ({value["RepVote"]})</div>
+                                        >&nbsp; ({value["RepVote"]})
+                                        </div>
                                     </td>
                                     <td className={"headshot-container"}>
                                         <img
