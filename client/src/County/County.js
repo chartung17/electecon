@@ -195,7 +195,7 @@ export default class County extends React.Component {
             <Fragment>
                 <CountyFinder getNewCounty={this.getNewCounty}/>
                 <div id={"county-profile"}/>
-                {this.state.countyName === "" ? null :
+                {this.state.countyName === C.PLACEHOLDER_COUNTY_NAME ? null :
                     <div id={"county-details"} className={"container"}>
                         <div id={"county-name-container"}>
                             <h1 id={"county-name"}>
