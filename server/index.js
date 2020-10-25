@@ -22,6 +22,9 @@ router.get(API_V1 + '/county/elections', routes.getElections);
 router.get(API_V1 + '/county/annual-gdp', routes.getAnnualGDP);
 router.get(API_V1 + '/county/top-industry', routes.getTopIndustry);
 router.get(API_V1 + '/county/growing-industry', routes.getGrowingIndustry);
+router.get(API_V1 + '/county/gdp-growth-percentile', routes.getGDPGrowthPercentile);
+router.get(API_V1 + '/county/state-gdp-rank', routes.getStateGDPRank);
+router.get(API_V1 + '/county/county-voting-for-party', routes.getCountyVotingForParty);
 
 // Map page routes
 router.get(API_V1 + '/map/counties', routes.getAllCounties);

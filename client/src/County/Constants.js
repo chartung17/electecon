@@ -26,9 +26,6 @@ export const PLACEHOLDER_ELECTION_RESULT = [
 export const PLACEHOLDER_STATE_GDP_RANK = "N/A";
 export const PLACEHOLDER_GDP_GROWTH_PERCENTILE = "N/A";
 
-export const CANDIDATE_IMAGE_PATH = '../assets/images/candidate/';
-export const INDUSTRY_ICON_PATH  = '../assets/icons/industry/';
-
 export const CANDIDATE_IMAGE = {
     "Donald Trump": "donald_trump.jpg",
     "Hillary Clinton": "hillary_clinton.jpg",
