@@ -90,8 +90,10 @@ export default class ElectionPanel extends React.Component {
                         let totalVote = parseInt(value["TotalVote"])
                         let demPct = parseInt(value["DemVote"]) * 100 / totalVote;
                         let repPct = parseInt(value["RepVote"]) * 100 / totalVote;
-                        let demBarWidth = Math.round(demPct)
-                        let repBarWidth = Math.round(repPct)
+                        let demBarWidth = isNaN(demPct) ? 0 : Math.round(demPct);
+                        let repBarWidth = isNaN(repPct) ? 0 : Math.round(repPct);
+
+                        console.log(demBarWidth, repBarWidth)
 
                         return (
                             <Fragment key={index}>
