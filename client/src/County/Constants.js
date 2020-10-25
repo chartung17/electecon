@@ -25,6 +25,10 @@ export const PLACEHOLDER_ELECTION_RESULT = [
 ];
 export const PLACEHOLDER_STATE_GDP_RANK = "N/A";
 export const PLACEHOLDER_GDP_GROWTH_PERCENTILE = "N/A";
+export const PLACEHOLDER_COUNTY_VOTING_FOR_PARTY = "";
+export const PLACEHOLDER_NUM_COUNTY_IN_STATE = 0;
+export const PLACEHOLDER_COUNTY_NAME = "County";
+export const PLACEHOLDER_COUNTY_STATE= "State";
 
 export const CANDIDATE_IMAGE = {
     "Donald Trump": "donald_trump.jpg",
