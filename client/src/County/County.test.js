@@ -155,8 +155,6 @@ describe('County Page Tests', () => {
                 let selector = `#elec-points-${i}`;
                 let d = data['BulletPoints'];
                 await driver.wait(until.elementLocated(By.css(selector)), TIMEOUT)
-                console.log(`d[i] = ${d[i]}`)
-                console.log(`findElement = ${await driver.findElement(By.css(selector), TIMEOUT).getText()}`)
                 assert(d[i] === await driver.findElement(By.css(selector), TIMEOUT).getText())
             }
             for (const i of Array(4).keys()) {
