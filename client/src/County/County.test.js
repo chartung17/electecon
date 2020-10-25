@@ -1,4 +1,4 @@
-require('chromedriver');
+// require('chromedriver');
 const webdriver = require('selenium-webdriver')
 const By = webdriver.By, until = webdriver.until;
 const assert = require('assert');
@@ -82,7 +82,7 @@ describe('County Page Tests', () => {
                 "CountyTitle": "Honolulu, HI",
                 "GDPAggr": "$69.3 bn",
                 "GDPGrowth": "4.22%",
-                "StateGDPRank": "1 / 3",
+                "StateGDPRank": "1 / 4",
                 "GDPGrowthPercentile": "73.5%",
                 "Top5Industry": {
                     "Government and government enterprises": "22.5",
@@ -102,7 +102,7 @@ describe('County Page Tests', () => {
                     0: "Democratic candidates won 5 out of the last 5 general elections in Honolulu County, HI.",
                     1: "The Democratic winners, on average, lead by 25.6 percentage point.",
                     2: "285790 in Honolulu County voted 2016 election, a 16.6% increase to that of 2012, a 11.6% increase to that of 2001.",
-                    3: "Honolulu County joins 3 other counties in HI that pre-dominantly voted for Democratic candidate in 2016, out of the 3 counties in the HI."
+                    3: "Honolulu County joins 3 other counties in HI that pre-dominantly voted for Democratic candidate in 2016, out of the 4 counties in HI."
                 },
                 "ElectionResult": {
                     0: {"DemPct": "61.5%", "RepPct": "31.6%", "DemVote": "175696", "RepVote": "90326"},
@@ -155,6 +155,8 @@ describe('County Page Tests', () => {
                 let selector = `#elec-points-${i}`;
                 let d = data['BulletPoints'];
                 await driver.wait(until.elementLocated(By.css(selector)), TIMEOUT)
+                console.log(`d[i] = ${d[i]}`)
+                console.log(`findElement = ${await driver.findElement(By.css(selector), TIMEOUT).getText()}`)
                 assert(d[i] === await driver.findElement(By.css(selector), TIMEOUT).getText())
             }
             for (const i of Array(4).keys()) {
