@@ -113,7 +113,7 @@ export default class Map extends React.Component {
   // when submit button is clicked, update state in order to re-render map
   handleClick = () => {
     let electionYears = ['2000', '2004', '2008', '2012', '2016'];
-    if ((this.state.nextVar === 'TotalGDP') || (this.state.nextVar.startsWith('Industry'))) {
+    if ((this.state.nextVar === 'TotalGDP') || (this.state.nextVar.includes('Industry'))) {
       if (this.state.nextYear === '2000') {
         this.setState({
           errorMsg: 'GDP data is not available for the year 2000'
