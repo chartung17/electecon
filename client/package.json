@@ -22,6 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "start:test": "HOST=localhost PORT=3000 react-scripts start",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
