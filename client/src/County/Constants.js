@@ -23,38 +23,45 @@ export const PLACEHOLDER_ELECTION_RESULT = [
         "RepCandidate": "George W. Bush", "DemVote": 0, "RepVote": 0, "TotalVote": 0
     },
 ];
-export const HEADSHOTS_LINKS = {
-    "Donald Trump": "https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_400x400.jpg",
-    "Hillary Clinton": "https://pbs.twimg.com/profile_images/1291192333199958017/SvH8J8_P_400x400.jpg",
-    "Barack Obama": "https://pbs.twimg.com/profile_images/822547732376207360/5g0FC8XX_400x400.jpg",
-    "Mitt Romney": "https://pbs.twimg.com/profile_images/964489716622966784/xbtCe2td_400x400.jpg",
-    "John McCain": "https://pbs.twimg.com/profile_images/898243253362929664/y1gCTcz1_400x400.jpg",
-    "John Kerry": "https://pbs.twimg.com/profile_images/1205176184906092545/fI6BP6PK_400x400.jpg",
-    "George W. Bush": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-0/p370x247/14322372_1221565084552548_1092844472382230015_n.jpg?_nc_cat=108&_nc_sid=85a577&_nc_ohc=Yd5f9oCtMucAX-rkcHL&_nc_ht=scontent-lga3-1.xx&tp=6&oh=671b5fc6d878b5e9642158b8a44442f9&oe=5FA462D6",
-    "Al Gore": "https://pbs.twimg.com/profile_images/1288163528340320257/ieQgrnv8_400x400.jpg",
+export const PLACEHOLDER_STATE_GDP_RANK = "N/A";
+export const PLACEHOLDER_GDP_GROWTH_PERCENTILE = "N/A";
+export const PLACEHOLDER_COUNTY_VOTING_FOR_PARTY = "";
+export const PLACEHOLDER_NUM_COUNTY_IN_STATE = 0;
+export const PLACEHOLDER_COUNTY_NAME = "County";
+export const PLACEHOLDER_COUNTY_STATE= "State";
+
+export const CANDIDATE_IMAGE = {
+    "Donald Trump": "donald_trump.jpg",
+    "Hillary Clinton": "hillary_clinton.jpg",
+    "Barack Obama": "barack_obama.jpg",
+    "Mitt Romney": "mitt_romney.jpg",
+    "John McCain": "john_mccain.jpg",
+    "John Kerry": "john_kerry.jpg",
+    "George W. Bush": "george_bush.jpg",
+    "Al Gore": "al_gore.jpg",
 }
-export const INDUSTRY_ICON_LINKS = {
-    "Agriculture, forestry, fishing and hunting": "https://img.icons8.com/pastel-glyph/2x/corn.png",
-    "Mining, quarrying, and oil and gas extraction": "https://img.icons8.com/pastel-glyph/2x/oil-pump-jack.png",
-    "Utilities": "https://img.icons8.com/pastel-glyph/2x/electricity.png",
-    "Construction": "https://img.icons8.com/pastel-glyph/2x/worker-male.png",
-    "Durable goods manufacturing": "https://img.icons8.com/pastel-glyph/2x/factory.png",
-    "Nondurable goods manufacturing": "https://img.icons8.com/pastel-glyph/2x/factory.png",
-    "Wholesale trade": "https://img.icons8.com/pastel-glyph/2x/warehouse.png",
-    "Retail trade": "https://img.icons8.com/pastel-glyph/2x/shopping-cart.png",
-    "Transportation and warehousing": "https://img.icons8.com/pastel-glyph/2x/truck.png",
-    "Information": "https://img.icons8.com/pastel-glyph/2x/monitor.png",
-    "Finance and insurance": "https://img.icons8.com/pastel-glyph/2x/investment.png",
-    "Real estate and rental and leasing": "https://img.icons8.com/pastel-glyph/2x/home.png",
-    "Professional, scientific, and technical services": "https://img.icons8.com/pastel-glyph/2x/online-support.png",
-    "Management of companies and enterprises": "https://img.icons8.com/pastel-glyph/2x/business-group.png",
-    "Administrative and support and waste management and remediation services": "https://img.icons8.com/pastel-glyph/2x/trust.png",
-    "Educational services": "https://img.icons8.com/pastel-glyph/2x/teacher.png",
-    "Health care and social assistance": "https://img.icons8.com/pastel-glyph/2x/clinic.png",
-    "Arts, entertainment, and recreation": "https://img.icons8.com/pastel-glyph/2x/theatre-mask.png",
-    "Accommodation and food services": "https://img.icons8.com/pastel-glyph/2x/meal.png",
-    "Other services (except government and government enterprises)": "https://img.icons8.com/pastel-glyph/2x/trust.png",
-    "Government and government enterprises": "https://img.icons8.com/pastel-glyph/2x/obelisk.png",
+export const INDUSTRY_ICON = {
+    "Agriculture, forestry, fishing and hunting": "industry_02.png",
+    "Mining, quarrying, and oil and gas extraction": "industry_03.png",
+    "Utilities": "industry_04.png",
+    "Construction": "industry_05.png",
+    "Durable goods manufacturing": "industry_07.png",
+    "Nondurable goods manufacturing": "industry_08.png",
+    "Wholesale trade": "industry_09.png",
+    "Retail trade": "industry_10.png",
+    "Transportation and warehousing": "industry_11.png",
+    "Information": "industry_12.png",
+    "Finance and insurance": "industry_14.png",
+    "Real estate and rental and leasing": "industry_15.png",
+    "Professional, scientific, and technical services": "industry_17.png",
+    "Management of companies and enterprises": "industry_18.png",
+    "Administrative and support and waste management and remediation services": "industry_19.png",
+    "Educational services": "industry_21.png",
+    "Health care and social assistance": "industry_22.png",
+    "Arts, entertainment, and recreation": "industry_24.png",
+    "Accommodation and food services": "industry_25.png",
+    "Other services (except government and government enterprises)": "industry_26.png",
+    "Government and government enterprises": "industry_27.png",
 }
 export const STATES = [
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",

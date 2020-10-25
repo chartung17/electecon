@@ -3,20 +3,31 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install client dependencies
+        run: cd client && npm install
 
-            - name: Install dependencies
-              run: |
-                cd client && npm install && ls -la
-                cd ../server && npm install && ls -la
+      - name: Install server dependencies
+        run: cd server && npm install
 
-            - name: Start servers
-              run: |
-                npm start --prefix client/ &
-                npm start --prefix server/ &
+      - name: Install xvfb
+        run: sudo apt-get install xvfb       # for selenium tests
 
-            - name: Test
-              run: cd client && npm test
+      - name: Start servers
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DEFAULT_DATABASE: ${{ secrets.DB_DEFAULT_DATABASE }}
+          DB_MAX_CONNECTIONS: ${{ secrets.DB_MAX_CONNECTIONS }}
+        run: |
+          npm start --prefix server/ &
+          npm run start:test --prefix client/ &
+      - name: Server Test
+        run: cd server && npm test
+      - name: Client Test
+        run: cd client && xvfb-run -a npm test

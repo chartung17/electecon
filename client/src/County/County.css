@@ -23,30 +23,27 @@ COUNTY FINDER
 /***********************************
 COUNTY DETAILS
 ************************************/
-#county-profile {
-    padding-bottom: 5vh
-}
-.county-details {
-    border: solid 1pt lightgray;
+#county-details {
+    border-bottom: solid 1pt lightgray;
     text-align: left;
     font-family: sans-serif;
-    padding-bottom: 10vh;
-    border-radius: 1%;
+    padding-bottom: 3vh;
+    margin-bottom: 5vh;
 }
-.county-name {
-    margin-top: 3vh;
-    font: 24pt black;
-    padding-bottom: 5vh;
-    font-family: sans-serif;
-    background-image: linear-gradient(to right, lightskyblue,lightpink);
-    color: black;
+#county-name-container {
+    text-align: center;
+    padding-bottom: 1vh;
+    margin-top: 4vh;
+}
+#county-name{
+    border-bottom: 1pt solid lightgrey;
+    padding-bottom: 3vh;
 }
 
 /***********************************
 ECONOMIC PANEL
 ************************************/
 .economy-panel {
-    /*border: solid 1pt red;*/
     border-radius: 10px;
 }
 .economy-panel-title, .election-panel-title {
@@ -58,22 +55,23 @@ ECONOMIC PANEL
 }
 
 /* GDP Aggregate, first section on econ panel*/
-.gdp-aggr {
+.econ-tile-container {
     text-align: center;
     border-top: solid 1pt lightgrey;
 }
-.gdp-aggr-title{
+.econ-tile-title{
     text-align: center;
 }
-.gdp-aggr-table, .election-table{
+.econ-tile-table {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 5vh;
 }
-.gdp-aggr-separator{
+.econ-tile-separator{
     width: 3vw;
 }
-.total-gdp-number, .gdp-cagr-number, .top-industry-image-container {
+.econ-tile
+{
     width: 100px;
     height: 80px;
     color: black;
@@ -82,78 +80,60 @@ ECONOMIC PANEL
     font-size: 26pt;
     text-align: center;
 }
-.total-gdp-number:hover {
-    font-family: sans-serif;
-    font-size: 26pt;
-    text-align: center;
-    color: dimgrey;
-    background-color: #f3f3f3;
-}
-.gdp-cagr-number:hover {
-    font-family: sans-serif;
-    font-size: 26pt;
-    text-align: center;
-    color: dimgrey;
-    background-color: #f7f7f7;
-}
-.top-industry-image {
+.econ-tile-image {
     max-width: 80px;
     max-height: 80px;
 }
-.top-industry-image-caption {
+.econ-tile-image-caption {
     font-size: 14px
 }
 
 /* GDP Growth chart, second section on econ panel*/
-.gdp-growth-chart{
-    background-color: #f7f7f7;
+#gdp-growth-chart{
     margin-top: 5vh;
     padding: 5px;
+    border-top: solid 1pt lightgrey
 }
-.gdp-growth-chart-title, .top-5-industries-title, .growing-industries-title {
+.econ-subpanel-title
+{
     font: 18pt black;
     font-family: sans-serif;
 }
-.gdp-growth-chart:hover .top-5-industries-title {
-    text-decoration: underline;
-}
 
 /* Top 5 industries chart, second section on econ panel*/
-.top-5-industries {
+.econ-subpanel-container {
     margin-top: 5vh;
     padding: 10px;
+    border-top: solid 1pt lightgrey
 }
-.top-5-industries:hover {
-    background-color: #f5f5f5;
-}
-.top-5-industries:hover .top-5-industries-title {
-    text-decoration: underline;
-}
-.top-gdp-industry-pct, .growing-industry-pct  {
+.econ-subpanel-table {
     text-align: center;
 }
-.top-gdp-bar-container, .growing-industries-bar-container {
+.econ-subpanel-table-pct-header  {
+    text-align: center;
+}
+.econ-subpanel-table-bar-container {
     width: 100%;
     height: 100%;
     padding-left: 30px;
 }
-.top-gdp-bar, .growing-industries-bar {
+.econ-subpanel-table-bar {
     float: left;
     display: inline-block;
     height: 100%;
+}
+.top-gdp-bar {
     background: blue;
 }
-.top-gdp-bar:hover {
-    background-color: darkblue;
+.growing-industries-bar {
+    background: red;
 }
-
-
-/* Fastest growing industries chart, second section on econ panel*/
-.growing-industries {
-    margin-top: 5vh;
-    padding: 10px;
-    border-top: solid 1pt lightgrey;
-    border-bottom: solid 1pt lightgrey;
+.econ-subpanel-table-image {
+    max-width: 40px;
+    max-height: 40px;
+}
+.econ-subpanel-table-image-caption {
+    font-size: 12px
 }
 
 /***********************************
@@ -161,6 +141,17 @@ ELECTION PANEL
 ************************************/
 .election-panel {
     border-left: lightgray solid 1pt;
+}
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid black;
+}
+.election-table{
+    width: 100%;
+    margin-bottom: 5vh;
 }
 .election-table-year-container{
     border-top:solid 1pt lightgrey;
@@ -175,10 +166,6 @@ ELECTION PANEL
     width: 100px;
     text-align: center;
     padding: 10px;
-}
-.headshot-container:hover {
-    position: relative;
-    top:-7px;
 }
 .headshot{
     max-width: 100%;
@@ -201,10 +188,10 @@ ELECTION PANEL
     margin-top:5px;
 }
 .democrat-vote-bar {
-     background-color: blue;
-     color: black;
-     font-weight: bold;
-     height: 40px;
+    background-color: blue;
+    color: black;
+    font-weight: bold;
+    height: 40px;
 }
 .republican-results-container {
     width: 100px;

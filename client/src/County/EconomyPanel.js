@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from "react-google-charts";
 import './County.css'
-import {INDUSTRY_ICON_LINKS} from "./Constants";
+import {INDUSTRY_ICON} from "./Constants";
 
 export default class EconomyPanel extends React.Component {
     constructor(props) {
@@ -29,35 +29,74 @@ export default class EconomyPanel extends React.Component {
                     Economy
                 </div>
 
-                <div className={"gdp-aggr"}>
-                    <table className={"gdp-aggr-table"}>
+                <div className={"econ-tile-container"}>
+                    <div className={"econ-subpanel-title"} style={{textAlign: "left", paddingBottom: "3vh"}}>Overview
+                    </div>
+                    <table className={"econ-tile-table"}>
                         <thead>
                         <tr>
-                            <td className={"gdp-aggr-title"}>{"GDP\n\n(2018)"}</td>
-                            <td className={"gdp-aggr-separator"}/>
-                            <td className={"gdp-aggr-title"}>{"Avg. Annual Growth\n(2001-2018)"}</td>
-                            <td className={"gdp-aggr-separator"}/>
-                            <td className={"gdp-aggr-title"}>{"Top Industry"}</td>
+                            <td className={"econ-tile-title"}>{"GDP\n\n(2018)"}</td>
+                            <td className={"econ-tile-separator"}/>
+                            <td className={"econ-tile-title"}>{"Avg. Annual Growth\n(2001-2018)"}</td>
+                            <td className={"econ-tile-separator"}/>
+                            <td className={"econ-tile-title"}>{"Top Industry"}</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td className={"total-gdp-number"}>${(gdpData[gdpData.length - 1] / 1E6).toFixed(1)} bn</td>
-                            <td/>
-                            <td className={"gdp-cagr-number"}>{
-                                gdpData[0] === 0 ? "N/A" :
-                                    (100 * (Math.pow((gdpData[gdpData.length - 1] / gdpData[0]), 1 / (gdpData.length)) - 1)).toFixed(2)
-                            } %
+                            <td id={"total-gdp-number"} className={"econ-tile"}>
+                                {gdpData[0] === 0 ? "N/A" :
+                                    '$' + (gdpData[gdpData.length - 1] / 1E6).toFixed(1) + ' bn'
+                                }
                             </td>
                             <td/>
-                            <td className={"top-industry-image-container"}>
+                            <td id={"gdp-cagr-number"} className={"econ-tile"}>{
+                                gdpData[0] === 0 ? "N/A" :
+                                    (100 * (Math.pow((gdpData[gdpData.length - 1] / gdpData[0]), 1 / (gdpData.length)) - 1)).toFixed(2) + '%'
+                            }
+                            </td>
+                            <td/>
+                            <td className={"econ-tile"}>
+                                {topIndustry[0]["Description"] === "" ? null :
                                 <img
-                                    className={"top-industry-image"}
-                                    src={INDUSTRY_ICON_LINKS[topIndustry[0]["Description"]]}
+                                    className={"econ-tile-image"}
+                                    src={require(`../assets/icons/industry/${INDUSTRY_ICON[topIndustry[0]["Description"]]}`)}
                                     alt={topIndustry[0]["Description"]}
                                 />
-                                <div className={"top-industry-image-caption"}>
+                                }
+                                <div id={"top-industry-image-caption"} className={"econ-tile-image-caption"}>
                                     {topIndustry[0]["Description"]}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td className={"econ-tile-title"}>{"State GDP Rank"}</td>
+                            <td className={"econ-tile-separator"}/>
+                            <td className={"econ-tile-title"}>{"Avg. Annual Growth National Percentile"}</td>
+                            <td className={"econ-tile-separator"}/>
+                            <td className={"econ-tile-title"}>{"Fastest Growing Industry"}</td>
+                        </tr>
+                        <tr>
+                            <td id={"state-gdp-rank"} className={"econ-tile"}>
+                                {gdpData[0] === 0 ? "N/A" : this.props.stateGDPRank}
+                            </td>
+                            <td/>
+                            <td id={"gdp-growth-percentile"} className={"econ-tile"}>
+                                {gdpData[0] === 0 ? "N/A" : this.props.GDPGrowthPercentile}
+                            </td>
+                            <td/>
+                            <td className={"econ-tile"}>
+                                { fastestGrowthIndustry[0]["Description"] === "" ? null :
+                                <img className={"econ-tile-image"}
+                                     src={require(`../assets/icons/industry/${INDUSTRY_ICON[fastestGrowthIndustry[0]["Description"]]}`)}
+                                     alt={fastestGrowthIndustry[0]["Description"]}
+                                />
+                                }
+                                <div id={"growing-industry-image-caption"} className={"econ-tile-image-caption"}>
+                                    {fastestGrowthIndustry[0]["Description"]}
                                 </div>
                             </td>
                         </tr>
@@ -65,34 +104,35 @@ export default class EconomyPanel extends React.Component {
                     </table>
                 </div>
 
-                <div className={"gdp-growth-chart"} style={{borderTop: "solid 1pt lightgrey"}}>
-                    <div className={"gdp-growth-chart-title"}>GDP Growth</div>
+                <div id={"gdp-growth-chart"}>
+                    <div className={"econ-subpanel-title"}>GDP Growth</div>
                     <Chart
                         chartType="LineChart"
                         loader={<div>Loading Chart</div>}
                         data={growthChartData}
-                        options={{
-                            legend: 'none',
-                            vAxis: {title: '% YoY'},
-                            backgroundColor: "#f7f7f7"
-                        }}
+                        options={{legend: 'none', vAxis: {title: '% YoY'},}}
                     />
                 </div>
 
-                <div className={"top-5-industries"} style={{borderTop: "solid 1pt lightgrey"}}>
-                    <div className={"top-5-industries-title"}>Top 5 Industries</div>
-                    <table>
+                <div className={"econ-subpanel-container"}>
+                    <div className={"econ-subpanel-title"}>Top 5 Industries</div>
+                    <table className={"econ-subpanel-table"}>
+                        <colgroup>
+                            <col style={{width: "20%"}}/>
+                            <col style={{width: "60%"}}/>
+                            <col style={{width: "10%"}}/>
+                        </colgroup>
                         <thead>
                         <tr>
                             <td/>
                             <td/>
-                            <td className={"top-gdp-industry-pct"}><b>%GDP</b></td>
+                            <td className={"econ-subpanel-table-pct-header"}><b>%GDP</b></td>
                         </tr>
                         </thead>
                         <tbody>
                         {topIndustry.map((value, index) => {
-                            // make maxIndustryPct occupy at most 80% max-width
-                            let rescale_factor = 0.8;
+                            // make maxIndustryPct occupy at most 90% max-width
+                            let rescale_factor = 0.9;
                             let maxIndustryPct = gdpData[gdpData.length - 1] === 0 ? 0 :
                                 topIndustry[0]["GDP"] / gdpData[gdpData.length - 1] * 100;
                             let pct = gdpData[gdpData.length - 1] === 0 ? 0 :
@@ -100,9 +140,21 @@ export default class EconomyPanel extends React.Component {
 
                             return (
                                 <tr key={index}>
-                                    <td>{value["Description"]}</td>
-                                    <td className={"top-gdp-bar-container"}>
-                                        <div className={"top-gdp-bar"}
+                                    <td>
+                                        <div>
+                                            { value["Description"] === "" ? null :
+                                                <img className={"econ-subpanel-table-image"}
+                                                     src={require(`../assets/icons/industry/${INDUSTRY_ICON[value["Description"]]}`)}
+                                                     alt={value["Description"]}
+                                                />
+                                            }
+                                            <p id={`top-gdp-desc-${index}`} className={"econ-subpanel-table-image-caption"}>
+                                                {value["Description"]}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td className={"econ-subpanel-table-bar-container"}>
+                                        <div className={"econ-subpanel-table-bar top-gdp-bar"}
                                              style={{
                                                  width: maxIndustryPct === 0 ? 0 :
                                                      rescale_factor * Math.max(0, Math.round(pct / maxIndustryPct * 100))
@@ -111,7 +163,7 @@ export default class EconomyPanel extends React.Component {
                                             &nbsp;
                                         </div>
                                     </td>
-                                    <td className={"top-gdp-industry-pct"}>
+                                    <td id={`top-gdp-value-${index}`}>
                                         {maxIndustryPct === 0 ? null : pct.toFixed(1)}
                                     </td>
                                 </tr>
@@ -121,27 +173,44 @@ export default class EconomyPanel extends React.Component {
                     </table>
                 </div>
 
-                <div className={"growing-industries"}>
-                    <div className={"growing-industries-title"}>Fastest Growing Industries</div>
-                    <table>
+                <div className={"econ-subpanel-container"}>
+                    <div className={"econ-subpanel-title"}>Fastest Growing Industries</div>
+                    <table className={"econ-subpanel-table"}>
+                        <colgroup>
+                            <col style={{width: "20%"}}/>
+                            <col style={{width: "60%"}}/>
+                            <col style={{width: "10%"}}/>
+                        </colgroup>
                         <thead>
                         <tr>
                             <td/>
                             <td/>
-                            <td className={"growing-industry-pct"}><b>%</b></td>
+                            <td className={"econ-subpanel-table-pct"}><b>%</b></td>
                         </tr>
                         </thead>
                         <tbody>
                         {fastestGrowthIndustry.map((value, index) => {
-                            // make maxGrowthPct occupy at most 80% max-width
-                            let rescale_factor = 0.8;
+                            // make maxGrowthPct occupy at most 90% max-width
+                            let rescale_factor = 0.9;
                             let maxGrowthPct = parseFloat(fastestGrowthIndustry[0]["Growth"]);
                             let pct = parseFloat(value["Growth"]);
                             return (
                                 <tr key={index}>
-                                    <td>{value["Description"]}</td>
-                                    <td className={"growing-industries-bar-container"}>
-                                        <div className={"growing-industries-bar"}
+                                    <td>
+                                        <div>
+                                            { value["Description"] === "" ? null :
+                                                <img className={"econ-subpanel-table-image"}
+                                                     src={require(`../assets/icons/industry/${INDUSTRY_ICON[value["Description"]]}`)}
+                                                     alt={value["Description"]}
+                                                />
+                                            }
+                                            <p id={`growing-industry-desc-${index}`} className={"econ-subpanel-table-image-caption"}>
+                                                {value["Description"]}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td className={"econ-subpanel-table-bar-container"}>
+                                        <div className={"econ-subpanel-table-bar growing-industries-bar"}
                                              style={{
                                                  width: maxGrowthPct === 0 ? 0 :
                                                      rescale_factor * Math.max(0, Math.round(pct / maxGrowthPct * 100)) + '%'
@@ -149,7 +218,8 @@ export default class EconomyPanel extends React.Component {
                                             &nbsp;
                                         </div>
                                     </td>
-                                    <td className={"growing-industry-pct"}>{maxGrowthPct === 0 ? null : pct.toFixed(1)}
+                                    <td id={`growing-industry-value-${index}`}>
+                                        {maxGrowthPct === 0 ? null : pct.toFixed(1)}
                                     </td>
                                 </tr>
                             )

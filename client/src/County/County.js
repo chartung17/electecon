@@ -4,6 +4,7 @@ import './County.css'
 import EconomyPanel from "./EconomyPanel";
 import ElectionPanel from "./ElectionPanel";
 import CountyFinder from "./CountyFinder";
+
 const C = require('./Constants')
 require('dotenv').config()
 
@@ -16,12 +17,16 @@ export default class County extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            countyName: "",
-            countyState: "",
+            countyName: C.PLACEHOLDER_COUNTY_NAME,
+            countyState: C.PLACEHOLDER_COUNTY_STATE,
             gdpData: C.PLACEHOLDER_GDP_DATA,
             growingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY,
             topIndustry: C.PLACEHOLDER_TOP_INDUSTRY,
             electionResult: C.PLACEHOLDER_ELECTION_RESULT,
+            GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE,
+            stateGDPRank: C.PLACEHOLDER_STATE_GDP_RANK,
+            countyVotingForParty: C.PLACEHOLDER_COUNTY_VOTING_FOR_PARTY,
+            numCountyInState: C.PLACEHOLDER_NUM_COUNTY_IN_STATE,
         }
         document.title = 'County Details'
     }
@@ -45,13 +50,13 @@ export default class County extends React.Component {
             .then(row => {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
-                    this.setState({countyName: "County Name", countyState: "State"});
-                    document.title = `County Details`
-                    this.props.history.push(`/county`)
+                    this.setState({countyName: C.PLACEHOLDER_COUNTY_NAME,
+                        countyState: C.PLACEHOLDER_COUNTY_STATE});
+                    document.title = `County Details`;
                 } else {
-                    this.setState({ countyName: row[0]["NAME"], countyState: row[0]["STATE"],
-                    })
-                    this.props.history.push(`/county/${fips}`)
+                    this.setState({countyName: row[0]["NAME"], countyState: row[0]["STATE"]})
+                    window.history.pushState({}, null, `/county/${fips}`);
+                    document.getElementById("county-profile").scrollIntoView();
                 }
                 document.title = `${this.state.countyName}, ${this.state.countyState} - County Details`
             });
@@ -138,6 +143,51 @@ export default class County extends React.Component {
                     this.setState({growingIndustry: data});
                 }
             });
+
+        // Get county's avg. GDP growth national percentile (among counties)
+        fetch(ENDPOINT.concat(`/gdp-growth-percentile?fips=${fips}`))
+            .then(res => {
+                return res.json();
+            }, this.ERR)
+            .then(row => {
+                if (row === undefined || row === null || row.length === 0) {
+                    // revert to default data
+                    this.setState({GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE});
+                } else {
+                    let percentile = (row[0]["PERCENTILE"] * 100).toFixed(1) + '%';
+                    this.setState({GDPGrowthPercentile: percentile});
+                }
+            });
+
+        // Get county's GDP rank within the state
+        fetch(ENDPOINT.concat(`/state-gdp-rank?fips=${fips}`))
+            .then(res => {
+                return res.json();
+            }, this.ERR)
+            .then(row => {
+                if (row === undefined || row === null || row.length === 0) {
+                    // revert to default data
+                    this.setState({stateGDPRank: C.PLACEHOLDER_STATE_GDP_RANK});
+                } else {
+                    let rank = `${row[0]["COUNTY_GDP_RANK"]} / ${row[0]["STATE_COUNTY_COUNT"]}`;
+                    this.setState({stateGDPRank: rank, numCountyInState: row[0]["STATE_COUNTY_COUNT"]});
+                }
+            });
+
+        // Get the fips and county name within the same state where
+        // the party winning the 2016 election in this county also won in those counties.
+        fetch(ENDPOINT.concat(`/county-voting-for-party?fips=${fips}`))
+            .then(res => {
+                return res.json();
+            }, this.ERR)
+            .then(row => {
+                if (row === undefined || row === null || row.length === 0) {
+                    // revert to default data
+                    this.setState({countyVotingForParty: C.PLACEHOLDER_COUNTY_VOTING_FOR_PARTY});
+                } else {
+                    this.setState({countyVotingForParty: row});
+                }
+            });
     }
 
     render() {
@@ -145,24 +195,33 @@ export default class County extends React.Component {
             <Fragment>
                 <CountyFinder getNewCounty={this.getNewCounty}/>
                 <div id={"county-profile"}/>
-                <h2>County Profile</h2>
-                <div className={"county-details container"}>
-                    <div className={"county-name jumbotron"}>
-                        {this.state.countyName === "" ? "County Name, State" :
-                            `${this.state.countyName}, ${this.state.countyState}`}
-                    </div>
-
-                    <div className={"panel-container container"}>
-                        <div className={"row"}>
-                            <EconomyPanel
-                                gdpData={this.state.gdpData}
-                                topIndustry={this.state.topIndustry}
-                                fastestGrowthIndustry={this.state.growingIndustry}
-                            />
-                            <ElectionPanel electionResult={this.state.electionResult}/>
+                {this.state.countyName === C.PLACEHOLDER_COUNTY_NAME ? null :
+                    <div id={"county-details"} className={"container"}>
+                        <div id={"county-name-container"}>
+                            <h1 id={"county-name"}>
+                                {this.state.countyName === "" ? "County Name, State" :
+                                    `${this.state.countyName}, ${this.state.countyState}`}
+                            </h1>
+                        </div>
+                        <div className={"panel-container container"}>
+                            <div className={"row"}>
+                                <EconomyPanel
+                                    gdpData={this.state.gdpData}
+                                    topIndustry={this.state.topIndustry}
+                                    fastestGrowthIndustry={this.state.growingIndustry}
+                                    GDPGrowthPercentile={this.state.GDPGrowthPercentile}
+                                    stateGDPRank={this.state.stateGDPRank}
+                                />
+                                <ElectionPanel electionResult={this.state.electionResult}
+                                               countyVotingForParty={this.state.countyVotingForParty}
+                                               countyName={this.state.countyName}
+                                               countyState={this.state.countyState}
+                                               numCountyInState={this.state.numCountyInState}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </Fragment>
         );
     }
