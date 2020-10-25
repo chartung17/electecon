@@ -228,9 +228,6 @@ export default class Choropleth extends React.Component {
     return this.state.industries[indID-1];
   }
 
-  // used in labeling top industries
-  topIndTickvals = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-
   componentDidMount() {
     // get names and fips for all counties and store in state
     fetch(ENDPOINT.concat(`/counties`),

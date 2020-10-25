@@ -129,7 +129,7 @@ export default class Map extends React.Component {
       }
     }
     if (this.state.nextFilter) {
-      if ((this.state.nextFilterVar === 'TotalGDP') || (this.state.nextFilterVar.startsWith('Industry'))) {
+      if ((this.state.nextFilterVar === 'TotalGDP') || (this.state.nextFilterVar.includes('Industry'))) {
         if (this.state.nextFilterYear === '2000') {
           this.setState({
             errorMsg: 'GDP data is not available for the year 2000'
