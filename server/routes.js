@@ -210,7 +210,7 @@ function getStateGDPRank(req, res) {
                )
     SELECT FIPS, 
            (SELECT COUNT(1) FROM County_GDP) - COUNT(1) as COUNTY_GDP_RANK, 
-           (SELECT COUNT(1) FROM County_GDP) as STATE_COUNTY_COUNT
+           (SELECT COUNT(1) FROM County WHERE STATE IN (SELECT STATE FROM County WHERE FIPS=${pool.escape(req.query.fips)})) as STATE_COUNTY_COUNT
     FROM County_GDP
     WHERE (SELECT GDP
            FROM County_GDP 

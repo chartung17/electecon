@@ -73,8 +73,7 @@ export default class ElectionPanel extends React.Component {
                                                 joins {this.props.countyVotingForParty.length - 1} other
                                                 counties in {this.props.countyState} that pre-dominantly voted
                                                 for {stats["WinnerParty"]} candidate in 2016,
-                                                out of the {this.props.numCountyInState} counties in
-                                                the {this.props.countyState}.
+                                                out of the {this.props.numCountyInState} counties in {this.props.countyState}.
                                             </li>
                                         }
                                     </ul>
