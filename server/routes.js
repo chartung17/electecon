@@ -57,7 +57,7 @@ function getCounty(req, res) {
         let page_size = Number(req.query.page_size);
         let page = Number(req.query.page);
 
-        if (Number.isInteger(page_size) && Number.isInteger(page) && page_size >= 0 && page >= 0) {
+        if (Number.isInteger(page_size) && Number.isInteger(page) && page_size >= 0 && page > 0) {
             paging = `LIMIT ${page_size} OFFSET ${(page - 1) * page_size}` // page 1 is 0 offset
         } else {
             res.status(404).json({"message": "Invalid page or page size"});
