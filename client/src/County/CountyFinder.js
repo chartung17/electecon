@@ -25,14 +25,13 @@ export default class CountyFinder extends React.Component {
                 } else {
                     let fipsNameList = rows.map((county, index) => {
                         return (
-                            <a
+                            <div
                                 id={`btn-county-${county.NAME}`}
                                 className={"btn btn-county"}
-                                href="#county-profile"
                                 key={index}
                                 onClick={() => this.props.getNewCounty(county.FIPS)}>
                                 {county.NAME}
-                            </a>);
+                            </div>);
                     })
                     this.setState({counties: fipsNameList});
                 }
@@ -64,12 +63,14 @@ export default class CountyFinder extends React.Component {
                                 }
                             </td>
                         </tr>
-                        <tr id={"county-finder-state-container"}>
-                            <td><b>County</b></td>
-                            <td>
-                                {this.state.counties}
-                            </td>
-                        </tr>
+                        {this.state.counties.length === 0 ? null :
+                            <tr id={"county-finder-state-container"}>
+                                <td><b>County</b></td>
+                                <td>
+                                    {this.state.counties}
+                                </td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
