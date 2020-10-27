@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import County from './County/County';
 import Map from './Map/Map';
 import Graph from './Graph';
-import Trends from './Trends';
+import Trends from './Trends/Trends';
 
 function App() {
   return (
