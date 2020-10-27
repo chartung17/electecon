@@ -43,6 +43,41 @@ select, button {
   padding: 0;
 }
 
+#colorbar {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1470px;
+  padding-top: 10px;
+  justify-content: center;
+}
+
+.colorbarBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.colorBox {
+  width: 70px;
+  height: 25px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+
+.colorbarLabel {
+  width: 70px;
+  height: 70px;
+  font-size: 9px;
+  text-align: left;
+}
+
+#choroplethWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media (max-width: 1300px) {
   section, .filter {
     flex-direction: column;

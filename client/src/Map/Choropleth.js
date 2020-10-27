@@ -20,6 +20,7 @@ export default class Choropleth extends React.Component {
       industries: [],
       nonAggregateIndustries: [],
       nonAggregateIndIDs: [],
+      topIndustryColorbar: [],
       customdata: [],
       colorscale: '',
       title: '',
@@ -78,11 +79,11 @@ export default class Choropleth extends React.Component {
     ['0.0', 'forestgreen'],
     ['0.05', 'dimgray'],
     ['0.1', 'aquamarine'],
-    ['0.15', 'gold'],
+    ['0.15', 'goldenrod'],
     ['0.2', 'blue'],
     ['0.25', 'mediumslateblue'],
     ['0.3', 'yellow'],
-    ['0.35', 'green'],
+    ['0.35', 'darkcyan'],
     ['0.4', 'deepskyblue'],
     ['0.45', 'darkviolet'],
     ['0.5', 'deeppink'],
@@ -90,11 +91,11 @@ export default class Choropleth extends React.Component {
     ['0.6', 'lightcoral'],
     ['0.65', 'maroon'],
     ['0.7', 'midnightblue'],
-    ['0.75', 'moccasin'],
+    ['0.75', 'wheat'],
     ['0.8', 'orangered'],
     ['0.85', 'orchid'],
-    ['0.9', 'peru'],
-    ['0.95', 'saddlebrown'],
+    ['0.9', 'silver'],
+    ['0.95', 'darkorange'],
     ['1.0', 'red']
   ];
 
@@ -129,7 +130,6 @@ export default class Choropleth extends React.Component {
       let gdpColorscale = this.gdpColorscale(z);
       // make sure query matches curretn selection; if not, abort
       if ((currentState !== this.state) && (this.state.z.length > 0)) {
-        console.log('query aborted');
         return;
       }
       // update state with query results
@@ -290,16 +290,25 @@ export default class Choropleth extends React.Component {
       let industries = row.map((rowObj, i) => rowObj.NAME);
       let indIDs = row.map((rowObj, i) => rowObj.INDUSTRY_ID);
       let i;
+      let topIndustryColorbar = [];
       for (i = 0; i < industries.length; i++) {
         if (industries[i].includes('2/')) {
           industries[i] = industries[i].substring(0, industries[i].indexOf('2/'));
         } else if (industries[i].includes('3/')) {
           industries[i] = industries[i].substring(0, industries[i].indexOf('3/'));
         }
+        // let color = 'background-color: ' + this.topIndustryColorscale[i][1] + ';';
+        topIndustryColorbar.push(
+          <div className='colorbarBox'>
+            <div className='colorBox' style={{backgroundColor: this.topIndustryColorscale[i][1]}}></div>
+            <p className='colorbarLabel'>{industries[i]}</p>
+          </div>
+        );
       }
       this.setState({
         nonAggregateIndustries: industries,
-        nonAggregateIndIDs: indIDs
+        nonAggregateIndIDs: indIDs,
+        topIndustryColorbar: topIndustryColorbar
       });
     }, err => {
       console.log(err);
@@ -349,6 +358,7 @@ export default class Choropleth extends React.Component {
 
   render() {
     return (
+      <div id='choroplethWrap'>
       <Plot
       id = 'choropleth'
       data = {[{
@@ -377,6 +387,11 @@ export default class Choropleth extends React.Component {
       }}
       config = {{responsive: true}}
       />
+      {this.state.showscale
+        ? <div></div>
+        : <div id='colorbar'>{this.state.topIndustryColorbar}</div>
+      }
+      </div>
       );
     }
   }
