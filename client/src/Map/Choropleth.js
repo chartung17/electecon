@@ -261,7 +261,6 @@ export default class Choropleth extends React.Component {
     }).then(row => {
       if (!row) return;
       let industries = row.map((rowObj, i) => rowObj.NAME);
-      // let indIDs = row.map((rowObj, i) => rowObj.INDUSTRY_ID);
       let i;
       for (i = 0; i < industries.length; i++) {
         if (industries[i].includes('2/')) {
@@ -297,7 +296,6 @@ export default class Choropleth extends React.Component {
         } else if (industries[i].includes('3/')) {
           industries[i] = industries[i].substring(0, industries[i].indexOf('3/'));
         }
-        // let color = 'background-color: ' + this.topIndustryColorscale[i][1] + ';';
         topIndustryColorbar.push(
           <div className='colorbarBox'>
             <div className='colorBox' style={{backgroundColor: this.topIndustryColorscale[i][1]}}></div>

@@ -84,3 +84,15 @@ select, button {
     align-items: center;
   }
 }
+
+@media (max-width: 1500px) {
+  #colorbar {
+    width: 770px;
+  }
+}
+
+@media (max-width: 800px) {
+  #colorbar {
+    width: 490px;
+  }
+}
