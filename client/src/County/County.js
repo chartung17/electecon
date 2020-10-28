@@ -4,6 +4,7 @@ import './County.css'
 import EconomyPanel from "./EconomyPanel";
 import ElectionPanel from "./ElectionPanel";
 import CountyFinder from "./CountyFinder";
+import {getCountyElectionResult} from "./CountyApi";
 
 const C = require('./Constants')
 require('dotenv').config()
@@ -62,34 +63,10 @@ export default class County extends React.Component {
             });
 
         // Get county elections result
-        fetch(ENDPOINT.concat(`/elections?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, ERR_HANDLER)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({electionResult: C.PLACEHOLDER_ELECTION_RESULT});
-                } else {
-                    let data = [];
-                    for (let i of [...Array(row.length / 2).keys()]) {
-                        let d_dem = row[i * 2];
-                        let d_rep = row[i * 2 + 1];
-                        data.push(
-                            {
-                                "Year": d_dem["YEAR"],
-                                "DemCandidate": d_dem["CANDIDATE_NAME"],
-                                "RepCandidate": d_rep["CANDIDATE_NAME"],
-                                "DemVote": d_dem["CANDIDATE_VOTES"],
-                                "RepVote": d_rep["CANDIDATE_VOTES"],
-                                "TotalVote": d_dem["TOTAL_VOTES"]      // same as d_rep["TOTAL_VOTES"]
-                            }
-                        );
-                    }
-                    this.setState({electionResult: data});
-                }
-            });
-
+        getCountyElectionResult(fips, ERR_HANDLER).then(electionData => {
+            this.setState({electionResult: electionData});
+        })
+            
         // Get county's yearly gdp (all industries)
         fetch(ENDPOINT.concat(`/annual-gdp?fips=${fips}`))
             .then(res => {
