@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/election-app/static/css/main.14345fe9.chunk.css",
-    "main.js": "/election-app/static/js/main.3ddebc91.chunk.js",
-    "main.js.map": "/election-app/static/js/main.3ddebc91.chunk.js.map",
+    "main.js": "/election-app/static/js/main.35716600.chunk.js",
+    "main.js.map": "/election-app/static/js/main.35716600.chunk.js.map",
     "runtime-main.js": "/election-app/static/js/runtime-main.a02a53fc.js",
     "runtime-main.js.map": "/election-app/static/js/runtime-main.a02a53fc.js.map",
     "static/css/2.8aa5a7f8.chunk.css": "/election-app/static/css/2.8aa5a7f8.chunk.css",
     "static/js/2.27a9111a.chunk.js": "/election-app/static/js/2.27a9111a.chunk.js",
     "static/js/2.27a9111a.chunk.js.map": "/election-app/static/js/2.27a9111a.chunk.js.map",
     "index.html": "/election-app/index.html",
-    "precache-manifest.fb952482c33ac9f883d76f2d9b8ae466.js": "/election-app/precache-manifest.fb952482c33ac9f883d76f2d9b8ae466.js",
+    "precache-manifest.95c5ffd0aa2c08fa40e624e207dbdd3d.js": "/election-app/precache-manifest.95c5ffd0aa2c08fa40e624e207dbdd3d.js",
     "service-worker.js": "/election-app/service-worker.js",
     "static/css/2.8aa5a7f8.chunk.css.map": "/election-app/static/css/2.8aa5a7f8.chunk.css.map",
     "static/css/main.14345fe9.chunk.css.map": "/election-app/static/css/main.14345fe9.chunk.css.map",
@@ -28,6 +28,6 @@
     "static/css/2.8aa5a7f8.chunk.css",
     "static/js/2.27a9111a.chunk.js",
     "static/css/main.14345fe9.chunk.css",
-    "static/js/main.3ddebc91.chunk.js"
+    "static/js/main.35716600.chunk.js"
   ]
 }
