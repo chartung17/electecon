@@ -1,20 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import CountyFinder from '../County/CountyFinder';
-//import Plot from 'react-plotly.js';
+import React, { useState } from 'react';
+import CountyTrends from './CountyTrends';
+import StateTrends from './StateTrends';
+import NationalTrends from './NationalTrends';
 
+/**
+ * Display Trending page
+ */
 function Trends() {
-  const [fips, setFips] = useState(null);
+  
+  const [granularity, setGranularity] = useState(null);
 
-  // if fips changes, fetch new election results
-  useEffect(() => {
-    // call api to get election results
-  }, [fips]); 
+  document.title = `Trends`;
 
-  return (
-    <div >
-      <CountyFinder getNewCounty={setFips}></CountyFinder>
+  let trendChoice;
+  if (granularity === "National") {
+    trendChoice = <NationalTrends />;
+  } else if (granularity === "State") {
+    trendChoice = <StateTrends />;
+  } else if (granularity === "County") {
+    trendChoice = <CountyTrends />;
+  }
+  return(
+    <div id="TrendPage">
+      <button onClick={() => setGranularity("National")}>See National Trends</button>
+      <button onClick={() => setGranularity("State")}>See State Trends</button>
+      <button onClick={() => setGranularity("County")}>See County Trends</button>
+      {trendChoice}
     </div>
   );
+
+  
 }
 
 export default Trends;
