@@ -22,7 +22,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && copy build\\index.html build\\404.html",
     "test": "react-scripts test",
     "start:test": "HOST=localhost PORT=3000 react-scripts start",
     "eject": "react-scripts eject"
@@ -46,5 +46,6 @@
     "mocha": "^8.1.3",
     "chromedriver": "^85.0.0",
     "selenium-webdriver": "^4.0.0-alpha.7"
-  }
+  },
+  "homepage": "https://chartung17.github.io/election-app/"
 }

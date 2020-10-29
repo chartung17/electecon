@@ -10,16 +10,16 @@ import Trends from './Trends';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Navbar />
         <div id="main">
           <Switch>
-            <Route path="/" exact component={() => <Map />} />
+            <Route path="/map" exact component={() => <Map />} />
             <Route path="/graph" exact component={() => <Graph />} />
             <Route path="/trends" exact component={() => <Trends />} />
             <Route path="/county/:fips" component={(props) => <County {...props}/>} />
             <Route path="/county/" component={(props) => <County {...props}/>} />
-            <Route render={() => <Redirect to="/" />} />
+            <Route render={() => <Redirect to="/map" />} />
           </Switch>
         </div>
       </Router>

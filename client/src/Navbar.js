@@ -17,10 +17,10 @@ function Navbar() {
 
   return (
     <nav className="Navbar" style={navStyle} id="navbar">
-      <a href="/" style={linkStyle}>Map</a>
-      <a href="/graph" style={linkStyle}>Graph</a>
-      <a href="/trends" style={linkStyle}>Trends</a>
-      <a href="/county" style={linkStyle}>County Details</a>
+      <a href={process.env.PUBLIC_URL + "/map"} style={linkStyle}>Map</a>
+      <a href={process.env.PUBLIC_URL + "/graph"} style={linkStyle}>Graph</a>
+      <a href={process.env.PUBLIC_URL + "/trends"} style={linkStyle}>Trends</a>
+      <a href={process.env.PUBLIC_URL + "/county"} style={linkStyle}>County Details</a>
     </nav>
   );
 }
