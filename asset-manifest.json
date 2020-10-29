@@ -1,33 +1,25 @@
 {
   "files": {
     "main.css": "/election-app/static/css/main.14345fe9.chunk.css",
-    "main.js": "/election-app/static/js/main.35716600.chunk.js",
-    "main.js.map": "/election-app/static/js/main.35716600.chunk.js.map",
+    "main.js": "/election-app/static/js/main.f56dfa1b.chunk.js",
+    "main.js.map": "/election-app/static/js/main.f56dfa1b.chunk.js.map",
     "runtime-main.js": "/election-app/static/js/runtime-main.a02a53fc.js",
     "runtime-main.js.map": "/election-app/static/js/runtime-main.a02a53fc.js.map",
     "static/css/2.8aa5a7f8.chunk.css": "/election-app/static/css/2.8aa5a7f8.chunk.css",
-    "static/js/2.27a9111a.chunk.js": "/election-app/static/js/2.27a9111a.chunk.js",
-    "static/js/2.27a9111a.chunk.js.map": "/election-app/static/js/2.27a9111a.chunk.js.map",
+    "static/js/2.24ee1953.chunk.js": "/election-app/static/js/2.24ee1953.chunk.js",
+    "static/js/2.24ee1953.chunk.js.map": "/election-app/static/js/2.24ee1953.chunk.js.map",
     "index.html": "/election-app/index.html",
-    "precache-manifest.95c5ffd0aa2c08fa40e624e207dbdd3d.js": "/election-app/precache-manifest.95c5ffd0aa2c08fa40e624e207dbdd3d.js",
+    "precache-manifest.1945129d861718cfadb10184c5de8d75.js": "/election-app/precache-manifest.1945129d861718cfadb10184c5de8d75.js",
     "service-worker.js": "/election-app/service-worker.js",
     "static/css/2.8aa5a7f8.chunk.css.map": "/election-app/static/css/2.8aa5a7f8.chunk.css.map",
     "static/css/main.14345fe9.chunk.css.map": "/election-app/static/css/main.14345fe9.chunk.css.map",
-    "static/js/2.27a9111a.chunk.js.LICENSE.txt": "/election-app/static/js/2.27a9111a.chunk.js.LICENSE.txt",
-    "static/media/al_gore.jpg": "/election-app/static/media/al_gore.1d5d5510.jpg",
-    "static/media/barack_obama.jpg": "/election-app/static/media/barack_obama.341e1212.jpg",
-    "static/media/donald_trump.jpg": "/election-app/static/media/donald_trump.b07e12ff.jpg",
-    "static/media/george_bush.jpg": "/election-app/static/media/george_bush.433056d2.jpg",
-    "static/media/hillary_clinton.jpg": "/election-app/static/media/hillary_clinton.3db6d42d.jpg",
-    "static/media/john_kerry.jpg": "/election-app/static/media/john_kerry.f2b52f4d.jpg",
-    "static/media/john_mccain.jpg": "/election-app/static/media/john_mccain.37b17671.jpg",
-    "static/media/mitt_romney.jpg": "/election-app/static/media/mitt_romney.c17a77bc.jpg"
+    "static/js/2.24ee1953.chunk.js.LICENSE.txt": "/election-app/static/js/2.24ee1953.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a02a53fc.js",
     "static/css/2.8aa5a7f8.chunk.css",
-    "static/js/2.27a9111a.chunk.js",
+    "static/js/2.24ee1953.chunk.js",
     "static/css/main.14345fe9.chunk.css",
-    "static/js/main.35716600.chunk.js"
+    "static/js/main.f56dfa1b.chunk.js"
   ]
 }
