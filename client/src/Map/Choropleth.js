@@ -99,6 +99,37 @@ export default class Choropleth extends React.Component {
     ['1.0', 'red']
   ];
 
+  // determine new map parameters based on query type
+  colorscale(queryURL, gdpColorscale) {
+    if (queryURL.startsWith('/rep-dem-diff')) return 'RdBu';
+    if (queryURL.startsWith('/rep-votes')) return [['0.0', 'white'], ['1.0', 'red']];
+    if (queryURL.startsWith('/dem-votes')) return [['0.0', 'white'], ['1.0', 'blue']];
+    if (queryURL.startsWith('/other-votes')) return [['0.0', 'white'], ['1.0', 'green']];
+    if (queryURL.includes('gdp')) return gdpColorscale;
+    if (queryURL.startsWith('/top-industry')) return this.topIndustryColorscale;
+  }
+  title(queryURL) {
+    if (queryURL.startsWith('/rep-dem-diff')) return '% Republican votes - % Democrat votes in ' + this.state.year;
+    if (queryURL.startsWith('/rep-votes')) return '% Republican votes in ' + this.state.year;
+    if (queryURL.startsWith('/dem-votes')) return '% Democrat votes in ' + this.state.year;
+    if (queryURL.startsWith('/other-votes')) return '% Other votes in ' + this.state.year;
+    if (queryURL.startsWith('/total-gdp')) return 'Total GDP (millions of dollars) in ' + this.state.year;
+    if (queryURL.startsWith('/industry-gdp')) return '% GDP from ' + this.getIndustryName(this.state.industry) + ' in ' + this.state.year;
+    if (queryURL.startsWith('/top-industry')) return 'Top Industry (non-aggregate) in ' + this.state.year;
+  }
+  zMinMaxAuto(queryURL) {
+    if (queryURL.startsWith('/rep-dem-diff')) return [-100, 100, false];
+    if ((queryURL.startsWith('/rep-votes')) || (queryURL.startsWith('/dem-votes'))) return [0, 100, false];
+    if (queryURL.startsWith('/top-industry')) return [0, 20, false];
+    return [0, 100, true];
+  }
+  hovertemplate(queryURL) {
+    if ((queryURL.startsWith('/top-industry')) || (queryURL.startsWith('/total-gdp'))) {
+      return '<b>%{text}</b><br>%{customdata}<extra></extra>';
+    }
+    return '<b>%{text}</b><br>%{z}<extra></extra>';
+  }
+
   // query the specified URL and update state accordingly
   queryZ() {
     let queryURL = this.state.queryURL + '?year=' + this.state.year +
@@ -124,96 +155,31 @@ export default class Choropleth extends React.Component {
             z[j] = this.state.nonAggregateIndIDs.indexOf(z[j]);
           }
         }
-      } else {
-        customdata = currentState.customdata;
+      } else if (queryURL.startsWith('/total-gdp')) {
+        for (let j = 0; j < z.length; j++) {
+          if (z[j] === null) {
+            customdata.push(null);
+          } else {
+            customdata.push(z[j].toString());
+          }
+        }
       }
       let gdpColorscale = this.gdpColorscale(z);
-      // make sure query matches curretn selection; if not, abort
+      let zMinMaxAuto = this.zMinMaxAuto(queryURL);
+      // make sure query matches current selection; if not, abort
       if ((currentState !== this.state) && (this.state.z.length > 0)) {
         return;
       }
       // update state with query results
-      else if (queryURL.startsWith('/rep-dem-diff')) {
+      else {
         this.setState({
-          colorscale: 'RdBu',
-          title: '% Republican votes - % Democrat votes in ' + this.state.year,
-          zmin: -100,
-          zmax: 100,
-          zauto: false,
-          hovertemplate: '<b>%{text}</b><br>%{z}<extra></extra>',
-          showscale: true,
-          z: z,
-          customdata: customdata
-        });
-      } else if (queryURL.startsWith('/rep-votes')) {
-        this.setState({
-          colorscale: [['0.0', 'white'], ['1.0', 'red']],
-          title: '% Republican votes in ' + this.state.year,
-          zmin: 0,
-          zmax: 100,
-          zauto: false,
-          hovertemplate: '<b>%{text}</b><br>%{z}<extra></extra>',
-          showscale: true,
-          z: z,
-          customdata: customdata
-        });
-      } else if (queryURL.startsWith('/dem-votes')) {
-        this.setState({
-          colorscale: [['0.0', 'white'], ['1.0', 'blue']],
-          title: '% Democrat votes in ' + this.state.year,
-          zmin: 0,
-          zmax: 100,
-          zauto: false,
-          hovertemplate: '<b>%{text}</b><br>%{z}<extra></extra>',
-          showscale: true,
-          z: z,
-          customdata: customdata
-        });
-      } else if (queryURL.startsWith('/other-votes')) {
-        this.setState({
-          colorscale: [['0.0', 'white'], ['1.0', 'green']],
-          title: '% Other votes in ' + this.state.year,
-          zmin: 0,
-          zmax: 100,
-          zauto: true,
-          hovertemplate: '<b>%{text}</b><br>%{z}<extra></extra>',
-          showscale: true,
-          z: z,
-          customdata: customdata
-        });
-      } else if (queryURL.startsWith('/total-gdp')) {
-        this.setState({
-          colorscale: gdpColorscale,
-          title: 'Total GDP (millions of dollars) in ' + this.state.year,
-          zmin: 0,
-          zmax: 100,
-          zauto: true,
-          hovertemplate: '<b>%{text}</b><br>%{z}<extra></extra>',
-          showscale: true,
-          z: z,
-          customdata: customdata
-        });
-      } else if (queryURL.startsWith('/industry-gdp')) {
-        this.setState({
-          colorscale: gdpColorscale,
-          title: '% GDP from ' + this.getIndustryName(this.state.industry) + ' in ' + this.state.year,
-          zmin: 0,
-          zmax: 100,
-          zauto: true,
-          hovertemplate: '<b>%{text}</b><br>%{z}<extra></extra>',
-          showscale: true,
-          z: z,
-          customdata: customdata
-        });
-      } else if (queryURL.startsWith('/top-industry')) {
-        this.setState({
-          colorscale: this.topIndustryColorscale,
-          title: 'Top Industry (non-aggregate) in ' + this.state.year,
-          zmin: 0,
-          zmax: 20,
-          zauto: false,
-          hovertemplate: '<b>%{text}</b><br>%{customdata}<extra></extra>',
-          showscale: false,
+          colorscale: this.colorscale(queryURL, gdpColorscale),
+          title: this.title(queryURL),
+          zmin: zMinMaxAuto[0],
+          zmax: zMinMaxAuto[1],
+          zauto: zMinMaxAuto[2],
+          hovertemplate: this.hovertemplate(queryURL),
+          showscale: !(queryURL.startsWith('/top-industry')),
           z: z,
           customdata: customdata
         });
@@ -243,8 +209,7 @@ export default class Choropleth extends React.Component {
       let names = row.map((rowObj, i) => rowObj.NAME);
       this.setState({
         fips: fips,
-        names: names,
-        customdata: fips
+        names: names
       });
     }, err => {
       console.log(err);
@@ -322,7 +287,7 @@ export default class Choropleth extends React.Component {
 
   // update dimensions of map when window resized
   updateDimensions() {
-  let width = Math.min(window.innerWidth * 0.9, 1400);
+    let width = Math.min(window.innerWidth * 0.9, 1400);
     let height = width / 2;
     this.setState({
       width: width,
@@ -379,7 +344,7 @@ export default class Choropleth extends React.Component {
         width: this.state.width,
         height: this.state.height,
         autosize: true,
-        margin: {t: 0, b: 0},
+        margin: {t: 0, b: 0, l: 0, r: 0},
         title: {text: this.state.title, y: 0.95},
         dragmode: false
       }}
