@@ -4,14 +4,10 @@ import './County.css'
 import EconomyPanel from "./EconomyPanel";
 import ElectionPanel from "./ElectionPanel";
 import CountyFinder from "./CountyFinder";
+import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
 
 const C = require('./Constants')
 require('dotenv').config()
-
-const API_HOST = process.env.REACT_APP_API_HOST || "localhost";
-const API_PORT = process.env.REACT_APP_API_PORT || 5000;
-
-export const ENDPOINT = `http://${API_HOST}:${API_PORT}/api/v1/county`;
 
 export default class County extends React.Component {
     constructor(props) {

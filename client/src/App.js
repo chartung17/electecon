@@ -7,6 +7,16 @@ import Map from './Map/Map';
 import Graph from './Graph';
 import Trends from './Trends';
 
+const API_HOST = process.env.REACT_APP_API_HOST || "localhost";
+const API_PORT = process.env.REACT_APP_API_PORT || 5000;
+
+const ENDPOINT = `http://${API_HOST}:${API_PORT}/api/v1`;
+
+export const MAP_ENDPOINT = ENDPOINT + '/map';
+export const GRAPH_ENDPOINT = ENDPOINT + '/graph';
+export const TRENDS_ENDPOINT = ENDPOINT + '/trends';
+export const COUNTY_ENDPOINT = ENDPOINT + '/county';
+
 function App() {
   return (
     <div className="App">

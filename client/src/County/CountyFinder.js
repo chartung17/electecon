@@ -1,5 +1,5 @@
 import React from "react";
-import {ENDPOINT} from "./County";
+import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
 import {STATES} from './Constants'
 
 export default class CountyFinder extends React.Component {

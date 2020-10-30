@@ -2,7 +2,7 @@ import React from 'react';
 import './Map.css';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
-import {ENDPOINT} from './Map';
+import {MAP_ENDPOINT as ENDPOINT} from '../App';
 
 Plotly.register([
   require('plotly.js/lib/choropleth')

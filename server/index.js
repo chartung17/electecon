@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require("./routes.js");
+const countyRoutes = require("./countyRoutes.js");
+const mapRoutes = require("./mapRoutes.js");
 const cors = require('cors');
 const router = express();
 
@@ -17,27 +18,26 @@ router.use(bodyParser.urlencoded({extended: false}));
 const API_V1 = "/api/v1";
 
 // County page routes
-router.get(API_V1 + '/county/counties', routes.getCounties);
-router.get(API_V1 + '/county/elections', routes.getElections);
-router.get(API_V1 + '/county/annual-gdp', routes.getAnnualGDP);
-router.get(API_V1 + '/county/top-industry', routes.getTopIndustry);
-router.get(API_V1 + '/county/growing-industry', routes.getGrowingIndustry);
-router.get(API_V1 + '/county/gdp-growth-percentile', routes.getGDPGrowthPercentile);
-router.get(API_V1 + '/county/state-gdp-rank', routes.getStateGDPRank);
-router.get(API_V1 + '/county/county-voting-for-party', routes.getCountyVotingForParty);
+router.get(API_V1 + '/county/counties', countyRoutes.getCounties);
+router.get(API_V1 + '/county/elections', countyRoutes.getElections);
+router.get(API_V1 + '/county/annual-gdp', countyRoutes.getAnnualGDP);
+router.get(API_V1 + '/county/top-industry', countyRoutes.getTopIndustry);
+router.get(API_V1 + '/county/growing-industry', countyRoutes.getGrowingIndustry);
+router.get(API_V1 + '/county/gdp-growth-percentile', countyRoutes.getGDPGrowthPercentile);
+router.get(API_V1 + '/county/state-gdp-rank', countyRoutes.getStateGDPRank);
+router.get(API_V1 + '/county/county-voting-for-party', countyRoutes.getCountyVotingForParty);
 
 // Map page routes
-router.get(API_V1 + '/map/counties', routes.getAllCounties);
-router.get(API_V1 + '/map/parties', routes.getParties);
-router.get(API_V1 + '/map/rep-dem-diff', routes.getRepDemDiff);
-router.get(API_V1 + '/map/dem-votes', routes.getDemVotes);
-router.get(API_V1 + '/map/rep-votes', routes.getRepVotes);
-router.get(API_V1 + '/map/other-votes', routes.getOtherVotes);
-router.get(API_V1 + '/map/industries', routes.getIndustries);
-router.get(API_V1 + '/map/non-aggregate-industries', routes.getNonAggregateIndustries);
-router.get(API_V1 + '/map/total-gdp', routes.getTotalGDP);
-router.get(API_V1 + '/map/industry-gdp', routes.getIndustryGDP);
-router.get(API_V1 + '/map/top-industry', routes.getTopIndustries);
+router.get(API_V1 + '/map/counties', mapRoutes.getAllCounties);
+router.get(API_V1 + '/map/rep-dem-diff', mapRoutes.getRepDemDiff);
+router.get(API_V1 + '/map/dem-votes', mapRoutes.getDemVotes);
+router.get(API_V1 + '/map/rep-votes', mapRoutes.getRepVotes);
+router.get(API_V1 + '/map/other-votes', mapRoutes.getOtherVotes);
+router.get(API_V1 + '/map/industries', mapRoutes.getIndustries);
+router.get(API_V1 + '/map/non-aggregate-industries', mapRoutes.getNonAggregateIndustries);
+router.get(API_V1 + '/map/total-gdp', mapRoutes.getTotalGDP);
+router.get(API_V1 + '/map/industry-gdp', mapRoutes.getIndustryGDP);
+router.get(API_V1 + '/map/top-industry', mapRoutes.getTopIndustries);
 
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ENDPOINT} from './Map';
+import {MAP_ENDPOINT as ENDPOINT} from '../App';
 
 export default class VariableDropdown extends React.Component {
   constructor(props) {
