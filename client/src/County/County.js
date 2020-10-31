@@ -8,6 +8,7 @@ import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
 
 const C = require('./Constants')
 require('dotenv').config()
+export const ASSETS_PATH = process.env.PUBLIC_URL + `/assets`;
 
 export default class County extends React.Component {
     constructor(props) {

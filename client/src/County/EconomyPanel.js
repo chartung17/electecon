@@ -2,14 +2,16 @@ import React from 'react';
 import Chart from "react-google-charts";
 import './County.css'
 import {INDUSTRY_ICON} from "./Constants";
+import {ASSETS_PATH} from "./County";
+
 
 export default class EconomyPanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
     }
 
     render() {
+        let INDUSTRY_ICON_PATH = `${ASSETS_PATH}/icons/industry`;
         let gdpData = this.props.gdpData;
         let topIndustry = this.props.topIndustry;
         let fastestGrowthIndustry = this.props.fastestGrowthIndustry;
@@ -60,7 +62,7 @@ export default class EconomyPanel extends React.Component {
                                 {topIndustry[0]["Description"] === "" ? null :
                                 <img
                                     className={"econ-tile-image"}
-                                    src={require(`../assets/icons/industry/${INDUSTRY_ICON[topIndustry[0]["Description"]]}`)}
+                                    src={`${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[topIndustry[0]["Description"]]}`}
                                     alt={topIndustry[0]["Description"]}
                                 />
                                 }
@@ -91,7 +93,7 @@ export default class EconomyPanel extends React.Component {
                             <td className={"econ-tile"}>
                                 { fastestGrowthIndustry[0]["Description"] === "" ? null :
                                 <img className={"econ-tile-image"}
-                                     src={require(`../assets/icons/industry/${INDUSTRY_ICON[fastestGrowthIndustry[0]["Description"]]}`)}
+                                     src={`${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[fastestGrowthIndustry[0]["Description"]]}`}
                                      alt={fastestGrowthIndustry[0]["Description"]}
                                 />
                                 }
@@ -144,7 +146,7 @@ export default class EconomyPanel extends React.Component {
                                         <div>
                                             { value["Description"] === "" ? null :
                                                 <img className={"econ-subpanel-table-image"}
-                                                     src={require(`../assets/icons/industry/${INDUSTRY_ICON[value["Description"]]}`)}
+                                                     src={`${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[value["Description"]]}`}
                                                      alt={value["Description"]}
                                                 />
                                             }
@@ -200,7 +202,7 @@ export default class EconomyPanel extends React.Component {
                                         <div>
                                             { value["Description"] === "" ? null :
                                                 <img className={"econ-subpanel-table-image"}
-                                                     src={require(`../assets/icons/industry/${INDUSTRY_ICON[value["Description"]]}`)}
+                                                     src={`${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[value["Description"]]}`}
                                                      alt={value["Description"]}
                                                 />
                                             }
