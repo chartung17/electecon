@@ -7,10 +7,16 @@ import Map from './Map/Map';
 import Graph from './Graph';
 import Trends from './Trends';
 
+// set useLocalServer to true to use server running on localhost, or false to use Heroku server
+const useLocalServer = true;
+
+// define base URLs for server fetch requests
 const API_HOST = process.env.REACT_APP_API_HOST || "localhost";
 const API_PORT = process.env.REACT_APP_API_PORT || 5000;
 
-const ENDPOINT = `http://${API_HOST}:${API_PORT}/api/v1`;
+let ENDPOINT;
+if (useLocalServer) ENDPOINT = `http://${API_HOST}:${API_PORT}/api/v1`;
+else ENDPOINT = `http://election-app-server.herokuapp.com/api/v1`;
 
 export const MAP_ENDPOINT = ENDPOINT + '/map';
 export const GRAPH_ENDPOINT = ENDPOINT + '/graph';

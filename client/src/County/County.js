@@ -54,7 +54,7 @@ export default class County extends React.Component {
                     document.title = `County Details`;
                 } else {
                     this.setState({countyName: row[0]["NAME"], countyState: row[0]["STATE"]})
-                    window.history.pushState({}, null, `/county/${fips}`);
+                    window.history.pushState({}, null, process.env.PUBLIC_URL + `/county/${fips}`);
                     document.getElementById("county-profile").scrollIntoView();
                 }
                 document.title = `${this.state.countyName}, ${this.state.countyState} - County Details`
