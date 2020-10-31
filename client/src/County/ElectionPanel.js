@@ -1,9 +1,11 @@
 import React, {Fragment} from "react";
-import {CANDIDATE_IMAGE} from "./Constants"
+import {CANDIDATE_IMAGE, INDUSTRY_ICON} from "./Constants"
 import {getStats, getPartyPreference} from './helper';
+import {ASSETS_PATH} from "./County";
 
 export default class ElectionPanel extends React.Component {
     render() {
+        let CANDIDATE_IMG_PATH = `${ASSETS_PATH}/images/candidate`;
         let electionResult = this.props.electionResult;
         let preference = getPartyPreference(electionResult);
         let stats = getStats(electionResult);
@@ -107,7 +109,7 @@ export default class ElectionPanel extends React.Component {
                                 <tr className={"election-table-result-container"} key={index}>
                                     <td className={"headshot-container"}>
                                         <img
-                                            src={process.env.PUBLIC_URL + `/assets/images/candidate/${CANDIDATE_IMAGE[value["DemCandidate"]]}`}
+                                            src={`${CANDIDATE_IMG_PATH}/${CANDIDATE_IMAGE[value["DemCandidate"]]}`}
                                             alt={value["DemCandidate"]}
                                             className={"headshot"}
                                         />
@@ -153,7 +155,7 @@ export default class ElectionPanel extends React.Component {
                                     </td>
                                     <td className={"headshot-container"}>
                                         <img
-                                            src={process.env.PUBLIC_URL + `/assets/images/candidate/${CANDIDATE_IMAGE[value["RepCandidate"]]}`}
+                                            src={`${CANDIDATE_IMG_PATH}/${CANDIDATE_IMAGE[value["RepCandidate"]]}`}
                                             alt={value["RepCandidate"]}
                                             className={"headshot"}/>
                                         {value["RepCandidate"]}
