@@ -1,3 +1,7 @@
+import {INDUSTRY_ICON} from "./Constants";
+
+const C = require('./Constants')
+
 /**
  * Compute a county's party preference over the last 5 elections
  *
@@ -29,7 +33,8 @@ export function getPartyPreference(electionResult) {
     electionResult.forEach((value, index) => {
         let totalVote = parseInt(value["TotalVote"])
         let repPct = parseInt(value["RepVote"]) * 100 / totalVote;
-        repWinCount += repPct > 50 ? 1 : 0;
+        let demPct = parseInt(value["DemVote"]) * 100 / totalVote;
+        repWinCount += repPct > demPct ? 1 : 0;
         preference += (repPct * weight[index]);
     });
 
@@ -79,4 +84,84 @@ export function getStats(electionResult) {
         "NumVoteChangePct2001": 100 * ((totalVote2016 / totalVote2001) - 1),
         "NumVoteChangePct2012": 100 * ((totalVote2012 / totalVote2001) - 1),
     };
+}
+
+
+export function isGDPDataValid(gdpData) {
+    if (gdpData === undefined || gdpData === C.PLACEHOLDER_GDP_DATA || gdpData.includes(null) || gdpData.length !== 18) {
+        return false;
+    }
+    for (const gdpDatum of gdpData) {
+        if (isNaN(gdpDatum) || gdpDatum <= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isElectionDataValid(electionData) {
+    console.log(electionData)
+    if (electionData === undefined || electionData === C.PLACEHOLDER_ELECTION_RESULT || electionData.includes(null) || electionData.length !== 5) {
+        return false;
+    }
+    for (const electionDatum of electionData) {
+        if (electionDatum["TotalVote"] <= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+export function getTotalGDP(gdpData) {
+    return `$${(gdpData[gdpData.length - 1] / 1E6).toFixed(1)} bn`;
+}
+
+export function getGDPCAGR(gdpData) {
+    return `${(100 * (Math.pow((gdpData[gdpData.length - 1] / gdpData[0]), 1 / (gdpData.length)) - 1)).toFixed(2)}%`;
+}
+
+export function getGrowthChartData(gdpData) {
+    let growthChartData = [[{type: 'string', label: 'Year'}, {type: 'number', label: 'Growth'}]];
+    for (let i = 1; i < gdpData.length; i++) {
+        growthChartData.push([(2001 + i) + "", 100 * ((gdpData[i] / gdpData[i - 1]) - 1)]);
+    }
+    return growthChartData;
+}
+
+
+export function getTileData(data, INDUSTRY_ICON_PATH) {
+    return [
+        [
+            {"id": "total-gdp-number", "type": "value", "title": "GDP\n\n(2018)", "value": getTotalGDP(data.gdpData)},
+            {
+                "id": "gdp-cagr-number",
+                "type": "value",
+                "title": "Avg. Annual Growth\n(2001-2018)",
+                "value": getGDPCAGR(data.gdpData)
+            },
+            {
+                "id": "top-industry-icon",
+                "type": "icon",
+                "title": "Top Industry",
+                "caption": data.topIndustry[0]["Description"],
+                "src": `${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[data.topIndustry[0]["Description"]]}`
+            }
+        ],
+        [
+            {"id": "state-gdp-rank", "type": "value", "title": "State GDP Rank", "value": data.stateGDPRank},
+            {
+                "id": "gdp-growth-percentile",
+                "type": "value",
+                "title": "Avg. Annual Growth National Percentile",
+                "value": data.GDPGrowthPercentile
+            },
+            {
+                "id": "growing-industry-icon",
+                "type": "icon",
+                "title": "Fastest Growing Industry",
+                "caption": data.fastestGrowingIndustry[0]["Description"],
+                "src": `${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[data.fastestGrowingIndustry[0]["Description"]]}`
+            },
+        ]
+    ];
 }

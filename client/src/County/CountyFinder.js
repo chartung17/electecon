@@ -5,9 +5,7 @@ import {STATES} from './Constants'
 export default class CountyFinder extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            counties: []
-        }
+        this.state = {counties: []}
     }
 
     ERR = (err) => {
