@@ -17,7 +17,7 @@ export default class County extends React.Component {
             countyName: C.PLACEHOLDER_COUNTY_NAME,
             countyState: C.PLACEHOLDER_COUNTY_STATE,
             gdpData: C.PLACEHOLDER_GDP_DATA,
-            growingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY,
+            fastestGrowingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY,
             topIndustry: C.PLACEHOLDER_TOP_INDUSTRY,
             electionResult: C.PLACEHOLDER_ELECTION_RESULT,
             GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE,
@@ -28,8 +28,8 @@ export default class County extends React.Component {
         document.title = 'County Details'
     }
 
-    componentDidMount () {
-        if (this.props.match !== undefined && this.props.match.params.fips !== undefined){
+    componentDidMount() {
+        if (this.props.match !== undefined && this.props.match.params.fips !== undefined) {
             this.getNewCounty(this.props.match.params.fips)
         }
     }
@@ -47,8 +47,10 @@ export default class County extends React.Component {
             .then(row => {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
-                    this.setState({countyName: C.PLACEHOLDER_COUNTY_NAME,
-                        countyState: C.PLACEHOLDER_COUNTY_STATE});
+                    this.setState({
+                        countyName: C.PLACEHOLDER_COUNTY_NAME,
+                        countyState: C.PLACEHOLDER_COUNTY_STATE
+                    });
                     document.title = `County Details`;
                 } else {
                     this.setState({countyName: row[0]["NAME"], countyState: row[0]["STATE"]})
@@ -131,13 +133,13 @@ export default class County extends React.Component {
             .then(row => {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
-                    this.setState({growingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY});
+                    this.setState({fastestGrowingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY});
                 } else {
                     let data = [];
                     for (let i of [...Array(row.length).keys()]) {
                         data.push({"Description": row[i]["Description"], "Growth": row[i]["Growth"]})
                     }
-                    this.setState({growingIndustry: data});
+                    this.setState({fastestGrowingIndustry: data});
                 }
             });
 
@@ -202,19 +204,8 @@ export default class County extends React.Component {
                         </div>
                         <div className={"panel-container container"}>
                             <div className={"row"}>
-                                <EconomyPanel
-                                    gdpData={this.state.gdpData}
-                                    topIndustry={this.state.topIndustry}
-                                    fastestGrowthIndustry={this.state.growingIndustry}
-                                    GDPGrowthPercentile={this.state.GDPGrowthPercentile}
-                                    stateGDPRank={this.state.stateGDPRank}
-                                />
-                                <ElectionPanel electionResult={this.state.electionResult}
-                                               countyVotingForParty={this.state.countyVotingForParty}
-                                               countyName={this.state.countyName}
-                                               countyState={this.state.countyState}
-                                               numCountyInState={this.state.numCountyInState}
-                                />
+                                <EconomyPanel {...this.state}/>
+                                <ElectionPanel {...this.state}/>
                             </div>
                         </div>
                     </div>

@@ -38,6 +38,7 @@ COUNTY DETAILS
 #county-name{
     border-bottom: 1pt solid lightgrey;
     padding-bottom: 3vh;
+    font-weight: bold;
 }
 
 /***********************************
@@ -53,11 +54,17 @@ ECONOMIC PANEL
     text-align: center;
     font-weight: bolder;
 }
-
+#data-unavailable-warning {
+    text-align: center;
+}
 /* GDP Aggregate, first section on econ panel*/
 .econ-tile-container {
     text-align: center;
     border-top: solid 1pt lightgrey;
+}
+.econ-tile-container-title{
+    text-align: left;
+    padding-bottom: 3vh;
 }
 .econ-tile-title{
     text-align: center;
@@ -99,40 +106,42 @@ ECONOMIC PANEL
     font: 18pt black;
     font-family: sans-serif;
 }
-
 /* Top 5 industries chart, second section on econ panel*/
-.econ-subpanel-container {
+.econ-barchart-container {
     margin-top: 5vh;
     padding: 10px;
     border-top: solid 1pt lightgrey
 }
-.econ-subpanel-table {
+.econ-barchart-table {
     text-align: center;
 }
-.econ-subpanel-table-pct-header  {
+.econ-barchart-table-col-1 {
+    width: 20%;
+}
+.econ-barchart-table-col-2 {
+    width: 60%;
+}
+.econ-barchart-table-col-3 {
+    width: 10%;
+}
+.econ-barchart-table-pct-header  {
     text-align: center;
 }
-.econ-subpanel-table-bar-container {
+.econ-barchart-table-bar-container {
     width: 100%;
     height: 100%;
     padding-left: 30px;
 }
-.econ-subpanel-table-bar {
+.econ-barchart-table-bar {
     float: left;
     display: inline-block;
     height: 100%;
 }
-.top-gdp-bar {
-    background: blue;
-}
-.growing-industries-bar {
-    background: red;
-}
-.econ-subpanel-table-image {
+.econ-barchart-table-image {
     max-width: 40px;
     max-height: 40px;
 }
-.econ-subpanel-table-image-caption {
+.econ-barchart-table-image-caption {
     font-size: 12px
 }
 
@@ -141,6 +150,18 @@ ELECTION PANEL
 ************************************/
 .election-panel {
     border-left: lightgray solid 1pt;
+}
+.election-spectrum-dem-title{
+    text-align: left;
+}
+.election-spectrum-swing-title{
+    text-align: center;
+}
+.election-spectrum-rep-title{
+    text-align: right;
+}
+.spectrum{
+    background-image: linear-gradient(to right, blue, lightblue, lightpink, red);
 }
 .arrow-up {
     width: 0;
@@ -208,3 +229,5 @@ ELECTION PANEL
     color: black;
     height: 40px;
 }
+
+

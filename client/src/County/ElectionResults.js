@@ -3,10 +3,6 @@ import {CANDIDATE_IMAGE} from "./Constants";
 import {ASSETS_PATH} from "./County";
 
 export default class ElectionSummary extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let CANDIDATE_IMG_PATH = `${ASSETS_PATH}/images/candidate`;
         let CHECKMARK_ICON = `${ASSETS_PATH}/icons/other/checkmark.svg`;
@@ -20,6 +16,7 @@ export default class ElectionSummary extends React.Component {
                     let repPct = parseInt(value["RepVote"]) * 100 / totalVote;
                     let demBarWidth = isNaN(demPct) ? 0 : Math.round(demPct);
                     let repBarWidth = isNaN(repPct) ? 0 : Math.round(repPct);
+                    let repWon = demPct < repPct
 
                     return (
                         <Fragment key={index}>
@@ -39,11 +36,10 @@ export default class ElectionSummary extends React.Component {
                                     {value["DemCandidate"]}
                                 </td>
                                 <td className={"democrat-results-container"}>
-                                    {
-                                        (totalVote === 0 || demPct < repPct) ? null :
+                                    {repWon ? null :
                                             <img
                                                 src={CHECKMARK_ICON}
-                                                alt="" className={"democrat-vote-checkmark"}
+                                                alt="checkmark" className={"democrat-vote-checkmark"}
                                                 style={{marginLeft: `${Math.min(77, 100 - demBarWidth + 5)}%`}}
                                             />
                                     }
@@ -59,10 +55,11 @@ export default class ElectionSummary extends React.Component {
                                     </div>
                                 </td>
 
+
+
                                 <td className={"republican-results-container"}>
-                                    {(totalVote === 0 || demPct > repPct) ? null :
-                                        <img src={CHECKMARK_ICON} alt=""
-                                             className={"republican-vote-checkmark"}
+                                    {!repWon ? null :
+                                        <img src={CHECKMARK_ICON} alt="checkmark" className={"republican-vote-checkmark"}
                                              style={{marginRight: `${Math.min(77, 100 - repBarWidth)}%`}}
                                         />
                                     }
