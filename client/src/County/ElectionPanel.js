@@ -107,7 +107,7 @@ export default class ElectionPanel extends React.Component {
                                 <tr className={"election-table-result-container"} key={index}>
                                     <td className={"headshot-container"}>
                                         <img
-                                            src={require(`../assets/images/candidate/${CANDIDATE_IMAGE[value["DemCandidate"]]}`)}
+                                            src={process.env.PUBLIC_URL + `/assets/images/candidate/${CANDIDATE_IMAGE[value["DemCandidate"]]}`}
                                             alt={value["DemCandidate"]}
                                             className={"headshot"}
                                         />
@@ -153,7 +153,7 @@ export default class ElectionPanel extends React.Component {
                                     </td>
                                     <td className={"headshot-container"}>
                                         <img
-                                            src={require(`../assets/images/candidate/${CANDIDATE_IMAGE[value["RepCandidate"]]}`)}
+                                            src={process.env.PUBLIC_URL + `/assets/images/candidate/${CANDIDATE_IMAGE[value["RepCandidate"]]}`}
                                             alt={value["RepCandidate"]}
                                             className={"headshot"}/>
                                         {value["RepCandidate"]}
