@@ -4,13 +4,7 @@
 
 const C = require('./Constants');
 
-<<<<<<< HEAD
 import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
-=======
-const API_HOST = process.env.REACT_APP_API_HOST || "localhost";
-const API_PORT = process.env.REACT_APP_API_PORT || 5000;
-export const ENDPOINT = `http://${API_HOST}:${API_PORT}/api/v1/county`;
->>>>>>> 4135f33e04cbdcbc334e084006a81a5687a71c95
 
 /*
 
