@@ -19,12 +19,22 @@ function CountyTrends() {
         })
     }, [fips]);
 
-    return (
-        <div >
-            <CountyFinder getNewCounty={setFips}></CountyFinder>
-            <ElectionGraph data={electionData} />
-        </div>
-    );
+    if (fips && electionData) {
+        return (
+            <div id="CountyTrends">
+                <div id="Finder" >
+                <CountyFinder getNewCounty={setFips}/>
+                </div>
+                <div id="CountyGraphs" >
+                <ElectionGraph data={electionData} />
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <CountyFinder getNewCounty={setFips}/>
+        );
+    }
 }
 
 export default CountyTrends;

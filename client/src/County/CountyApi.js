@@ -1,10 +1,10 @@
 /* 
  * Api for getting county data
  */
-
+import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
 const C = require('./Constants');
 
-import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
+
 
 /*
 
