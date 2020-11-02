@@ -78,7 +78,7 @@ export default class County extends React.Component {
 
         // Get top 5 industries by 2001-2018 CAGR
         getCountyGrowingIndustry(fips, ERR_HANDLER).then(data => {
-            this.setState({growingIndustry: data});
+            this.setState({fastestGrowingIndustry: data});
         });
         
 
