@@ -1,0 +1,20 @@
+html {
+    scroll-behavior: smooth;
+}
+/**************************************
+STATE FIDER
+***************************************/
+.state-finder {
+    text-align: left;
+    font-family: sans-serif;
+    margin-bottom: 2vh;
+    border-radius: 1%;
+    padding: 20px;
+}
+.btn-state:hover {
+    background-color: lightgray;
+}
+#state-finder-state-container {
+    border-bottom: 1pt solid lightgrey;
+    border-top: 1pt solid lightgrey;
+}

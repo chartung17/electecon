@@ -32,7 +32,9 @@ function CountyTrends() {
         );
     } else {
         return (
+            <div id="Finder" >
             <CountyFinder getNewCounty={setFips}/>
+            </div>
         );
     }
 }
