@@ -18,7 +18,6 @@
 .env.test.local
 .env.production.local
 db-config.js
-.env
 
 npm-debug.log*
 yarn-debug.log*
