@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const countyRoutes = require("./countyRoutes.js");
 const mapRoutes = require("./mapRoutes.js");
+const trendRoutes = require("./trendRoutes");
 const cors = require('cors');
 const router = express();
 
@@ -39,6 +40,10 @@ router.get(API_V1 + '/map/total-gdp', mapRoutes.getTotalGDP);
 router.get(API_V1 + '/map/industry-gdp', mapRoutes.getIndustryGDP);
 router.get(API_V1 + '/map/top-industry', mapRoutes.getTopIndustries);
 
+// Trend Page routes
+router.get(API_V1 + '/trends/state', trendRoutes.getStates);
+router.get(API_V1 + '/trends/state-election', trendRoutes.getStateElectionResults);
+router.get(API_V1 + '/trends/national-election', trendRoutes.getNationalElectionResults);
 
 
 // Put last
