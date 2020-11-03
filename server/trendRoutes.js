@@ -34,6 +34,7 @@ function getStates(req, res) {
     const q = `
     Select Distinct STATE
     FROM County
+    WHERE STATE NOT IN ('AS', 'GU', 'MP', 'PR', 'VI')
     `;
     execQuery(q, res);
 }
