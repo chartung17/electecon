@@ -5,6 +5,7 @@ import EconomyPanel from "./EconomyPanel";
 import ElectionPanel from "./ElectionPanel";
 import CountyFinder from "./CountyFinder";
 import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
+import {getCountyElectionResult, getCountyGDP, getCountyGrowingIndustry, getCountyTopIndustries} from "./CountyApi";
 
 const C = require('./Constants')
 require('dotenv').config()
@@ -61,87 +62,25 @@ export default class County extends React.Component {
             });
 
         // Get county elections result
-        fetch(ENDPOINT.concat(`/elections?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, ERR_HANDLER)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({electionResult: C.PLACEHOLDER_ELECTION_RESULT});
-                } else {
-                    let data = [];
-                    for (let i of [...Array(row.length / 2).keys()]) {
-                        let d_dem = row[i * 2];
-                        let d_rep = row[i * 2 + 1];
-                        data.push(
-                            {
-                                "Year": d_dem["YEAR"],
-                                "DemCandidate": d_dem["CANDIDATE_NAME"],
-                                "RepCandidate": d_rep["CANDIDATE_NAME"],
-                                "DemVote": d_dem["CANDIDATE_VOTES"],
-                                "RepVote": d_rep["CANDIDATE_VOTES"],
-                                "TotalVote": d_dem["TOTAL_VOTES"]      // same as d_rep["TOTAL_VOTES"]
-                            }
-                        );
-                    }
-                    this.setState({electionResult: data});
-                }
-            });
-
+        getCountyElectionResult(fips, ERR_HANDLER).then(electionData => {
+            this.setState({electionResult: electionData});
+        });
+            
         // Get county's yearly gdp (all industries)
-        fetch(ENDPOINT.concat(`/annual-gdp?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, ERR_HANDLER)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({gdpData: C.PLACEHOLDER_GDP_DATA});
-                } else {
-                    let data = [];
-                    for (let i of [...Array(row.length).keys()]) {
-                        data.push(row[i]["GDP"])
-                    }
-                    this.setState({gdpData: data});
-                }
-            });
+        getCountyGDP(fips, ERR_HANDLER).then(data => {
+            this.setState({gdpData: data});
+        });
 
         // Get top 5 industries by size in 2018
-        fetch(ENDPOINT.concat(`/top-industry?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, ERR_HANDLER)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({topIndustry: C.PLACEHOLDER_TOP_INDUSTRY});
-                } else {
-                    let data = [];
-                    for (let i of [...Array(row.length).keys()]) {
-                        data.push({"Description": row[i]["Description"], "GDP": row[i]["GDP"]})
-                    }
-                    this.setState({topIndustry: data});
-                }
-            });
+        getCountyTopIndustries(fips, ERR_HANDLER).then(data => {
+            this.setState({topIndustry: data});
+        });
 
         // Get top 5 industries by 2001-2018 CAGR
-        fetch(ENDPOINT.concat(`/growing-industry?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, this.ERR)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({fastestGrowingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY});
-                } else {
-                    let data = [];
-                    for (let i of [...Array(row.length).keys()]) {
-                        data.push({"Description": row[i]["Description"], "Growth": row[i]["Growth"]})
-                    }
-                    this.setState({fastestGrowingIndustry: data});
-                }
-            });
+        getCountyGrowingIndustry(fips, ERR_HANDLER).then(data => {
+            this.setState({fastestGrowingIndustry: data});
+        });
+        
 
         // Get county's avg. GDP growth national percentile (among counties)
         fetch(ENDPOINT.concat(`/gdp-growth-percentile?fips=${fips}`))
