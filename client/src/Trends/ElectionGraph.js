@@ -6,11 +6,13 @@ import Chart from "react-google-charts";
  */
 function ElectionGraph(props) {
     
+    
     if (!props.data) {
         return (
-            <div id="ElectionGraph">No election data found.</div>
+            <div id="ElectionGraph"></div>
         )
     }
+    
 
     let formattedData = [['Year', 'Democrat Votes', 'Republican Votes']];
     for (let election of props.data) {
