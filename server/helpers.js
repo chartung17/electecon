@@ -39,7 +39,7 @@ function getFilterQuery(req) {
       SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Diff
       FROM TotalVotes2 NATURAL JOIN RepVotes2 NATURAL JOIN DemVotes2
     )
-    SELECT FIPS
+    SELECT DISTINCT FIPS
     FROM Diff
     WHERE Diff ${op} ${req.query.val}
     `;
@@ -59,7 +59,7 @@ function getFilterQuery(req) {
       SELECT FIPS, ((Rep / Total) * 100) AS Percent
       FROM TotalVotes2 NATURAL JOIN RepVotes2
     )
-    SELECT FIPS
+    SELECT DISTINCT FIPS
     FROM Percent
     WHERE Percent ${op} ${req.query.val}
     `;
@@ -79,7 +79,7 @@ function getFilterQuery(req) {
       SELECT FIPS, ((Dem / Total) * 100) AS Percent
       FROM TotalVotes2 NATURAL JOIN DemVotes2
     )
-    SELECT FIPS
+    SELECT DISTINCT FIPS
     FROM Percent
     WHERE Percent ${op} ${req.query.val}
     `;
@@ -100,7 +100,7 @@ function getFilterQuery(req) {
       SELECT FIPS, ((Other / Total) * 100) AS Percent
       FROM TotalVotes2 NATURAL JOIN OtherVotes2
     )
-    SELECT FIPS
+    SELECT DISTINCT FIPS
     FROM Percent
     WHERE Percent ${op} ${req.query.val}
     `;
@@ -127,7 +127,7 @@ function getFilterQuery(req) {
       SELECT FIPS, ((GDP / Total) * 100) AS Percent
       FROM TotalGDP2 NATURAL JOIN IndustryGDP2
     )
-    SELECT FIPS
+    SELECT DISTINCT FIPS
     FROM Percent
     WHERE Percent ${op} ${req.query.val}
     `;
