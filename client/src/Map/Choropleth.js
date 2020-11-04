@@ -322,36 +322,41 @@ export default class Choropleth extends React.Component {
   render() {
     return (
       <div id='choroplethWrap'>
-      <Plot
-      id = 'choropleth'
-      data = {[{
-        type: "choropleth",
-        geojson: "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json",
-        locations: this.state.fips,
-        z: this.state.z,
-        text: this.state.names,
-        colorscale: this.state.colorscale,
-        zmin: this.state.zmin,
-        zmax: this.state.zmax,
-        zauto: this.state.zauto,
-        hovertemplate: this.state.hovertemplate,
-        customdata: this.state.customdata,
-        showscale: this.state.showscale
-      }]}
-      onClick = {(data) => { window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].location + '#county-profile'; }}
-      layout = {{
-        geo: {scope: 'usa'},
-        width: this.state.width,
-        height: this.state.height,
-        autosize: true,
-        margin: {t: 0, b: 0, l: 0, r: 0},
-        title: {text: this.state.title, y: 0.95},
-        dragmode: false
-      }}
-      config = {{responsive: true}}
-      />
+      {this.state.z.length
+        ? <Plot
+            id = 'choropleth'
+            data = {[{
+              type: "choropleth",
+              geojson: "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json",
+              locations: this.state.fips,
+              z: this.state.z,
+              text: this.state.names,
+              colorscale: this.state.colorscale,
+              zmin: this.state.zmin,
+              zmax: this.state.zmax,
+              zauto: this.state.zauto,
+              hovertemplate: this.state.hovertemplate,
+              customdata: this.state.customdata,
+              showscale: this.state.showscale
+            }]}
+            onClick = {(data) => { window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].location + '#county-profile'; }}
+            layout = {{
+              geo: {scope: 'usa'},
+              width: this.state.width,
+              height: this.state.height,
+              autosize: true,
+              margin: {t: 0, b: 0, l: 0, r: 0},
+              title: {text: this.state.title, y: 0.95},
+              dragmode: false
+            }}
+            config = {{responsive: true}}
+          />
+        : <div style={{width: this.state.width, height: this.state.height, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <h1>Loading...</h1>
+          </div>
+      }
       {this.state.showscale
-        ? <div></div>
+        ? null
         : <div id='colorbar'>{this.state.topIndustryColorbar}</div>
       }
       </div>
