@@ -82,7 +82,7 @@ describe('County Page Tests', () => {
                 "GDPAggr": "$69.3 bn",
                 "GDPGrowth": "4.22%",
                 "StateGDPRank": "1 / 4",
-                "GDPGrowthPercentile": "73.5%",
+                "GDPGrowthPercentile": "73.7%",
                 "Top5Industry": {
                     "Government and government enterprises": "22.5",
                     "Real estate and rental and leasing": "17.8",
