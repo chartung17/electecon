@@ -91,3 +91,22 @@ BEGIN
 END $$
 DELIMITER ;
 CALL AddTopIndustries();
+
+
+/**************************************/
+/* INDICES */
+/**************************************/
+
+/*
+Create secondary BTREE index on County.STATE. Improves queries for finding County tuples of some state.
+
+E.g. Finding the list of counties in Texas.
+
+Query : SELECT * FROM County WHERE STATE IN ('TX');
+BEFORE: the query has no possible_keys and has to perform full table scan (3228 rows).
+        Avg of 5: 1.368 ms.
+AFTER : the query uses county_state_idx as possible_keys and examines only the number of counties in that state
+        e.g. 254 counties in Texas.
+        Avg of 5: 0.8404 ms (63% improvement).
+*/
+CREATE INDEX county_state_idx USING BTREE ON County(State);
