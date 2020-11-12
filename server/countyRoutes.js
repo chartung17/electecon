@@ -168,26 +168,15 @@ function getGrowingIndustry(req, res) {
  */
 function getGDPGrowthPercentile(req, res) {
     const q = `
-    WITH Percentile AS (SELECT A.FIPS,
-       	              ROUND(100 * (POWER(B.GDP / A.GDP, 1 / 18) - 1),2) AS Growth
-       	       FROM (SELECT FIPS, GDP
-       	             FROM GDP NATURAL JOIN Industry
-                     WHERE YEAR=2001 AND INDUSTRY_ID=0) A
-       				JOIN
-                    (SELECT FIPS, GDP
-       		         FROM GDP NATURAL JOIN Industry
-                     WHERE YEAR=2018 AND INDUSTRY_ID=0) B
-       				ON A.FIPS=B.FIPS
-       	       WHERE A.GDP IS NOT NULL
-       	       	     AND A.GDP != 0
-       	       	     AND B.GDP IS NOT NULL
-       	       ORDER BY Growth DESC
-               )
-    SELECT FIPS, COUNT(1) / (SELECT COUNT(1) FROM Percentile) AS PERCENTILE
-    FROM Percentile
-    WHERE (SELECT Growth
-    	   FROM Percentile
-    	   WHERE FIPS=${pool.escape(req.query.fips)}) > Percentile.Growth;
+    WITH Ranking AS (SELECT A.FIPS, ROW_NUMBER() OVER w AS position
+		FROM (SELECT FIPS, GDP FROM GDP WHERE YEAR=2001 AND INDUSTRY_ID=0 AND GDP IS NOT NULL) A
+			 JOIN
+             (SELECT FIPS, GDP FROM GDP WHERE YEAR=2018 AND INDUSTRY_ID=0 AND GDP IS NOT NULL) B
+             ON A.FIPS=B.FIPS
+		WINDOW w AS (ORDER BY B.GDP / A.GDP DESC)
+        )
+    SELECT 1 - (SELECT position FROM Ranking WHERE FIPS=${pool.escape(req.query.fips)}) 
+                / (SELECT COUNT(*) FROM Ranking) AS PERCENTILE;
     `;
     execQuery(q, res);
 }
