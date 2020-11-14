@@ -232,24 +232,6 @@ export default class Choropleth extends React.Component {
       console.log(err);
     });
 
-    // get names for all states and store in state
-    fetch(ENDPOINT.concat(`/states`),
-    {
-      method: 'GET'
-    }).then(res => {
-      return res.json();
-    }, err => {
-      console.log(err);
-    }).then(row => {
-      if (!row) return;
-      let states = row.map((rowObj, i) => rowObj.STATE);
-      this.setState({
-        states: states
-      });
-    }, err => {
-      console.log(err);
-    });
-
     // get names and IDs for all industries and store in state
     fetch(ENDPOINT.concat(`/industries`),
     {

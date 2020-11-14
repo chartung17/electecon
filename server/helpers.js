@@ -147,9 +147,10 @@ function getFilterQuery(req) {
       FROM ElectionTable2
       GROUP BY FIPS
     ), OtherVotes2 AS (
-      SELECT FIPS, CANDIDATE_VOTES AS Other
+      SELECT FIPS, SUM(CANDIDATE_VOTES) AS Other
       FROM ElectionTable2 NATURAL JOIN Candidate
       WHERE PARTY IS NULL OR (PARTY != 'Republican' AND PARTY != 'Democrat')
+      GROUP BY FIPS
     ), Percent AS (
       SELECT FIPS, ((Other / Total) * 100) AS Percent
       FROM TotalVotes2 NATURAL JOIN OtherVotes2

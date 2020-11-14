@@ -87,7 +87,7 @@ function getNonAggregateIndustries(req, res) {
 
 /**
 * Get the difference between the percentage of Republican votes
-* and the percentage of Democrat votes for all counties
+* and the percentage of Democrat votes for all counties/states
 *
 * @param req
 * @param res
@@ -122,7 +122,7 @@ function getRepDemDiff(req, res) {
 }
 
 /**
-* Get the percentage of Democrat votes for all counties
+* Get the percentage of Democrat votes for all counties/states
 *
 * @param req
 * @param res
@@ -153,7 +153,7 @@ function getDemVotes(req, res) {
 }
 
 /**
-* Get the percentage of Republican votes for all counties
+* Get the percentage of Republican votes for all counties/states
 *
 * @param req
 * @param res
@@ -184,7 +184,7 @@ function getRepVotes(req, res) {
 }
 
 /**
-* Get the percentage of Other votes for all counties
+* Get the percentage of Other votes for all counties/states
 *
 * @param req
 * @param res
@@ -216,7 +216,7 @@ function getOtherVotes(req, res) {
 }
 
 /**
-* Get the total GDP for all counties
+* Get the total GDP for all counties/states
 *
 * @param req
 * @param res
@@ -239,7 +239,7 @@ function getTotalGDP(req, res) {
 }
 
 /**
-* Get the percentage of GDP from the specified industry for all counties
+* Get the percentage of GDP from the specified industry for all counties/states
 *
 * @param req
 * @param res
@@ -264,7 +264,7 @@ function getIndustryGDP(req, res) {
 }
 
 /**
-* Get largest industry (non-aggregate) for all counties
+* Get largest industry (non-aggregate) for all counties/states
 *
 * @param req
 * @param res
