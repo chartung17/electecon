@@ -110,3 +110,6 @@ AFTER : the query uses county_state_idx as possible_keys and examines only the n
         Avg of 5: 0.8404 ms (63% improvement).
 */
 CREATE INDEX county_state_idx USING BTREE ON County(State);
+
+/* Create index on all fields of GDP table to improve top industry queries */
+CREATE INDEX gdp_idx USING BTREE ON GDP(YEAR, INDUSTRY_ID, FIPS, GDP);
