@@ -6,6 +6,7 @@ import CmpDropdown from './CmpDropdown';
 import CmpInput from './CmpInput';
 import VariableDropdown from './VariableDropdown';
 import FilterCheckbox from './FilterCheckbox';
+import StateCheckbox from './StateCheckbox';
 require('dotenv').config()
 
 export default class Map extends React.Component {
@@ -30,7 +31,9 @@ export default class Map extends React.Component {
       nextVal: 0,
       industry: 1,
       nextIndustry: 1,
-      errorMsg: ''
+      errorMsg: '',
+      aggregate: false,
+      nextAggregate: false
     }
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleVarChange = this.handleVarChange.bind(this);
@@ -39,6 +42,7 @@ export default class Map extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleOpChange = this.handleOpChange.bind(this);
     this.handleValChange = this.handleValChange.bind(this);
+    this.handleLevelChange = this.handleLevelChange.bind(this);
   }
 
   // handle state change in year dropdown
@@ -65,6 +69,13 @@ export default class Map extends React.Component {
   handleFilterChange(newFilter) {
     this.setState({
       nextFilter: newFilter
+    });
+  }
+
+  // handle state change in state checkbox
+  handleLevelChange(newAggregate) {
+    this.setState({
+      nextAggregate: newAggregate
     });
   }
 
@@ -167,7 +178,8 @@ export default class Map extends React.Component {
         val: this.state.nextVal,
         queryURL: queryURL,
         industry: this.state.nextIndustry,
-        errorMsg: ''
+        errorMsg: '',
+        aggregate: this.state.nextAggregate
       });
     } else {
       this.setState({
@@ -179,7 +191,8 @@ export default class Map extends React.Component {
         val: this.state.nextVal,
         queryURL: queryURL,
         industry: this.state.nextIndustry,
-        errorMsg: ''
+        errorMsg: '',
+        aggregate: this.state.nextAggregate
       });
     }
   };
@@ -196,6 +209,7 @@ export default class Map extends React.Component {
           val={this.state.val}
           queryURL={this.state.queryURL}
           industry={this.state.industry}
+          level={this.state.aggregate ? 'state' : 'county'}
         />
         <p className='error'>{this.state.errorMsg}</p>
         <p>Select a year and variable, then click "Submit" to update the map.</p>
@@ -208,6 +222,11 @@ export default class Map extends React.Component {
             id='variable-dropdown'
             handleVarChange={this.handleVarChange}
             includeCategorical={true}
+          />
+          <StateCheckbox
+            id='aggregate'
+            checked={this.state.aggregate}
+            handleLevelChange={this.handleLevelChange}
           />
           <button id='submit' onClick={this.handleClick}>Submit</button>
         </section>

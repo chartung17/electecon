@@ -15,7 +15,7 @@ export default class Choropleth extends React.Component {
     super(props);
     this.state = {
       fips: [],
-      names: [],
+      countyNames: [],
       z: [],
       industries: [],
       nonAggregateIndustries: [],
@@ -37,7 +37,11 @@ export default class Choropleth extends React.Component {
       val: props.val,
       industry: props.industry,
       hovertemplate: '',
-      showscale: true
+      showscale: true,
+      level: props.level,
+      locationmode: '',
+      locations: [],
+      names: []
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
@@ -129,13 +133,17 @@ export default class Choropleth extends React.Component {
     }
     return '<b>%{text}</b><br>%{z}<extra></extra>';
   }
+  locationmode(queryURL, states) {
+    if (queryURL.includes('level=county')) return ['geojson-id', this.state.fips, this.state.countyNames];
+    return ['USA-states', states, states];
+  }
 
   // query the specified URL and update state accordingly
   queryZ() {
     let queryURL = this.state.queryURL + '?year=' + this.state.year +
       '&filter=' + this.state.filter + '&filteryear=' + this.state.filterYear +
       '&operand=' + this.state.operand + '&val=' + this.state.val +
-      '&industry=' + this.state.industry;
+      '&industry=' + this.state.industry + '&level=' + this.state.level;
     let currentState = this.state;
     let customdata = [];
     fetch(ENDPOINT.concat(queryURL),
@@ -148,6 +156,11 @@ export default class Choropleth extends React.Component {
     }).then(row => {
       if (!row) return;
       let z = row.map((rowObj, i) => rowObj.Z);
+      let states = row.map((rowObj, i) => rowObj.FIPS);
+      if (!z.length) {
+        z = [null];
+        states = [null];
+      }
       if (queryURL.startsWith('/top-industry')) {
         for (let j = 0; j < z.length; j++) {
           customdata.push(this.state.nonAggregateIndustries[this.state.nonAggregateIndIDs.indexOf(z[j])]);
@@ -166,6 +179,7 @@ export default class Choropleth extends React.Component {
       }
       let gdpColorscale = this.gdpColorscale(z);
       let zMinMaxAuto = this.zMinMaxAuto(queryURL);
+      let locationmode = this.locationmode(queryURL, states);
       // make sure query matches current selection; if not, abort
       if ((currentState !== this.state) && (this.state.z.length > 0)) {
         return;
@@ -181,7 +195,10 @@ export default class Choropleth extends React.Component {
           hovertemplate: this.hovertemplate(queryURL),
           showscale: !(queryURL.startsWith('/top-industry')),
           z: z,
-          customdata: customdata
+          customdata: customdata,
+          locationmode: locationmode[0],
+          locations: locationmode[1],
+          names: locationmode[2]
         });
       }
     }, err => {
@@ -209,7 +226,25 @@ export default class Choropleth extends React.Component {
       let names = row.map((rowObj, i) => rowObj.NAME);
       this.setState({
         fips: fips,
-        names: names
+        countyNames: names
+      });
+    }, err => {
+      console.log(err);
+    });
+
+    // get names for all states and store in state
+    fetch(ENDPOINT.concat(`/states`),
+    {
+      method: 'GET'
+    }).then(res => {
+      return res.json();
+    }, err => {
+      console.log(err);
+    }).then(row => {
+      if (!row) return;
+      let states = row.map((rowObj, i) => rowObj.STATE);
+      this.setState({
+        states: states
       });
     }, err => {
       console.log(err);
@@ -309,7 +344,8 @@ export default class Choropleth extends React.Component {
       filterYear: nextProps.filterYear,
       operand: nextProps.operand,
       val: nextProps.val,
-      industry: nextProps.industry
+      industry: nextProps.industry,
+      level: nextProps.level
     });
   }
   componentDidUpdate(prevProps) {
@@ -322,13 +358,14 @@ export default class Choropleth extends React.Component {
   render() {
     return (
       <div id='choroplethWrap'>
-      {this.state.z.length
+      {this.state.locationmode
         ? <Plot
             id = 'choropleth'
             data = {[{
               type: "choropleth",
               geojson: "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json",
-              locations: this.state.fips,
+              locationmode: this.state.locationmode,
+              locations: this.state.locations,
               z: this.state.z,
               text: this.state.names,
               colorscale: this.state.colorscale,
@@ -339,7 +376,11 @@ export default class Choropleth extends React.Component {
               customdata: this.state.customdata,
               showscale: this.state.showscale
             }]}
-            onClick = {(data) => { window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].location + '#county-profile'; }}
+            onClick = {(data) => {
+              if (this.state.level === 'county') {
+                window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].location + '#county-profile';
+              }
+            }}
             layout = {{
               geo: {scope: 'usa'},
               width: this.state.width,

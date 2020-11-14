@@ -16,7 +16,7 @@ section {
   flex-wrap: wrap;
 }
 
-.dropdown label, .filter label {
+.dropdown label, .checkbox label {
   padding-right: 5px;
 }
 

@@ -30,6 +30,7 @@ router.get(API_V1 + '/county/county-voting-for-party', countyRoutes.getCountyVot
 
 // Map page routes
 router.get(API_V1 + '/map/counties', mapRoutes.getAllCounties);
+router.get(API_V1 + '/map/states', mapRoutes.getAllStates);
 router.get(API_V1 + '/map/rep-dem-diff', mapRoutes.getRepDemDiff);
 router.get(API_V1 + '/map/dem-votes', mapRoutes.getDemVotes);
 router.get(API_V1 + '/map/rep-votes', mapRoutes.getRepVotes);
