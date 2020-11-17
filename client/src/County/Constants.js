@@ -1,34 +1,23 @@
-export const PLACEHOLDER_GDP_DATA = Array(18).fill(0);
-export const PLACEHOLDER_TOP_INDUSTRY = Array.from({length: 5}).fill({"Description": "", "GDP": 0});
-export const PLACEHOLDER_GROWING_INDUSTRY = Array.from({length: 5}).fill({"Description": "", "Growth": "0"});
-export const PLACEHOLDER_ELECTION_RESULT = [
-    {
-        "Year": 2016, "DemCandidate": "Hillary Clinton",
-        "RepCandidate": "Donald Trump", "DemVote": 0, "RepVote": 0, "TotalVote": 0
-    },
-    {
-        "Year": 2012, "DemCandidate": "Barack Obama",
-        "RepCandidate": "Mitt Romney", "DemVote": 0, "RepVote": 0, "TotalVote": 0
-    },
-    {
-        "Year": 2008, "DemCandidate": "Barack Obama",
-        "RepCandidate": "John McCain", "DemVote": 0, "RepVote": 0, "TotalVote": 0
-    },
-    {
-        "Year": 2004, "DemCandidate": "John Kerry",
-        "RepCandidate": "George W. Bush", "DemVote": 0, "RepVote": 0, "TotalVote": 0
-    },
-    {
-        "Year": 2000, "DemCandidate": "Al Gore",
-        "RepCandidate": "George W. Bush", "DemVote": 0, "RepVote": 0, "TotalVote": 0
-    },
-];
-export const PLACEHOLDER_STATE_GDP_RANK = "N/A";
-export const PLACEHOLDER_GDP_GROWTH_PERCENTILE = "N/A";
-export const PLACEHOLDER_COUNTY_VOTING_FOR_PARTY = "";
-export const PLACEHOLDER_NUM_COUNTY_IN_STATE = 0;
-export const PLACEHOLDER_COUNTY_NAME = "County";
-export const PLACEHOLDER_COUNTY_STATE= "State";
+export const PLACEHOLDER = {
+    countyName: "Name",
+    countyState: "State",
+    gdpData: Array(18).fill(0),
+    fastestGrowingIndustry: Array.from({length: 5}).fill({"Description": "", "Growth": "0"}),
+    topIndustry: Array.from({length: 5}).fill({"Description": "", "GDP": 0}),
+    electionResult: [
+       [2016, "Hillary Clinton", "Donald Trump"],
+       [2012, "Barack Obama", "Mitt Romney"],
+       [2008, "Barack Obama", "John  McCain"],
+       [2004, "John Kerry", "George W. Bush"],
+       [2000, "Al Gore", "George W. Bush"],
+    ].map((vals) => {
+        return {"Year": vals[0], "DemCandidate": vals[1], "RepCandidate": vals[2], "DemVote": 0, "RepVote": 0, "TotalVote": 0}
+    }),
+    GDPGrowthPercentile: "N/A",
+    stateGDPRank: "N/A",
+    countyVotingForParty: "",
+    numCountyInState: 0,
+}
 
 export const CANDIDATE_IMAGE = {
     "Donald Trump": "donald_trump.jpg",

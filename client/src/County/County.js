@@ -14,18 +14,7 @@ export const ASSETS_PATH = process.env.PUBLIC_URL + `/assets`;
 export default class County extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            countyName: C.PLACEHOLDER_COUNTY_NAME,
-            countyState: C.PLACEHOLDER_COUNTY_STATE,
-            gdpData: C.PLACEHOLDER_GDP_DATA,
-            fastestGrowingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY,
-            topIndustry: C.PLACEHOLDER_TOP_INDUSTRY,
-            electionResult: C.PLACEHOLDER_ELECTION_RESULT,
-            GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE,
-            stateGDPRank: C.PLACEHOLDER_STATE_GDP_RANK,
-            countyVotingForParty: C.PLACEHOLDER_COUNTY_VOTING_FOR_PARTY,
-            numCountyInState: C.PLACEHOLDER_NUM_COUNTY_IN_STATE,
-        }
+        this.state = {...C.PLACEHOLDER};
         document.title = 'County Details'
     }
 
@@ -49,8 +38,8 @@ export default class County extends React.Component {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
                     this.setState({
-                        countyName: C.PLACEHOLDER_COUNTY_NAME,
-                        countyState: C.PLACEHOLDER_COUNTY_STATE
+                        countyName: C.PLACEHOLDER["countyName"],
+                        countyState: C.PLACEHOLDER["countyState"]
                     });
                     document.title = `County Details`;
                 } else {
@@ -90,7 +79,7 @@ export default class County extends React.Component {
             .then(row => {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
-                    this.setState({GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE});
+                    this.setState({GDPGrowthPercentile: C.PLACEHOLDER["GDPGrowthPercentile"]});
                 } else {
                     let percentile = (row[0]["PERCENTILE"] * 100).toFixed(1) + '%';
                     this.setState({GDPGrowthPercentile: percentile});
@@ -105,7 +94,7 @@ export default class County extends React.Component {
             .then(row => {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
-                    this.setState({stateGDPRank: C.PLACEHOLDER_STATE_GDP_RANK});
+                    this.setState({stateGDPRank: C.PLACEHOLDER["stateGDPRank"]});
                 } else {
                     let rank = `${row[0]["COUNTY_GDP_RANK"]} / ${row[0]["STATE_COUNTY_COUNT"]}`;
                     this.setState({stateGDPRank: rank, numCountyInState: row[0]["STATE_COUNTY_COUNT"]});
@@ -121,7 +110,7 @@ export default class County extends React.Component {
             .then(row => {
                 if (row === undefined || row === null || row.length === 0) {
                     // revert to default data
-                    this.setState({countyVotingForParty: C.PLACEHOLDER_COUNTY_VOTING_FOR_PARTY});
+                    this.setState({countyVotingForParty: C.PLACEHOLDER["countyVotingForParty"]});
                 } else {
                     this.setState({countyVotingForParty: row});
                 }
@@ -133,7 +122,7 @@ export default class County extends React.Component {
             <Fragment>
                 <CountyFinder getNewCounty={this.getNewCounty}/>
                 <div id={"county-profile"}/>
-                {this.state.countyName === C.PLACEHOLDER_COUNTY_NAME ? null :
+                {this.state.countyName === C.PLACEHOLDER["countyName"] ? null :
                     <div id={"county-details"} className={"container"}>
                         <div id={"county-name-container"}>
                             <h1 id={"county-name"}>
