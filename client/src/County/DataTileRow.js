@@ -1,6 +1,18 @@
 import React, {Fragment} from "react";
+import './styles/DataTileRow.css'
 
-export default class EconomyDataTile extends React.Component {
+/**
+ * Data tile row group
+ *
+ * Props:
+ * - data: [
+ *          {id: str element id,
+ *          type: "value" or "icon",
+ *          title: str name of the data,
+ *          value: str
+ *          }, ..., {...}]
+ */
+export default class DataTileRow extends React.Component {
     render() {
         return (
             <Fragment>
@@ -8,9 +20,9 @@ export default class EconomyDataTile extends React.Component {
                     {this.props.data.map((value, index) => {
                         return (
                             <Fragment key={index}>
-                                <td className={"econ-tile-title"}>{value["title"]}</td>
+                                <td className={"data-tile-title"}>{value["title"]}</td>
                                 {index === this.props.data.length - 1 ? null :
-                                    <td className={"econ-tile-separator"}/>
+                                    <td className={"data-tile-separator"}/>
                                 }
                             </Fragment>
                         )
@@ -20,16 +32,15 @@ export default class EconomyDataTile extends React.Component {
                     {this.props.data.map((value, index) => {
                         return (
                             <Fragment key={index}>
-                                <td id={value["id"]} className={"econ-tile"}>
+                                <td id={value["id"]} className={"data-tile"}>
                                     {value["type"] === "value" ? value["value"] :
                                         <Fragment>
                                             <img
-                                                className={"econ-tile-image"}
+                                                className={"data-tile-image"}
                                                 src={value["src"]}
                                                 alt={value["caption"]}
                                             />
-                                            <div id={"top-industry-image-caption"}
-                                                 className={"econ-tile-image-caption"}>
+                                            <div className={"data-tile-image-caption"}>
                                                 {value["caption"]}
                                             </div>
                                         </Fragment>
