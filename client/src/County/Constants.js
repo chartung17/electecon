@@ -1,3 +1,9 @@
+export const YEAR = {
+    firstGDP: 2001,
+    lastGDP: 2018,
+    election: [2000, 2004, 2008, 2012, 2016]
+}
+
 export const PLACEHOLDER = {
     countyName: "Name",
     countyState: "State",
