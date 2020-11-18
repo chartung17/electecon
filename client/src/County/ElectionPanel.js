@@ -2,8 +2,12 @@ import React from "react";
 import ElectionSummary from "./ElectionSummary"
 import ElectionResults from "./ElectionResults";
 import {getPartyPreference, isElectionDataValid} from "./helper";
-import ElectionSpectrum from "./ElectionSpectrum";
+import Spectrum from "./Spectrum";
+import './styles/ElectionPanel.css'
 
+/**
+ * Display county's election details.
+ */
 export default class ElectionPanel extends React.Component {
     render() {
         if (!isElectionDataValid(this.props.electionResult)) {
@@ -25,16 +29,18 @@ export default class ElectionPanel extends React.Component {
                     Elections
                 </div>
 
-                <table className={"election-table"}>
-                    <tbody>
-                    <ElectionSpectrum preference={getPartyPreference(this.props.electionResult)}/>
-                    <tr>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <ElectionSummary {...this.props} />
-                    </tbody>
-                </table>
-
+                <Spectrum
+                    label={{
+                        "0": {label: "Democrats", style: {textAlign: "left"}},
+                        "1": {label: "Lean Dem", style: {textAlign: "left"}},
+                        "2": {label: "Swing", style: {textAlign: "center"}},
+                        "3": {label: "Lean Rep", style: {textAlign: "right"}},
+                        "4": {label: "Republican", style: {textAlign: "right"}},
+                    }}
+                    value={getPartyPreference(this.props.electionResult)}
+                    color={"blue, lightblue, lightpink, red"}
+                />
+                <ElectionSummary {...this.props} />
                 <ElectionResults {...this.props}/>
             </div>
         );

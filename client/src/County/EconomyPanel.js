@@ -1,11 +1,16 @@
 import React from 'react';
 import Chart from "react-google-charts";
-import EconomyBarChart from "./EconomyBarChart";
-import EconomyDataTile from "./EconomyDataTile";
+import BarChart from "./BarChart";
+import DataTile from "./DataTile";
 import {ASSETS_PATH} from "./County";
 import {INDUSTRY_ICON} from "./Constants";
 import {getGrowthChartData, isGDPDataValid, getTileData} from "./helper";
+import './styles/EconomyPanel.css'
 
+/**
+ * Display county's economic details.
+ *
+ */
 export default class EconomyPanel extends React.Component {
     render() {
         let gdpData = this.props.gdpData;
@@ -31,20 +36,10 @@ export default class EconomyPanel extends React.Component {
                     Economy
                 </div>
 
-                <div className={"econ-tile-container"}>
-                    <div className={"econ-subpanel-title econ-tile-container-title"}>
-                        Overview
-                    </div>
-                    <table className={"econ-tile-table"}>
-                        <tbody>
-                            <EconomyDataTile data={tileData[0]}/>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <EconomyDataTile data={tileData[1]}/>
-                        </tbody>
-                    </table>
-                </div>
+                <DataTile
+                    title={"Overview"}
+                    data={tileData}
+                />
 
                 <div id={"gdp-growth-chart"}>
                     <div className={"econ-subpanel-title"}>GDP Growth</div>
@@ -52,7 +47,7 @@ export default class EconomyPanel extends React.Component {
                            options={{legend: 'none', vAxis: {title: '% YoY'},}}/>
                 </div>
 
-                <EconomyBarChart
+                <BarChart
                     title="Top 5 Industries"
                     idPrefix="top-gdp"
                     unit="%GDP"
@@ -62,7 +57,7 @@ export default class EconomyPanel extends React.Component {
                     data={
                         [this.props.topIndustry.map((value, index) => {
                             return {
-                                pct: value["GDP"] / gdpData[gdpData.length - 1] * 100,
+                                value: value["GDP"] / gdpData[gdpData.length - 1] * 100,
                                 desc: value["Description"],
                                 icon: `${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[value["Description"]]}`
                             }
@@ -71,7 +66,7 @@ export default class EconomyPanel extends React.Component {
                     }
                 />
 
-                <EconomyBarChart
+                <BarChart
                     title="Fastest Growing Industries"
                     idPrefix="growing-industry"
                     unit="%"
@@ -81,7 +76,7 @@ export default class EconomyPanel extends React.Component {
                     data={
                         [this.props.fastestGrowingIndustry.map((value, index) => {
                             return {
-                                pct: parseFloat(value["Growth"]),
+                                value: parseFloat(value["Growth"]),
                                 desc: value["Description"],
                                 icon: `${INDUSTRY_ICON_PATH}/${INDUSTRY_ICON[value["Description"]]}`
                             }
