@@ -1,0 +1,25 @@
+html {
+    scroll-behavior: smooth;
+}
+
+#county-details {
+    border-bottom: solid 1pt lightgray;
+    text-align: left;
+    font-family: sans-serif;
+    padding-bottom: 3vh;
+    margin-bottom: 5vh;
+}
+
+#county-name-container {
+    text-align: center;
+    padding-bottom: 1vh;
+    margin-top: 4vh;
+}
+
+#county-name {
+    border-bottom: 1pt solid lightgrey;
+    padding-bottom: 3vh;
+    font-weight: bold;
+}
+
+

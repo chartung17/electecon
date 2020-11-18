@@ -1,131 +1,59 @@
 import React, {Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import './County.css'
+import './styles/County.css'
 import EconomyPanel from "./EconomyPanel";
 import ElectionPanel from "./ElectionPanel";
 import CountyFinder from "./CountyFinder";
-import {COUNTY_ENDPOINT as ENDPOINT} from '../App';
-import {getCountyElectionResult, getCountyGDP, getCountyGrowingIndustry, getCountyTopIndustries} from "./CountyApi";
+import {getCountyData} from "./CountyApi";
+import LoadingText from "./LoadingText";
 
 const C = require('./Constants')
 require('dotenv').config()
 export const ASSETS_PATH = process.env.PUBLIC_URL + `/assets`;
 
+/**
+ * Highest order component of the County details page.
+ */
 export default class County extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            countyName: C.PLACEHOLDER_COUNTY_NAME,
-            countyState: C.PLACEHOLDER_COUNTY_STATE,
-            gdpData: C.PLACEHOLDER_GDP_DATA,
-            fastestGrowingIndustry: C.PLACEHOLDER_GROWING_INDUSTRY,
-            topIndustry: C.PLACEHOLDER_TOP_INDUSTRY,
-            electionResult: C.PLACEHOLDER_ELECTION_RESULT,
-            GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE,
-            stateGDPRank: C.PLACEHOLDER_STATE_GDP_RANK,
-            countyVotingForParty: C.PLACEHOLDER_COUNTY_VOTING_FOR_PARTY,
-            numCountyInState: C.PLACEHOLDER_NUM_COUNTY_IN_STATE,
-        }
+            ...C.PLACEHOLDER,
+            isFetching: false,
+            validCounty : true
+        };
         document.title = 'County Details'
     }
 
     componentDidMount() {
         if (this.props.match !== undefined && this.props.match.params.fips !== undefined) {
-            this.getNewCounty(this.props.match.params.fips)
+            this.getNewCounty(this.props.match.params.fips);
         }
     }
 
     getNewCounty = (fips) => {
-        let ERR_HANDLER = (err) => {
-            console.log(err)
-        };
+        this.setState({isFetching: true})
 
-        // Get county name, state
-        fetch(ENDPOINT.concat(`/counties?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, ERR_HANDLER)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({
-                        countyName: C.PLACEHOLDER_COUNTY_NAME,
-                        countyState: C.PLACEHOLDER_COUNTY_STATE
-                    });
-                    document.title = `County Details`;
-                } else {
-                    this.setState({countyName: row[0]["NAME"], countyState: row[0]["STATE"]})
-                    window.history.pushState({}, null, process.env.PUBLIC_URL + `/county/${fips}`);
-                    document.getElementById("county-profile").scrollIntoView();
-                }
+        getCountyData(fips).then((data) => {
+            let newState = [];
+
+            // flatten results
+            for (const datum of data) {
+                newState = {...newState, ...datum};
+            }
+            this.setState({...newState, isFetching: false});
+
+            // set page title, window and scroll behavior
+            if (newState["countyName"] === C.PLACEHOLDER["countyName"]) {
+                this.setState({validCounty: false});
+                document.title = `County Details`;
+            } else {
+                this.setState({validCounty: true});
+                window.history.pushState({}, null, process.env.PUBLIC_URL + `/county/${fips}`);
+                document.getElementById("county-profile").scrollIntoView();
                 document.title = `${this.state.countyName}, ${this.state.countyState} - County Details`
-            });
-
-        // Get county elections result
-        getCountyElectionResult(fips, ERR_HANDLER).then(electionData => {
-            this.setState({electionResult: electionData});
+            }
         });
-            
-        // Get county's yearly gdp (all industries)
-        getCountyGDP(fips, ERR_HANDLER).then(data => {
-            this.setState({gdpData: data});
-        });
-
-        // Get top 5 industries by size in 2018
-        getCountyTopIndustries(fips, ERR_HANDLER).then(data => {
-            this.setState({topIndustry: data});
-        });
-
-        // Get top 5 industries by 2001-2018 CAGR
-        getCountyGrowingIndustry(fips, ERR_HANDLER).then(data => {
-            this.setState({fastestGrowingIndustry: data});
-        });
-        
-
-        // Get county's avg. GDP growth national percentile (among counties)
-        fetch(ENDPOINT.concat(`/gdp-growth-percentile?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, this.ERR)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({GDPGrowthPercentile: C.PLACEHOLDER_GDP_GROWTH_PERCENTILE});
-                } else {
-                    let percentile = (row[0]["PERCENTILE"] * 100).toFixed(1) + '%';
-                    this.setState({GDPGrowthPercentile: percentile});
-                }
-            });
-
-        // Get county's GDP rank within the state
-        fetch(ENDPOINT.concat(`/state-gdp-rank?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, this.ERR)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({stateGDPRank: C.PLACEHOLDER_STATE_GDP_RANK});
-                } else {
-                    let rank = `${row[0]["COUNTY_GDP_RANK"]} / ${row[0]["STATE_COUNTY_COUNT"]}`;
-                    this.setState({stateGDPRank: rank, numCountyInState: row[0]["STATE_COUNTY_COUNT"]});
-                }
-            });
-
-        // Get the fips and county name within the same state where
-        // the party winning the 2016 election in this county also won in those counties.
-        fetch(ENDPOINT.concat(`/county-voting-for-party?fips=${fips}`))
-            .then(res => {
-                return res.json();
-            }, this.ERR)
-            .then(row => {
-                if (row === undefined || row === null || row.length === 0) {
-                    // revert to default data
-                    this.setState({countyVotingForParty: C.PLACEHOLDER_COUNTY_VOTING_FOR_PARTY});
-                } else {
-                    this.setState({countyVotingForParty: row});
-                }
-            });
     }
 
     render() {
@@ -133,7 +61,9 @@ export default class County extends React.Component {
             <Fragment>
                 <CountyFinder getNewCounty={this.getNewCounty}/>
                 <div id={"county-profile"}/>
-                {this.state.countyName === C.PLACEHOLDER_COUNTY_NAME ? null :
+                {(this.state.isFetching ||
+                    this.state.countyName === C.PLACEHOLDER["countyName"]
+                ) ? null :
                     <div id={"county-details"} className={"container"}>
                         <div id={"county-name-container"}>
                             <h1 id={"county-name"}>
@@ -149,6 +79,18 @@ export default class County extends React.Component {
                         </div>
                     </div>
                 }
+                {!this.state.isFetching ? null : (
+                    <LoadingText
+                        id={"fetching-message"}
+                        style={{"paddingBottom":"40vh", "fontSize": "18pt"}}
+                        text={"Fetching result"}
+                    />
+                )}
+                {(this.state.isFetching || this.state.validCounty) ? null : (
+                    <h4>
+                        County not found.
+                    </h4>
+                )}
             </Fragment>
         );
     }

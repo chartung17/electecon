@@ -100,7 +100,7 @@ describe('County Page Tests', () => {
                 "BulletPoints": {
                     0: "Democratic candidates won 5 out of the last 5 general elections in Honolulu County, HI.",
                     1: "The Democratic winners, on average, lead by 25.6 percentage point.",
-                    2: "285790 in Honolulu County voted 2016 election, a 16.6% increase to that of 2012, a 11.6% increase to that of 2001.",
+                    2: "285790 in Honolulu County voted 2016 election, a 15.9% increase to that of 2012, a 11.6% increase to that of 2000.",
                     3: "Honolulu County joins 3 other counties in HI that pre-dominantly voted for Democratic candidate in 2016, out of the 4 counties in HI."
                 },
                 "ElectionResult": {

@@ -4,18 +4,13 @@ import CountyFinder from '../County/CountyFinder';
 import ElectionGraph from './ElectionGraph';
 
 function CountyTrends() {
-    let ERR_HANDLER = (err) => {
-        console.log(err)
-    };
-
     const [fips, setFips] = useState(null);
     const [electionData, setElectionData] = useState(null);
 
     // if fips changes, fetch new election results
     useEffect(() => {
-        // call api to get election results
-        getCountyElectionResult(fips, ERR_HANDLER).then(electionData => {
-            setElectionData(electionData);
+        getCountyElectionResult(fips).then(electionData => {
+            setElectionData(electionData["electionResult"]);
         })
     }, [fips]);
 

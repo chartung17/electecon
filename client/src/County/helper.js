@@ -1,6 +1,15 @@
 import {INDUSTRY_ICON} from "./Constants";
-
 const C = require('./Constants')
+
+/**
+ * Check if data is undefined, null, or of length 0
+ *
+ * @param data
+ * @returns {boolean}
+ */
+export function isEmpty(data) {
+    return data === undefined || data === null || data.length === 0
+}
 
 /**
  * Compute a county's party preference over the last 5 elections
@@ -49,18 +58,20 @@ export function getPartyPreference(electionResult) {
  * Compute basic election stats
  *
  * @param electionResult
- * @returns {{WinnerLead: number, WinnerParty: string, WinnerCount: number, LastNumVotes: number, NumVoteChangePct2001: number, NumVoteChangePct2012: number}}
+ * @returns {{WinnerLead: number, WinnerParty: string, WinnerCount: number, LastNumVotes: *, VotePctChangeFirstElection: number, VotePctChangePenultimateElection: number}}
  */
 export function getStats(electionResult) {
     let repWinCount = 0;
     let demWinCount = 0;
     let demWinLead = 0;
     let repWinLead = 0;
-    let totalVote2001 = 0;
-    let totalVote2012 = 0;
-    let totalVote2016 = 0;
 
-    electionResult.forEach((value, index) => {
+    let votesFirstElection = 0;
+    let votesPenultimateElection = 0;
+    let votesLastElection = 0;
+
+    // assume electionResult is sorted by year desc
+    electionResult.forEach((value) => {
         const totalVote = parseInt(value["TotalVote"])
         let demPct = parseInt(value["DemVote"]) * 100 / totalVote;
         let repPct = parseInt(value["RepVote"]) * 100 / totalVote;
@@ -72,23 +83,24 @@ export function getStats(electionResult) {
             demWinCount += 1
             demWinLead += demPct - repPct
         }
-        if (index === 0) totalVote2016 = totalVote;
-        if (index === 3) totalVote2012 = totalVote;
-        if (index === 4) totalVote2001 = totalVote;
+        if (value["Year"] === C.YEAR.election[C.YEAR.election.length - 1]) votesLastElection = totalVote;
+        if (value["Year"] === C.YEAR.election[C.YEAR.election.length - 2]) votesPenultimateElection = totalVote;
+        if (value["Year"] === C.YEAR.election[0]) votesFirstElection = totalVote;
     });
+
     return {
         "WinnerParty": (repWinCount >= 3 ? 'Republican' : 'Democratic'),
         "WinnerCount": (repWinCount >= 3 ? repWinCount : 5 - repWinCount),
         "WinnerLead": (repWinCount >= 3 ? repWinLead / repWinCount : demWinLead / demWinCount),
-        "LastNumVotes": totalVote2016,
-        "NumVoteChangePct2001": 100 * ((totalVote2016 / totalVote2001) - 1),
-        "NumVoteChangePct2012": 100 * ((totalVote2012 / totalVote2001) - 1),
+        "LastNumVotes": votesLastElection,
+        "VotePctChangeFirstElection": 100 * ((votesLastElection / votesFirstElection) - 1),
+        "VotePctChangePenultimateElection": 100 * ((votesPenultimateElection / votesFirstElection) - 1)
     };
 }
 
 
 export function isGDPDataValid(gdpData) {
-    if (gdpData === undefined || gdpData === C.PLACEHOLDER_GDP_DATA || gdpData.includes(null) || gdpData.length !== 18) {
+    if (gdpData === undefined || gdpData === C.PLACEHOLDER["gdpData"] || gdpData.includes(null) || gdpData.length !== 18) {
         return false;
     }
     for (const gdpDatum of gdpData) {
@@ -100,8 +112,7 @@ export function isGDPDataValid(gdpData) {
 }
 
 export function isElectionDataValid(electionData) {
-    console.log(electionData)
-    if (electionData === undefined || electionData === C.PLACEHOLDER_ELECTION_RESULT || electionData.includes(null) || electionData.length !== 5) {
+    if (electionData === undefined || electionData === C.PLACEHOLDER["electionResult"] || electionData.includes(null) || electionData.length !== 5) {
         return false;
     }
     for (const electionDatum of electionData) {
@@ -123,20 +134,19 @@ export function getGDPCAGR(gdpData) {
 export function getGrowthChartData(gdpData) {
     let growthChartData = [[{type: 'string', label: 'Year'}, {type: 'number', label: 'Growth'}]];
     for (let i = 1; i < gdpData.length; i++) {
-        growthChartData.push([(2001 + i) + "", 100 * ((gdpData[i] / gdpData[i - 1]) - 1)]);
+        growthChartData.push([(C.YEAR.firstGDP + i) + "", 100 * ((gdpData[i] / gdpData[i - 1]) - 1)]);
     }
     return growthChartData;
 }
 
-
 export function getTileData(data, INDUSTRY_ICON_PATH) {
     return [
         [
-            {"id": "total-gdp-number", "type": "value", "title": "GDP\n\n(2018)", "value": getTotalGDP(data.gdpData)},
+            {"id": "total-gdp-number", "type": "value", "title": `GDP\n\n(${C.YEAR.lastGDP})`, "value": getTotalGDP(data.gdpData)},
             {
                 "id": "gdp-cagr-number",
                 "type": "value",
-                "title": "Avg. Annual Growth\n(2001-2018)",
+                "title": `Avg. Annual Growth\n(${C.YEAR.firstGDP}-${C.YEAR.lastGDP})`,
                 "value": getGDPCAGR(data.gdpData)
             },
             {

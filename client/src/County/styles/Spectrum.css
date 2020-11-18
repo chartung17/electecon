@@ -1,0 +1,14 @@
+.spectrum-table{
+    width: 100%;
+    margin-bottom: 5vh;
+}
+.spectrum-container{
+    border-top:solid 1pt lightgrey;
+}
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid black;
+}

@@ -1,0 +1,14 @@
+.county-finder {
+    text-align: left;
+    font-family: sans-serif;
+    margin-bottom: 2vh;
+    border-radius: 1%;
+    padding: 20px;
+}
+.btn-state:hover, .btn-county:hover {
+    background-color: lightgray;
+}
+#county-finder-state-container, #county-finder-county-container {
+    border-bottom: 1pt solid lightgrey;
+    border-top: 1pt solid lightgrey;
+}

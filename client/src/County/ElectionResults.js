@@ -1,8 +1,13 @@
 import React, {Fragment} from "react";
 import {CANDIDATE_IMAGE} from "./Constants";
 import {ASSETS_PATH} from "./County";
+import './styles/ElectionResults.css'
 
-export default class ElectionSummary extends React.Component {
+/**
+ * Display past election results.
+ *
+ */
+export default class ElectionResults extends React.Component {
     render() {
         let CANDIDATE_IMG_PATH = `${ASSETS_PATH}/images/candidate`;
         let CHECKMARK_ICON = `${ASSETS_PATH}/icons/other/checkmark.svg`;
@@ -54,9 +59,6 @@ export default class ElectionSummary extends React.Component {
                                         ({value["DemVote"]})
                                     </div>
                                 </td>
-
-
-
                                 <td className={"republican-results-container"}>
                                     {!repWon ? null :
                                         <img src={CHECKMARK_ICON} alt="checkmark" className={"republican-vote-checkmark"}
