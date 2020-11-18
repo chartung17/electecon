@@ -1,0 +1,23 @@
+.economy-panel {
+    border-radius: 10px;
+}
+.economy-panel-title, .election-panel-title {
+    font: 20pt black;
+    font-family: sans-serif;
+    padding-bottom: 5vh;
+    text-align: center;
+    font-weight: bolder;
+}
+.econ-subpanel-title
+{
+    font: 18pt black;
+    font-family: sans-serif;
+}
+#gdp-growth-chart{
+    margin-top: 5vh;
+    padding: 5px;
+    border-top: solid 1pt lightgrey
+}
+#data-unavailable-warning {
+    text-align: center;
+}

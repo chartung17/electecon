@@ -1,0 +1,28 @@
+.data-tile-title{
+    text-align: center;
+}
+.data-tile-table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5vh;
+}
+.data-tile-separator{
+    width: 3vw;
+}
+.data-tile
+{
+    width: 100px;
+    height: 80px;
+    color: black;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 26pt;
+    text-align: center;
+}
+.data-tile-image {
+    max-width: 80px;
+    max-height: 80px;
+}
+.data-tile-image-caption {
+    font-size: 14px
+}

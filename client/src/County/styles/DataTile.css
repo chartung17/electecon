@@ -1,0 +1,13 @@
+.data-tile-container {
+    text-align: center;
+    border-top: solid 1pt lightgrey;
+}
+.data-tile-container-title{
+    text-align: left;
+    padding-bottom: 3vh;
+}
+.title
+{
+    font: 18pt black;
+    font-family: sans-serif;
+}

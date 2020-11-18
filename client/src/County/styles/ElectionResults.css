@@ -1,0 +1,56 @@
+.election-table{
+    width: 100%;
+    margin-bottom: 5vh;
+}
+.election-table-year-container{
+    border-top:solid 1pt lightgrey;
+}
+.election-table-year{
+    text-align: center;
+}
+.headshot-container {
+    width: 100px;
+    text-align: center;
+    padding: 10px;
+}
+.headshot{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    /* make sure headshot is under the checkmark*/
+    z-index: -1;
+    position: relative;
+}
+.democrat-results-container {
+    width: 100px;
+    text-align: right;
+    padding-right: 0;
+    margin-right: 0;
+}
+.democrat-vote-checkmark {
+    float: left;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+}
+.democrat-vote-bar {
+    background-color: blue;
+    color: black;
+    font-weight: bold;
+    height: 40px;
+}
+.republican-results-container {
+    width: 100px;
+    text-align: left;
+}
+.republican-vote-checkmark {
+    float: right;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+}
+.republican-vote-bar {
+    background-color: red;
+    color: black;
+    height: 40px;
+}
