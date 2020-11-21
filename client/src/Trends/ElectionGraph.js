@@ -23,7 +23,7 @@ function ElectionGraph(props) {
         <div id="ElectionGraph">
             <Chart
                 chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
+                loader={<div>Loading Election Data</div>}
                 data={formattedData}
                 options= {{
                     title: 'Election Trends',

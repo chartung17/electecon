@@ -2,7 +2,7 @@
  * Api for getting data for trends page
  */
 
-import {TRENDS_ENDPOINT as ENDPOINT} from '../App';
+import {COUNTY_ENDPOINT, TRENDS_ENDPOINT as ENDPOINT} from '../App';
 
 let ERR_HANDLER = (err) => {
     console.log(err)
@@ -34,5 +34,16 @@ export function getNationalElectionResult() {
             .then(res => {
                 return res.json();
             }, ERR_HANDLER);
+}
+
+/**
+ * get county GDP data
+ * @param {} fips - county fips code
+ */
+export function getCountyGDPData(fips) {
+    return fetch(COUNTY_ENDPOINT.concat(`/annual-gdp?fips=${fips}`))
+            .then(res => {
+                return res.json();
+            })
 }
 
