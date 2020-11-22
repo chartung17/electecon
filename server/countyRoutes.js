@@ -1,29 +1,6 @@
-let mysql = require('mysql');
-require('dotenv').config()
-let pool = mysql.createPool({
-    connectionLimit: process.env.DB_MAX_CONNECTIONS || 10,
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DEFAULT_DATABASE,
-});
-
+let db = require('./database')
+let [pool, execQuery] = [db.pool, db.execQuery]
 let util = require('./helpers')
-
-/**
- * Executes given query and sets the response's body;
- *
- * @param query SQL query string
- * @param res   response body
- */
-function execQuery(query, res) {
-    pool.query(query, function (err, rows, fields) {
-        if (err) console.log(err);
-        else {
-            res.json(rows);
-        }
-    });
-}
 
 /**
  * Get county data.
