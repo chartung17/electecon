@@ -91,9 +91,32 @@ function getNationalElectionResults(req, res) {
     execQuery(q, res);
 }
 
+function getStateGDP(req, res) {
+  const q = `
+  With STATE_COUNTIES AS (
+    Select FIPS
+    From County
+    Where STATE = ${pool.escape(req.query.state)}
+  )
+  Select g.YEAR, Sum(GDP) as 'GDP'
+  From STATE_COUNTIES s join GDP g on s.FIPS = g.FIPS
+  Group By g.YEAR;`;
+  execQuery(q, res);
+}
+
+function getNationalGDP(req, res) {
+  const q = `
+  Select g.YEAR, sum(GDP) as 'GDP'
+  From GDP g
+  Group By g.YEAR;`;
+  execQuery(q, res);
+}
+
 
 module.exports = {
     getStates: getStates,
     getStateElectionResults: getStateElectionResults,
     getNationalElectionResults: getNationalElectionResults,
+    getStateGDP: getStateGDP,
+    getNationalGDP: getNationalGDP
 }

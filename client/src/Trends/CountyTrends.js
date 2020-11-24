@@ -20,7 +20,7 @@ function CountyTrends() {
             .then(data => setGDPdata(data));
     }, [fips]);
 
-    if (fips && electionData) {
+    if (fips) {
         return (
             <div id="CountyTrends">
                 <div id="Finder" >

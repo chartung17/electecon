@@ -44,6 +44,26 @@ export function getCountyGDPData(fips) {
     return fetch(COUNTY_ENDPOINT.concat(`/annual-gdp?fips=${fips}`))
             .then(res => {
                 return res.json();
-            })
+            });
 }
 
+/**
+ * get state GDP data
+ * @param {} state - state abbreviation
+ */
+export function getStateGDPData(state) {
+    return fetch(ENDPOINT.concat(`/state-gdp?state=${state}`))
+            .then(res => {
+                return res.json();
+            });
+}
+
+/**
+ * get national GDP data
+ */
+export function getNationalGDPData() {
+    return fetch(ENDPOINT.concat(`/national-gdp`))
+            .then(res => {
+                return res.json();
+            });
+}

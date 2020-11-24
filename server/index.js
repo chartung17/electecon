@@ -45,6 +45,8 @@ router.get(API_V1 + '/map/top-industry', mapRoutes.getTopIndustries);
 router.get(API_V1 + '/trends/state', trendRoutes.getStates);
 router.get(API_V1 + '/trends/state-election', trendRoutes.getStateElectionResults);
 router.get(API_V1 + '/trends/national-election', trendRoutes.getNationalElectionResults);
+router.get(API_V1 + '/trends/state-gdp', trendRoutes.getStateGDP);
+router.get(API_V1 + '/trends/national-gdp', trendRoutes.getNationalGDP);
 
 
 // Put last
