@@ -112,11 +112,45 @@ function getNationalGDP(req, res) {
   execQuery(q, res);
 }
 
+function getCountyIndustryGDP(req, res) {
+  const q = `
+  Select g.YEAR, g.GDP
+  From GDP g
+  Where g.FIPS = ${pool.escape(req.query.FIPS)} AND g.INDUSTRY_ID = ${pool.escape(req.query.industry)};`;
+  execQuery(q, res);
+}
+
+function getStateIndustryGDP(req, res) {
+  const q = `
+  With STATE_COUNTIES AS (
+    Select FIPS
+    From County
+    Where STATE = ${pool.escape(req.query.state)}
+  )
+  Select g.YEAR, Sum(g.GDP) as 'GDP'
+  FROM STATE_COUNTIES s join GDP g on s.FIPS = g.FIPS
+  Where g.INDUSTRY_ID = ${pool.escape(req.query.industry)}
+  Group By g.YEAR`;
+  execQuery(q, res);
+}
+
+function getNationalIndustryGDP(req, res) {
+  const q = `
+  Select g.YEAR, Sum(g.GDP) as 'GDP'
+  From GDP g
+  Where g.INDUSTRY_ID = ${pool.escape(req.query.industry)}
+  Group By g.YEAR`;
+  execQuery(q, res);
+}
+
 
 module.exports = {
     getStates: getStates,
     getStateElectionResults: getStateElectionResults,
     getNationalElectionResults: getNationalElectionResults,
     getStateGDP: getStateGDP,
-    getNationalGDP: getNationalGDP
+    getNationalGDP: getNationalGDP,
+    getCountyIndustryGDP: getCountyIndustryGDP,
+    getStateIndustryGDP: getStateIndustryGDP,
+    getNationalIndustryGDP: getNationalIndustryGDP,
 }
