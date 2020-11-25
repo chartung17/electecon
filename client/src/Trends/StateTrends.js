@@ -28,6 +28,7 @@ function StateTrends() {
                 <div id="Finder" >
                     <StateFinder getNewState={setCurrentState}/>
                 </div>
+                <h2>State: {currentState}</h2>
                 <TrendsContainer electionData={electionData} gdpData={gdpData} industry={industry} industryGDP={industryGDP} setIndustry={setIndustry}/>
             </div>
         );
