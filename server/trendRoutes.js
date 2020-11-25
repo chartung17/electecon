@@ -100,6 +100,7 @@ function getStateGDP(req, res) {
   )
   Select g.YEAR, Sum(GDP) as 'GDP'
   From STATE_COUNTIES s join GDP g on s.FIPS = g.FIPS
+  WHERE g.INDUSTRY_ID=0
   Group By g.YEAR;`;
   execQuery(q, res);
 }
@@ -108,6 +109,7 @@ function getNationalGDP(req, res) {
   const q = `
   Select g.YEAR, sum(GDP) as 'GDP'
   From GDP g
+  WHERE g.INDUSTRY_ID=0
   Group By g.YEAR;`;
   execQuery(q, res);
 }
