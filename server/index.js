@@ -51,6 +51,14 @@ router.get(API_V1 + '/trends/county-industry', trendRoutes.getCountyIndustryGDP)
 router.get(API_V1 + '/trends/state-industry', trendRoutes.getStateIndustryGDP);
 router.get(API_V1 + '/trends/national-industry', trendRoutes.getNationalIndustryGDP);
 
+// Graph page routes
+router.get(API_V1 + '/graph/gdp-growth-since-2001', graphRoutes.getGDPGrowthSince2001);
+router.get(API_V1 + '/graph/gdp-growth-since-last-election', graphRoutes.getGDPGrowthSinceLastElection);
+router.get(API_V1 + '/graph/gdp-industry-comp', graphRoutes.getGDPIndustryComp);
+router.get(API_V1 + '/graph/total-county-gdp', graphRoutes.getTotalGDPByCounty);
+router.get(API_V1 + '/graph/industry-gdp-county', graphRoutes.getIndustryGDPByCounty);
+router.get(API_V1 + '/graph/dem-votes', graphRoutes.getDemVotes);
+router.get(API_V1 + '/graph/rep-votes', graphRoutes.getRepVotes);
 
 // Put last
 router.use((req, res, next) => {
