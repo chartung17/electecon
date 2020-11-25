@@ -1,12 +1,13 @@
 import React, { useEffect, useState} from 'react';
-import ElectionGraph from './ElectionGraph';
-import GDPGraph from './GDPGraph';
-import { getNationalElectionResult, getNationalGDPData} from './TrendsApi';
+import TrendsContainer from './TrendsContainer';
+import { getNationalElectionResult, getNationalGDPData, getNationalIndustryGDP} from './TrendsApi';
 
 function NationalTrends() {
 
     const [electionData, setElectionData] = useState(null);
+    const [industry, setIndustry] = useState(null);
     const [gdpData, setGDPdata] = useState(null);
+    const [industryGDP, setIndustryGDP] = useState(null);
 
     useEffect(() => {
         getNationalElectionResult().then(electionData => {
@@ -14,13 +15,15 @@ function NationalTrends() {
         });
         getNationalGDPData().then(gdpData => {
             setGDPdata(gdpData);
+        });
+        getNationalIndustryGDP(industry).then(data => {
+            setIndustryGDP(data);
         })
-    }, []);
+    }, [industry]);
 
     return(
         <div id="NationalTrends">
-            <ElectionGraph data={electionData} />
-            <GDPGraph gdpData={gdpData} />
+            <TrendsContainer electionData={electionData} gdpData={gdpData} industry={industry} industryGDP={industryGDP} setIndustry={setIndustry}/>
         </div>
     );
 }

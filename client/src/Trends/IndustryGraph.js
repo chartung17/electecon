@@ -34,27 +34,36 @@ function IndustryGraph(props) {
 
     return(
         <div id="IndustryGraph">
-            <Chart
-                chartType="LineChart"
-                loader={<div>Loading Industry GDP data</div>}
-                data={rawIndustryGDPdata}
-                options={{
-                    title: 'Industry GDP Trends',
-                    vAxis: {title: 'GDP'},
-                    hAxis: {title: 'Year', format: '####', ticks: [2000, 2004, 2008, 2012, 2016], textStyle: {fontSize: 12}},
-                    chartArea: {width: '60%', height: '70%'},
-                }}
-            />
-            <Chart
-                chartType="LineChart"
-                loader={<div>Loading Industry GDP data</div>}
-                data={proportionalGDPdata}
-                options={{
-                    vAxis: {title: 'fraction of total GDP'},
-                    hAxis: {title: 'Year', format: '####', ticks: [2000, 2004, 2008, 2012, 2016], textStyle: {fontSize: 12}},
-                    chartArea: {width: '60%', height: '70%'},
-                }}
-            />
+            <div className="card">
+                <div className="card-body">
+                <Chart
+                    chartType="LineChart"
+                    loader={<div>Loading Industry GDP data</div>}
+                    data={rawIndustryGDPdata}
+                    options={{
+                        title: 'Industry GDP Trends',
+                        vAxis: {title: 'GDP'},
+                        hAxis: {title: 'Year', format: '####', ticks: [2000, 2004, 2008, 2012, 2016], textStyle: {fontSize: 12}},
+                        chartArea: {width: '60%', height: '70%'},
+                    }}
+                />
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                <Chart
+                    chartType="LineChart"
+                    loader={<div>Loading Industry GDP data</div>}
+                    data={proportionalGDPdata}
+                    options={{
+                        vAxis: {title: 'fraction of total GDP'},
+                        hAxis: {title: 'Year', format: '####', ticks: [2000, 2004, 2008, 2012, 2016], textStyle: {fontSize: 12}},
+                        chartArea: {width: '60%', height: '70%'},
+                    }}
+                />
+                </div>
+            </div>
+            
         </div>
     );
 

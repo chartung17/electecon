@@ -4,8 +4,8 @@ import GDPGraph from './GDPGraph';
 import { IndustryPanel } from './IndustryPanel';
 
 /**
- * 
- * @param {electionData, gdpData, industry, industryGDP, setIndustry} props 
+ * Holds the components of the container body page
+ * @param {*} props - electionData, gdpData, industry, industryGDP, setIndustry
  */
 function TrendsContainer(props) {
 
