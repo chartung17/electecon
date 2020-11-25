@@ -116,7 +116,7 @@ function getCountyIndustryGDP(req, res) {
   const q = `
   Select g.YEAR, g.GDP
   From GDP g
-  Where g.FIPS = ${pool.escape(req.query.FIPS)} AND g.INDUSTRY_ID = ${pool.escape(req.query.industry)};`;
+  Where g.FIPS = ${pool.escape(req.query.fips)} AND g.INDUSTRY_ID = ${pool.escape(req.query.industry)};`;
   execQuery(q, res);
 }
 
