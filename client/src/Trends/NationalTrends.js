@@ -23,6 +23,7 @@ function NationalTrends() {
 
     return(
         <div id="NationalTrends">
+            <h3>USA</h3>
             <TrendsContainer electionData={electionData} gdpData={gdpData} industry={industry} industryGDP={industryGDP} setIndustry={setIndustry}/>
         </div>
     );
