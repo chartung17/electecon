@@ -28,7 +28,7 @@ export function StateFinder(props) {
                                             return (
                                                 <div className={"btn btn-state"}
                                                 key={index}
-                                                onClick={() => props.getNewState(state)}
+                                                onClick={() => props.getNewState(state.STATE)}
                                                 id={`btn-state-${state}`}>
                                                 {state.STATE}    
                                                 </div>

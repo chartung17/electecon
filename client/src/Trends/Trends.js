@@ -22,9 +22,9 @@ function Trends() {
   }
   return(
     <div id="TrendPage">
-      <button onClick={() => setGranularity("National")}>See National Trends</button>
-      <button onClick={() => setGranularity("State")}>See State Trends</button>
-      <button onClick={() => setGranularity("County")}>See County Trends</button>
+      <button onClick={() => setGranularity("National")}>National Trends</button>
+      <button onClick={() => setGranularity("State")}>State Trends</button>
+      <button onClick={() => setGranularity("County")}>County Trends</button>
       {trendChoice}
     </div>
   );

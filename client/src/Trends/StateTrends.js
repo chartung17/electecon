@@ -1,35 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import ElectionGraph from './ElectionGraph';
 import { StateFinder } from './StateFinder';
-import {getStateElectionResult} from './TrendsApi';
+import {getStateElectionResult, getStateGDPData, getStateIndustryGDP} from './TrendsApi';
+import TrendsContainer from './TrendsContainer';
 
 function StateTrends() {
     const [currentState, setCurrentState] = useState(null);
+    const [industry, setIndustry] = useState(null);
     const [electionData, setElectionData] = useState(null);
+    const [gdpData, setGDPdata] = useState(null);
+    const [industryGDP, setIndustryGDP] = useState(null);
 
     useEffect(() => {
-        if (currentState != null) {
-            getStateElectionResult(currentState.STATE).then(electionData => {
-                setElectionData(electionData);
-            })
-        }
-    }, [currentState]);
+        getStateElectionResult(currentState).then(electionData => {
+            setElectionData(electionData);
+        });
+        getStateGDPData(currentState).then(gdpData => {
+            setGDPdata(gdpData);
+        });
+        getStateIndustryGDP(currentState, industry).then(data => {
+            setIndustryGDP(data);
+        });
+    }, [currentState, industry]);
 
-    if (currentState && electionData) {
+    if (currentState) {
         return (
             <div id="StateTrends">
                 <div id="Finder" >
                     <StateFinder getNewState={setCurrentState}/>
                 </div>
-                <div id="StateGraphs" >
-                    <ElectionGraph data={electionData} />
-                </div>
+                <TrendsContainer electionData={electionData} gdpData={gdpData} industry={industry} industryGDP={industryGDP} setIndustry={setIndustry}/>
             </div>
         );
     } else {
         return (
             <div id="Finder" >
-                    <StateFinder getNewState={setCurrentState}/>
+                <StateFinder getNewState={setCurrentState}/>
             </div>
         )
     }

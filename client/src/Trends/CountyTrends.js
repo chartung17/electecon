@@ -1,28 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { getCountyElectionResult } from '../County/CountyApi';
+import {getCountyGDPData, getCountyIndustryGDP} from './TrendsApi';
 import CountyFinder from '../County/CountyFinder';
-import ElectionGraph from './ElectionGraph';
+import TrendsContainer from './TrendsContainer';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function CountyTrends() {
     const [fips, setFips] = useState(null);
+    const [industry, setIndustry] = useState(null);
     const [electionData, setElectionData] = useState(null);
+    const [gdpData, setGDPdata] = useState(null);
+    const [industryGDP, setIndustryGDP] = useState(null);
 
-    // if fips changes, fetch new election results
+    // if fips changes, fetch new election results, new gdp data
     useEffect(() => {
-        getCountyElectionResult(fips).then(electionData => {
+        // fetch new election results
+        getCountyElectionResult(fips)
+        .then(electionData => {
             setElectionData(electionData["electionResult"]);
-        })
-    }, [fips]);
+        });
+        // fetch new county gdp data
+        getCountyGDPData(fips)
+            .then(data => setGDPdata(data));
+        getCountyIndustryGDP(fips, industry)
+            .then(data => setIndustryGDP(data));
+    }, [fips, industry]);
 
-    if (fips && electionData) {
+    if (fips) {
         return (
             <div id="CountyTrends">
                 <div id="Finder" >
                 <CountyFinder getNewCounty={setFips}/>
                 </div>
-                <div id="CountyGraphs" >
-                <ElectionGraph data={electionData} />
-                </div>
+                <TrendsContainer electionData={electionData} gdpData={gdpData} industry={industry} industryGDP={industryGDP} setIndustry={setIndustry}/>
             </div>
         );
     } else {

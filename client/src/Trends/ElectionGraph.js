@@ -6,7 +6,6 @@ import Chart from "react-google-charts";
  */
 function ElectionGraph(props) {
     
-    
     if (!props.data || props.data.length === 0) {
         return (
             <div id="ElectionGraph">No election data found.</div>
@@ -23,7 +22,7 @@ function ElectionGraph(props) {
         <div id="ElectionGraph">
             <Chart
                 chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
+                loader={<div>Loading Election Data</div>}
                 data={formattedData}
                 options= {{
                     title: 'Election Trends',
