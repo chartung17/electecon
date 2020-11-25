@@ -209,6 +209,54 @@ function getRepVotes(req, res) {
   execQuery(q, res);
 }
 
+function getDemVotes(req, res) {
+  const q = `
+  WITH TotalVotes AS (
+    SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+    FROM Election
+    WHERE YEAR = ${req.query.year}
+    GROUP BY FIPS
+  ), DemVotes AS (
+    SELECT FIPS, CANDIDATE_VOTES AS Dem
+    FROM Election NATURAL JOIN Candidate
+    WHERE YEAR = ${req.query.year} AND PARTY = 'Democrat'
+  ), Result AS (
+    SELECT FIPS, ((Dem / Total) * 100) AS Z
+    FROM TotalVotes NATURAL JOIN DemVotes
+  )
+  SELECT R.Z AS Z
+  FROM County C LEFT OUTER JOIN Result R ON C.FIPS = R.FIPS
+  ORDER BY C.FIPS
+  `;
+  execQuery(q, res);
+}
+
+function getRepDemDiff(req, res) {
+  const q = `
+  WITH TotalVotes AS (
+    SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+    FROM Election
+    WHERE YEAR = ${req.query.year}
+    GROUP BY FIPS
+  ), DemVotes AS (
+    SELECT FIPS, CANDIDATE_VOTES AS Dem
+    FROM Election NATURAL JOIN Candidate
+    WHERE YEAR = ${req.query.year} AND PARTY = 'Democrat'
+  ), RepVotes AS (
+    SELECT FIPS, CANDIDATE_VOTES AS Rep
+    FROM Election NATURAL JOIN Candidate
+    WHERE YEAR = ${req.query.year} AND PARTY = 'Republican'
+  ), Result AS (
+    SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Z
+    FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
+  )
+  SELECT R.Z AS Z
+  FROM County C LEFT OUTER JOIN Result R ON C.FIPS = R.FIPS
+  ORDER BY C.FIPS
+  `;
+  execQuery(q, res);
+}
+
 function getIndustryGDPByCounty(req, res) {
     const q = `
     SELECT GDP
@@ -227,7 +275,8 @@ module.exports = {
     getTotalGDPByCounty: getTotalGDPByCounty,
     getIndustryGDPByCounty: getIndustryGDPByCounty,
     getDemVotes: getDemVotes,
-    getRepVotes: getRepVotes
+    getRepVotes: getRepVotes,
+    getRepDemDiff: getRepDemDiff
     // add all queries here
 }
 
