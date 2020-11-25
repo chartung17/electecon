@@ -4,7 +4,7 @@ import './App.css';
 import Navbar from './Navbar';
 import County from './County/County';
 import Map from './Map/Map';
-import Graph from './Graph';
+import Graph from './Graph/Graph';
 import Trends from './Trends/Trends';
 
 let ENDPOINT = "http://localhost:5000/api/v1";
