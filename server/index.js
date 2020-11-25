@@ -3,11 +3,7 @@ const bodyParser = require('body-parser');
 const countyRoutes = require("./countyRoutes.js");
 const mapRoutes = require("./mapRoutes.js");
 const trendRoutes = require("./trendRoutes");
-<<<<<<< HEAD
 const graphRoutes = require("./graphRoutes.js");
-=======
-const graphRoutes = require("./graphRoutes");
->>>>>>> c170dab4cda7f1c128c4666779287bdf0b501783
 const cors = require('cors');
 const router = express();
 
