@@ -1,11 +1,17 @@
 import React from 'react';
-import Plot from 'react-plotly.js';
 import { getStates } from './GraphApi';
 import YearDropdown from './YearDropdown';
 import XVariableDropdown from './XVariableDropdown';
 import YVariableDropdown from './YVariableDropdown';
+import createPlotlyComponent from 'react-plotly.js/factory';
+import Plotly from 'plotly.js/lib/core';
 
 import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
+
+Plotly.register([
+  require('plotly.js/lib/scatter')
+]);
+const Plot = createPlotlyComponent(Plotly);
 
 export default class Graph extends React.Component {
 	constructor(props) {
