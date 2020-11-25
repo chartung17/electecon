@@ -6,7 +6,6 @@ import Chart from "react-google-charts";
  */
 function ElectionGraph(props) {
     
-    
     if (!props.data || props.data.length === 0) {
         return (
             <div id="ElectionGraph">No election data found.</div>

@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCountyElectionResult } from '../County/CountyApi';
 import {getCountyGDPData, getCountyIndustryGDP} from './TrendsApi';
 import CountyFinder from '../County/CountyFinder';
-import ElectionGraph from './ElectionGraph';
-import GDPGraph from './GDPGraph';
-import { IndustryPanel } from './IndustryPanel';
+import TrendsContainer from './TrendsContainer';
 import 'bootstrap/dist/css/bootstrap.css';
 
 function CountyTrends() {
@@ -34,25 +32,7 @@ function CountyTrends() {
                 <div id="Finder" >
                 <CountyFinder getNewCounty={setFips}/>
                 </div>
-                <div className={"container-fluid"}>
-                    <div className={"row"}>
-                        <div className={"col-lg-6"}>
-                        <div className="card">
-                            <div className="card-body">
-                            <ElectionGraph data={electionData} />
-                            </div>
-                        </div>
-                        <div className="card">
-                            <div className="card-body">
-                            <GDPGraph gdpData={gdpData} />
-                            </div>
-                        </div>
-                        </div>
-                        <div className={"col-lg-6"}>
-                        <IndustryPanel industry={industry} industryGDP={industryGDP} gdp={gdpData}  setIndustry={setIndustry}/>
-                        </div>
-                    </div>
-                </div>
+                <TrendsContainer electionData={electionData} gdpData={gdpData} industry={industry} industryGDP={industryGDP} setIndustry={setIndustry}/>
             </div>
         );
     } else {
