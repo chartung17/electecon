@@ -34,9 +34,9 @@ function CountyTrends() {
                 <div id="Finder" >
                 <CountyFinder getNewCounty={setFips}/>
                 </div>
-                <div className={"container"}>
+                <div className={"container-fluid"}>
                     <div className={"row"}>
-                        <div className={"col"}>
+                        <div className={"col-lg-6"}>
                         <div className="card">
                             <div className="card-body">
                             <ElectionGraph data={electionData} />
@@ -48,7 +48,7 @@ function CountyTrends() {
                             </div>
                         </div>
                         </div>
-                        <div className={"col"}>
+                        <div className={"col-lg-6"}>
                         <IndustryPanel industry={industry} industryGDP={industryGDP} gdp={gdpData}  setIndustry={setIndustry}/>
                         </div>
                     </div>
