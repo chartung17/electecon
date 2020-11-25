@@ -74,11 +74,11 @@ export default class Graph extends React.Component {
 	    } else if (this.state.xVar === 'TotalGDP') {
 	      xQueryURL = '/total-county-gdp' + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPGrowthSince2001') {
-	      xQueryURL = '/graph/gdp-growth-since-2001';
+	      xQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.xVar === 'GDPGrowthSinceLastElection') {
-	      xQueryURL = '/graph/gdp-growth-since-last-election'  + '?year=' + this.state.year;
+	      xQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPIndustryComp') {
-	      xQueryURL = '/graph/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1;
+	      xQueryURL = '/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1;
 	    } else if (this.state.xVar === 'IndustryGDP') {
 	      xQueryURL = '/industry-gdp-county'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1 + '&industry2=' + this.state.industry2;
 	    }
@@ -97,11 +97,11 @@ export default class Graph extends React.Component {
 	    } else if (this.state.yVar === 'TotalGDP') {
 	      yQueryURL = '/total-county-gdp'  + '?year=' + this.state.year;
 	    } else if (this.state.yVar === 'GDPGrowthSince2001') {
-	      yQueryURL = '/graph/gdp-growth-since-2001';
+	      yQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.yVar === 'GDPGrowthSinceLastElection') {
-	      yQueryURL = '/graph/gdp-growth-since-last-election'  + '?year=' + this.state.year;
+	      yQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
 	    } else if (this.state.yVar === 'GDPIndustryComp') {
-	      yQueryURL = '/graph/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1;
+	      yQueryURL = '/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1;
 	    } else if (this.state.yVar === 'IndustryGDP') {
 	      yQueryURL = '/industry-gdp-county'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1 + '&industry2=' + this.state.industry2;
 	    }

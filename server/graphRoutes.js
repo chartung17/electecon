@@ -110,7 +110,7 @@ function getGDPGrowthSince2001(req, res) {
       SELECT n.FIPS AS FIPS, (n.GDP / o.GDP) AS GROWTH
       FROM GDP2018 n JOIN GDP2001 o ON n.FIPS = o.FIPS
     )
-    SELECT g.GROWTH, r.Z
+    SELECT G.GROWTH AS Z
     FROM County C LEFT OUTER JOIN GDPGrowth G ON C.FIPS = G.FIPS
     ORDER BY C.FIPS
     `;
@@ -122,7 +122,7 @@ function getGDPGrowthSinceLastElection(req, res) {
     WITH GDPCurrent AS (
       SELECT FIPS, GDP
       FROM GDP
-      WHERE INDUSTRY_ID = 0 AND YEAR = (${pool.escape(req.query.year)} - 4)
+      WHERE INDUSTRY_ID = 0 AND YEAR = ${pool.escape(req.query.year)}
     ), GDPLast AS (
       SELECT FIPS, GDP
       FROM GDP
@@ -131,7 +131,7 @@ function getGDPGrowthSinceLastElection(req, res) {
       SELECT c.FIPS AS FIPS, (c.GDP / l.GDP) AS GROWTH
       FROM GDPCurrent c JOIN GDPLast l ON c.FIPS = l.FIPS
     )
-    SELECT g.GROWTH, r.Z
+    SELECT G.GROWTH AS Z
     FROM County C LEFT OUTER JOIN GDPGrowth G ON C.FIPS = G.FIPS
     ORDER BY C.FIPS
     `;
@@ -209,28 +209,6 @@ function getRepVotes(req, res) {
   execQuery(q, res);
 }
 
-function getDemVotes(req, res) {
-  const q = `
-  WITH TotalVotes AS (
-    SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
-    FROM Election
-    WHERE YEAR = ${req.query.year}
-    GROUP BY FIPS
-  ), DemVotes AS (
-    SELECT FIPS, CANDIDATE_VOTES AS Dem
-    FROM Election NATURAL JOIN Candidate
-    WHERE YEAR = ${req.query.year} AND PARTY = 'Democrat'
-  ), Result AS (
-    SELECT FIPS, ((Dem / Total) * 100) AS Z
-    FROM TotalVotes NATURAL JOIN DemVotes
-  )
-  SELECT R.Z AS Z
-  FROM County C LEFT OUTER JOIN Result R ON C.FIPS = R.FIPS
-  ORDER BY C.FIPS
-  `;
-  execQuery(q, res);
-}
-
 function getGreenVotes(req, res) {
   const q = `
   WITH TotalVotes AS (
@@ -291,15 +269,15 @@ function getIndustryGDPByCounty(req, res) {
 
 
 module.exports = {
-    getGDPGrowthSince2001,
-    getGDPGrowthSinceLastElection,
     getGDPIndustryComp: getGDPIndustryComp,
     getTotalGDPByCounty: getTotalGDPByCounty,
     getIndustryGDPByCounty: getIndustryGDPByCounty,
     getDemVotes: getDemVotes,
     getRepVotes: getRepVotes,
     getGreenVotes: getGreenVotes,
-    getRepDemDiff: getRepDemDiff
+    getRepDemDiff: getRepDemDiff,
+    getGDPGrowthSince2001: getGDPGrowthSince2001,
+    getGDPGrowthSinceLastElection: getGDPGrowthSinceLastElection
     // add all queries here
 }
 

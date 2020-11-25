@@ -22,8 +22,9 @@ export default class YVariableDropdown extends React.Component {
     vars.push(<option value='TotalGDP'>Total GDP</option>);
     vars.push(<option value='GDPGrowthSince2001'>GDP Growth since 2001</option>);
     vars.push(<option value='GDPGrowthSinceLastElection'>GDP Growth since Last Election</option>);
-    // vars.push(<option value='IndustryGDP'>Industry GDP</option>;
-    // vars.push(<option value='GDPIndustryComp'>GDP Difference between Industry 1 and Industry 2</option>;
+    vars.push(<option value='IndustryGDP'>Industry GDP</option>);
+    vars.push(<option value='GDPIndustryComp'>GDP Difference between Industry 1 and Industry 2</option>);
+
     this.setState({
         vars: vars
     })
