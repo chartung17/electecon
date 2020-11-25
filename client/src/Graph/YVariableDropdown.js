@@ -17,6 +17,7 @@ export default class YVariableDropdown extends React.Component {
     vars.push(<option value='RepDemDiff' selected>% Republican votes - % Democrat votes</option>);
     vars.push(<option value='Democrat'>% votes for Democrat</option>);
     vars.push(<option value='Republican'>% votes for Republican</option>);
+    vars.push(<option value='Green'>% votes for Green</option>);
     vars.push(<option value='Other'>% votes for Other</option>);
     vars.push(<option value='TotalGDP'>Total GDP</option>);
     vars.push(<option value='GDPGrowthSince2001'>GDP Growth since 2001</option>);

@@ -231,6 +231,28 @@ function getDemVotes(req, res) {
   execQuery(q, res);
 }
 
+function getGreenVotes(req, res) {
+  const q = `
+  WITH TotalVotes AS (
+    SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+    FROM Election
+    WHERE YEAR = ${req.query.year}
+    GROUP BY FIPS
+  ), GreenVotes AS (
+    SELECT FIPS, CANDIDATE_VOTES AS Green
+    FROM Election NATURAL JOIN Candidate
+    WHERE YEAR = ${req.query.year} AND PARTY = 'green'
+  ), Result AS (
+    SELECT FIPS, ((Green / Total) * 100) AS Z
+    FROM TotalVotes NATURAL JOIN GreenVotes
+  )
+  SELECT R.Z AS Z
+  FROM County C LEFT OUTER JOIN Result R ON C.FIPS = R.FIPS
+  ORDER BY C.FIPS
+  `;
+  execQuery(q, res);
+}
+
 function getRepDemDiff(req, res) {
   const q = `
   WITH TotalVotes AS (
@@ -276,6 +298,7 @@ module.exports = {
     getIndustryGDPByCounty: getIndustryGDPByCounty,
     getDemVotes: getDemVotes,
     getRepVotes: getRepVotes,
+    getGreenVotes: getGreenVotes,
     getRepDemDiff: getRepDemDiff
     // add all queries here
 }

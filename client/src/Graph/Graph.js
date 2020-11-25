@@ -65,6 +65,8 @@ export default class Graph extends React.Component {
 	      xQueryURL = '/dem-votes' + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Republican') {
 	      xQueryURL = '/rep-votes' + '?year=' + this.state.year;
+	    } else if (this.state.xVar === 'Green') {
+	      xQueryURL = '/green-votes' + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Other') {
 	      xQueryURL = '/other-votes' + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'RepDemDiff') {
@@ -86,6 +88,8 @@ export default class Graph extends React.Component {
 	      yQueryURL = '/dem-votes' + '?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Republican') {
 	      yQueryURL = '/rep-votes' + '?year=' + this.state.year;
+	    } else if (this.state.yVar === 'Green') {
+	      yQueryURL = '/green-votes' + '?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Other') {
 	      yQueryURL = '/other-votes'  + '?year=' + this.state.year;
 	    } else if (this.state.yVar === 'RepDemDiff') {
