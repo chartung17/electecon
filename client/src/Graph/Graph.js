@@ -26,6 +26,7 @@ export default class Graph extends React.Component {
 			yVar: 'Democrat',
 			xQueryURL: '/dem-votes?year=2016',
 			yQueryURL: '/dem-votes?year=2016',
+			// needsIndustry: false,
 			industry1: '', // SET DEFAULT LATER
 			industry2: '', // SET DEFAULT LATER
 			xResult: [],
@@ -79,6 +80,9 @@ export default class Graph extends React.Component {
 	      xQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPIndustryComp') {
 	      xQueryURL = '/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1;
+	      this.setState({
+	   	 	needsIndustry: true
+	      });
 	    } else if (this.state.xVar === 'IndustryGDP') {
 	      xQueryURL = '/industry-gdp-county'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1 + '&industry2=' + this.state.industry2;
 	    }
@@ -152,6 +156,11 @@ export default class Graph extends React.Component {
     }
 
 	render() {
+		// const needsIndustry = this.state.needsIndustry;
+		// let button;
+		// if (needsIndustry) {
+		// 	button = <this.state.xVar/>;
+		// }
 		return (
 			<div>
 				<Plot

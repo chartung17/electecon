@@ -157,9 +157,13 @@ function getGDPIndustryComp(req, res) {
 
 function getTotalGDPByCounty(req, res) {
     const q = `
-    SELECT G.GDP AS Z
-    FROM County C LEFT OUTER JOIN GDP G ON C.FIPS = G.FIPS
-    WHERE G.INDUSTRY_ID = 0 AND G.YEAR = ${pool.escape(req.query.year)}
+    WITH TotalGDP AS (
+      SELECT GDP, FIPS
+      FROM GDP
+      WHERE INDUSTRY_ID = 0 AND YEAR = ${pool.escape(req.query.year)}
+    )
+    SELECT R.GDP AS Z
+    FROM County C LEFT OUTER JOIN TotalGDP R ON C.FIPS = R.FIPS
     ORDER BY C.FIPS
     `;
     execQuery(q, res);
@@ -259,10 +263,14 @@ function getRepDemDiff(req, res) {
 
 function getIndustryGDPByCounty(req, res) {
     const q = `
-    SELECT GDP
-    FROM GDP
-    WHERE INDUSTRY_ID = ${pool.escape(req.query.industry)} AND YEAR = ${pool.escape(req.query.year)}
-    ORDER BY FIPS
+    WITH IndustryGDP AS (
+      SELECT GDP, FIPS
+      FROM GDP
+      WHERE INDUSTRY_ID = ${pool.escape(req.query.industry)} AND YEAR = ${pool.escape(req.query.year)}
+    )
+    SELECT R.GDP AS Z
+    FROM County C LEFT OUTER JOIN IndustryGDP R ON C.FIPS = R.FIPS
+    ORDER BY C.FIPS
     `;
     execQuery(q, res);
 }
