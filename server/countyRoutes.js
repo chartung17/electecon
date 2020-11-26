@@ -1,5 +1,5 @@
 let db = require('./database')
-let [pool, execQuery] = [db.pool, db.execQuery]
+let [pool, execQuery, execQueryRow] = [db.pool, db.execQuery, db.execQueryRow]
 let util = require('./helpers')
 
 /**
@@ -145,17 +145,26 @@ function getGrowingIndustry(req, res) {
  */
 function getGDPGrowthPercentile(req, res) {
     const q = `
-    WITH Ranking AS (SELECT A.FIPS, ROW_NUMBER() OVER w AS position
+    SELECT A.FIPS, ROW_NUMBER() OVER w AS position
 		FROM (SELECT FIPS, GDP FROM GDP WHERE YEAR=2001 AND INDUSTRY_ID=0 AND GDP IS NOT NULL) A
 			 JOIN
              (SELECT FIPS, GDP FROM GDP WHERE YEAR=2018 AND INDUSTRY_ID=0 AND GDP IS NOT NULL) B
              ON A.FIPS=B.FIPS
-		WINDOW w AS (ORDER BY B.GDP / A.GDP DESC)
-        )
-    SELECT 1 - (SELECT position FROM Ranking WHERE FIPS=${pool.escape(req.query.fips)}) 
-                / (SELECT COUNT(*) FROM Ranking) AS PERCENTILE;
+		WINDOW w AS (ORDER BY B.GDP / A.GDP DESC);
     `;
-    execQuery(q, res);
+
+    execQueryRow(q).then((ranking) => {
+        let result = [];
+        for (let i = 0; i < ranking.length; i++) {
+            if (ranking[i]["FIPS"] === req.query.fips){
+                result.push({
+                    "PERCENTILE" : 1 - (ranking[i]["position"] / ranking.length)
+                });
+                break;
+            }
+        }
+        res.json(result);
+    });
 }
 
 /**

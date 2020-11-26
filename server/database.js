@@ -22,24 +22,35 @@ let cache = new NodeCache({
  * @param res   response body
  */
 function execQuery(query, res) {
-    let value = useCache ? cache.get(query) : undefined;
+    execQueryRow(query).then((rows) => {
+        res.json(rows);
+    });
+}
 
-    if (value === undefined) {
-        pool.query(query, function (err, rows, fields) {
-            if (err) console.error(err);
-            else {
-                if (useCache) {
-                    cache.set(query, rows)
-                }
-                res.json(rows);
-            }
-        });
-    } else {
-        res.json(value);
-    }
+/**
+ * Executes given query and sets the response's body;
+ *
+ * @param query SQL query string
+ * @param res   response body
+ */
+function execQueryRow(query) {
+    return new Promise(function (resolve, reject) {
+        let value = useCache ? cache.get(query) : undefined;
+
+        if (value !== undefined) {
+            resolve(value)
+        } else {
+            pool.query(query, function (err, rows, fields) {
+                if (err) return reject(err)
+                if (useCache) cache.set(query, rows)
+                resolve(rows);
+            });
+        }
+    })
 }
 
 module.exports = {
     pool: pool,
-    execQuery: execQuery
+    execQuery: execQuery,
+    execQueryRow: execQueryRow
 };
