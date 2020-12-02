@@ -21,7 +21,7 @@ export default class FilterCheckbox extends React.Component {
   render() {
     return (
       <div className='checkbox'>
-        <label for='filter'>Filter</label>
+        <label htmlFor='filter'>Filter</label>
         <input type='checkbox' name='filter' value='Filter' checked={this.state.checked} onChange={this.handleChange} />
       </div>
     );

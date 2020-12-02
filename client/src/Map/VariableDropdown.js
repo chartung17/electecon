@@ -14,13 +14,13 @@ export default class VariableDropdown extends React.Component {
   // add variables to dropdown
   componentDidMount() {
     var vars = [];
-    vars.push(<option value='RepDemDiff' selected>% Republican votes - % Democrat votes</option>);
-    vars.push(<option value='Democrat'>% votes for Democrat</option>);
-    vars.push(<option value='Republican'>% votes for Republican</option>);
-    vars.push(<option value='Other'>% votes for Other</option>);
-    vars.push(<option value='TotalGDP'>Total GDP</option>);
+    vars.push(<option value='RepDemDiff' key='RepDemDiff'>% Republican votes - % Democrat votes</option>);
+    vars.push(<option value='Democrat' key='Democrat'>% votes for Democrat</option>);
+    vars.push(<option value='Republican' key='Republican'>% votes for Republican</option>);
+    vars.push(<option value='Other' key='Other'>% votes for Other</option>);
+    vars.push(<option value='TotalGDP' key='TotalGDP'>Total GDP</option>);
     if (this.props.includeCategorical) {
-      vars.push(<option value='TopIndustry'>Top Industry (non-aggregate)</option>);
+      vars.push(<option value='TopIndustry' key='TopIndustry'>Top Industry (non-aggregate)</option>);
     }
     fetch(ENDPOINT.concat(`/industries`),
     {
@@ -40,7 +40,7 @@ export default class VariableDropdown extends React.Component {
         } else if (industries[i].includes('3/')) {
           industries[i] = industries[i].substring(0, industries[i].indexOf('3/'));
         }
-        vars.push(<option value={'Industry' + indIDs[i]}>% GDP from {industries[i]}</option>);
+        vars.push(<option value={'Industry' + indIDs[i]} key={'Industry' + indIDs[i]}>% GDP from {industries[i]}</option>);
       }
       this.setState({
         vars: vars
@@ -61,7 +61,7 @@ export default class VariableDropdown extends React.Component {
   render() {
     return (
       <div className='dropdown'>
-        <label for='vars'>Variable: </label>
+        <label htmlFor='vars'>Variable: </label>
         <select name='vars' value={this.state.selectedVar} onChange={this.handleChange}>
           {this.state.vars}
         </select>

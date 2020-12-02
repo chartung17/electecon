@@ -41,7 +41,8 @@ export default class Choropleth extends React.Component {
       level: props.level,
       locationmode: '',
       locations: [],
-      names: []
+      names: [],
+      props: props
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
@@ -318,8 +319,9 @@ export default class Choropleth extends React.Component {
   }
 
   // update graph when new info received from parent component
-  componentWillReceiveProps(nextProps) {
-    this.setState({
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps === prevState.props) return null;
+    return {
       year: nextProps.year,
       queryURL: nextProps.queryURL,
       filter: nextProps.filter,
@@ -328,7 +330,7 @@ export default class Choropleth extends React.Component {
       val: nextProps.val,
       industry: nextProps.industry,
       level: nextProps.level
-    });
+    };
   }
   componentDidUpdate(prevProps) {
     if (this.props === prevProps) {

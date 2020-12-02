@@ -19,23 +19,21 @@ export default class CmpInput extends React.Component {
   }
 
   // update graph when new info received from parent component
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      filterLabel: nextProps.filterLabel
-    });
-  }
   componentDidUpdate(prevProps) {
     if (this.props === prevProps) {
       return;
     }
+    this.setState({
+      filterLabel: this.props.filterLabel
+    });
     this.forceUpdate();
   }
 
   render() {
     return (
       <div className='cmp-dropdown'>
-        <input type='number' min='-9999999' max='-9999999' name='cmp-input' value={this.state.val} onChange={this.handleChange}/>
-        <label for='cmp-input'>{this.state.filterLabel}</label>
+      <input type='number' min='-9999999' max='-9999999' name='cmp-input' value={this.state.val} onChange={this.handleChange}/>
+      <label htmlFor='cmp-input'>{this.state.filterLabel}</label>
       </div>
     );
   }

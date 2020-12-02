@@ -21,7 +21,7 @@ export default class StateCheckbox extends React.Component {
   render() {
     return (
       <div className='checkbox'>
-        <label for='aggregate'>Aggregate by state</label>
+        <label htmlFor='aggregate'>Aggregate by state</label>
         <input type='checkbox' name='aggregate' value='Aggregate' checked={this.state.checked} onChange={this.handleChange} />
       </div>
     );

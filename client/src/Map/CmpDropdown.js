@@ -13,8 +13,8 @@ export default class CmpDropdown extends React.Component {
   // add operators to dropdown
   componentDidMount() {
     var operators = [];
-    operators.push(<option value='gt' selected>&gt;</option>);
-    operators.push(<option value='lt'>&lt;</option>);
+    operators.push(<option value='gt' key='gt'>&gt;</option>);
+    operators.push(<option value='lt' key='lt'>&lt;</option>);
     this.setState({
       operators: operators
     });
@@ -39,7 +39,7 @@ export default class CmpDropdown extends React.Component {
   render() {
     return (
       <div className='dropdown'>
-        <label for='operators'>Comparison: </label>
+        <label htmlFor='operators'>Comparison: </label>
         <select name='operators' value={this.state.selectedOp} onChange={this.handleChange}>
           {this.state.operators}
         </select>
