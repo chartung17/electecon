@@ -281,7 +281,7 @@ export default class Graph extends React.Component {
 			           	text: this.state.labels
 			          }
 			        ]}
-			        layout={ {width: 1064, height: 798, title: 'A Fancy Plot'} }
+			        layout={ {width: 1064, height: 798} }
 			    />
 			    <section className = 'selectors'>
 				    <YearDropdown
