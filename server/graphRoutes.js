@@ -4,76 +4,11 @@ let util = require('./helpers')
 
 
 /**
- * Get the total GDP by county
+ * Get county nmaes (Format: City, STATE)
  * 
  * @param  {} req
  * @param  {} res
  */
-
-// function getGDPandVoteDiff(req, res) {
-//     const q = `
-//     WITH GDPByCounty AS (
-//       SELECT FIPS, GDP
-//       FROM GDP
-//       WHERE INDUSTRY_ID = ${pool.escape(req.query.industry)} AND YEAR = ${pool.escape(req.query.year)}
-//     ), TotalVotes AS (
-//       SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
-//       FROM Election
-//       WHERE YEAR = ${pool.escape(req.query.year)}
-//       GROUP BY FIPS
-//     ), RepVotes AS (
-//       SELECT FIPS, CANDIDATE_VOTES AS Rep
-//       FROM Election NATURAL JOIN Candidate
-//       WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Republican'
-//     ), DemVotes AS (
-//       SELECT FIPS, CANDIDATE_VOTES AS Dem
-//       FROM Election NATURAL JOIN Candidate
-//       WHERE YEAR = ${pool.escape(req.query.year)} AND PARTY = 'Democrat'
-//     ), Result AS (
-//       SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Z
-//       FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
-//     )
-//     SELECT g.GDP, r.Z
-//     FROM GDPByCounty g JOIN Result r ON g.FIPS = r.FIPS
-//     `;
-//     execQuery(q, res);
-// }
-
-// function getGDPGrowthAndVoteDiff(req, res) {
-//     const q = `
-//     WITH GDP2018 AS (
-//       SELECT FIPS, GDP
-//       FROM GDP
-//       WHERE INDUSTRY_ID = 0 AND YEAR = 2018
-//     ), GDP2001 AS (
-//       SELECT FIPS, GDP
-//       FROM GDP
-//       WHERE INDUSTRY_ID = 0 AND YEAR = 2001
-//     ), GDPGrowth AS (
-//       SELECT n.FIPS AS FIPS, (n.GDP / o.GDP) AS GROWTH
-//       FROM GDP2018 n JOIN GDP2001 o ON n.FIPS = o.FIPS
-//     ), TotalVotes AS (
-//       SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
-//       FROM Election
-//       GROUP BY FIPS
-//     ), RepVotes AS (
-//       SELECT FIPS, CANDIDATE_VOTES AS Rep
-//       FROM Election NATURAL JOIN Candidate
-//       WHERE PARTY = 'Republican'
-//     ), DemVotes AS (
-//       SELECT FIPS, CANDIDATE_VOTES AS Dem
-//       FROM Election NATURAL JOIN Candidate
-//       WHERE PARTY = 'Democrat'
-//     ), Result AS (
-//       SELECT FIPS, (((Rep - Dem) / Total) * 100) AS Z
-//       FROM TotalVotes NATURAL JOIN RepVotes NATURAL JOIN DemVotes
-//     )
-//     SELECT g.GROWTH, r.Z
-//     FROM GDPGrowth g JOIN Result r ON g.FIPS = r.FIPS
-//     `;
-//     execQuery(q, res);
-// }
-
 function getCounties(req, res) {
     const q = `
     SELECT CONCAT(NAME, ', ', STATE) AS Z
@@ -282,26 +217,5 @@ module.exports = {
     getRepDemDiff: getRepDemDiff,
     getGDPGrowthSince2001: getGDPGrowthSince2001,
     getGDPGrowthSinceLastElection: getGDPGrowthSinceLastElection
-    // add all queries here
 }
 
-// /**
-//  * EXPLANATION OF QUERY
-//  * 
-//  * @param  {} req
-//  * @param  {} res
-//  */
-// function queryName(req, res) {
-//     const q = `
-//     Select 
-//     FROM
-//     WHERE
-//     `; // add body of query inside ' '
-//     execQuery(q, res);
-// }
-
-// module.exports = {
-//     queryName: queryName,
-//     queryName2: queryName2
-//     // add all queries here
-// }
