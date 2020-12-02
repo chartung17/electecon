@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CountyTrends from './CountyTrends';
 import StateTrends from './StateTrends';
 import NationalTrends from './NationalTrends';
+import './Trends.css';
 
 /**
  * Display Trending page
