@@ -76,7 +76,7 @@ let util = require('./helpers')
 
 function getCounties(req, res) {
     const q = `
-    SELECT NAME AS Z
+    SELECT CONCAT(NAME, ', ', STATE) AS Z
     FROM County
     ORDER BY FIPS
     `;
