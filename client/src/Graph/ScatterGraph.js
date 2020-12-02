@@ -5,6 +5,7 @@ import XVariableDropdown from './XVariableDropdown';
 import YVariableDropdown from './YVariableDropdown';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
+import './ScatterGraph.css';
 
 import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
 
@@ -268,7 +269,7 @@ export default class Graph extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className='graph'>
 				<Plot
 			        data={[
 			          {
@@ -280,27 +281,29 @@ export default class Graph extends React.Component {
 			           	text: this.state.labels
 			          }
 			        ]}
-			        layout={ {width: 896, height: 672, title: 'A Fancy Plot'} }
+			        layout={ {width: 1064, height: 798, title: 'A Fancy Plot'} }
 			    />
-			    <YearDropdown
-            		id='year-dropdown'
-           			handleYearChange={this.handleYearChange}
-          		/>
-          		<XVariableDropdown
-          			id='variable-dropdown'
-          			handleXVarChange={this.handleXVarChange}
-          			includeCategorical={true}
-          		/>
-          		{XIndustryDropdown1}
-          		{XIndustryDropdown2}
-          		<YVariableDropdown
-          			id='variable-dropdown'
-          			handleYVarChange={this.handleYVarChange}
-          			includeCategorical={true}
-          		/>
-          		{YIndustryDropdown1}
-          		{YIndustryDropdown2}
-          		<button id='submit' onClick={this.handleClick}>Submit</button>
+			    <section className = 'selectors'>
+				    <YearDropdown
+	            		id='year-dropdown'
+	           			handleYearChange={this.handleYearChange}
+	          		/>
+	          		<XVariableDropdown
+	          			id='variable-dropdown'
+	          			handleXVarChange={this.handleXVarChange}
+	          			includeCategorical={true}
+	          		/>
+	          		{XIndustryDropdown1}
+	          		{XIndustryDropdown2}
+	          		<YVariableDropdown
+	          			id='variable-dropdown'
+	          			handleYVarChange={this.handleYVarChange}
+	          			includeCategorical={true}
+	          		/>
+	          		{YIndustryDropdown1}
+	          		{YIndustryDropdown2}
+          			<button id='submit' onClick={this.handleClick}>Submit</button>
+          		</section>
 		    </div>
 		)
 	}
