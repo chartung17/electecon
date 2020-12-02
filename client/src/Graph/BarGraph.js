@@ -25,9 +25,6 @@ export default class Graph extends React.Component {
 			yVar: 'Democrat',
 			xQueryURL: '/dem-votes?year=2016',
 			yQueryURL: '/dem-votes?year=2016',
-			// needsIndustry: false,
-			industry1: '', // SET DEFAULT LATER
-			industry2: '', // SET DEFAULT LATER
 			xResult: [],
 			yResult: []
 		};
