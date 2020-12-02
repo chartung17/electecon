@@ -62,6 +62,7 @@ router.get(API_V1 + '/graph/industry-gdp-county', graphRoutes.getIndustryGDPByCo
 router.get(API_V1 + '/graph/dem-votes', graphRoutes.getDemVotes);
 router.get(API_V1 + '/graph/rep-votes', graphRoutes.getRepVotes);
 router.get(API_V1 + '/graph/green-votes', graphRoutes.getGreenVotes);
+router.get(API_V1 + '/graph/other-votes', graphRoutes.getOtherVotes);
 router.get(API_V1 + '/graph/rep-dem-diff', graphRoutes.getRepDemDiff);
 
 

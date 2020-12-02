@@ -143,6 +143,32 @@ function getRepVotes(req, res) {
   execQuery(q, res);
 }
 
+function getOtherVotes(req, res) {
+  const q = `
+  WITH TotalVotes AS (
+    SELECT FIPS, SUM(CANDIDATE_VOTES) AS Total
+    FROM Election
+    WHERE YEAR = ${req.query.year}
+    GROUP BY FIPS
+  ), RepVotes AS (
+    SELECT FIPS, CANDIDATE_VOTES AS Rep
+    FROM Election NATURAL JOIN Candidate
+    WHERE YEAR = ${req.query.year} AND PARTY = 'Republican'
+  ), DemVotes AS (
+    SELECT FIPS, CANDIDATE_VOTES AS Dem
+    FROM Election NATURAL JOIN Candidate
+    WHERE YEAR = ${req.query.year} AND PARTY = 'Democrat'
+  ), Result AS (
+    SELECT t.FIPS, (((t.Total - r.Rep - d.Dem) / t.Total) * 100) AS Z
+    FROM TotalVotes t JOIN RepVotes r ON t.FIPS = r.FIPS JOIN DemVotes d ON r.FIPS = d.FIPS
+  )
+  SELECT R.Z AS Z
+  FROM County C LEFT OUTER JOIN Result R ON C.FIPS = R.FIPS
+  ORDER BY C.FIPS
+  `;
+  execQuery(q, res);
+}
+
 function getGreenVotes(req, res) {
   const q = `
   WITH TotalVotes AS (
@@ -214,6 +240,7 @@ module.exports = {
     getDemVotes: getDemVotes,
     getRepVotes: getRepVotes,
     getGreenVotes: getGreenVotes,
+    getOtherVotes: getOtherVotes,
     getRepDemDiff: getRepDemDiff,
     getGDPGrowthSince2001: getGDPGrowthSince2001,
     getGDPGrowthSinceLastElection: getGDPGrowthSinceLastElection
