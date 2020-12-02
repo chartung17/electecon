@@ -1,5 +1,6 @@
 import React from 'react';
 import YearDropdown from './YearDropdown';
+import IndustryDropdown from './IndustryDropdown';
 import XVariableDropdown from './XVariableDropdown';
 import YVariableDropdown from './YVariableDropdown';
 import createPlotlyComponent from 'react-plotly.js/factory';
@@ -26,14 +27,17 @@ export default class Graph extends React.Component {
 			xQueryURL: '/dem-votes?year=2016',
 			yQueryURL: '/dem-votes?year=2016',
 			labels: [],
-			// needsIndustry: false,
-			industry1: '', // SET DEFAULT LATER
-			industry2: '', // SET DEFAULT LATER
+			needsXIndustryDropdown: false,
+			needsYIndustryDropdown: false,
+			xIndustry: '', // SET DEFAULT LATER
+			yIndustry: '', // SET DEFAULT LATER
 			xResult: [],
 			yResult: []
 		};
 
 		this.handleYearChange = this.handleYearChange.bind(this);
+		this.handleXIndustryChange = this.handleXIndustryChange.bind(this);
+		this.handleYIndustryChange = this.handleYIndustryChange.bind(this);
 		this.handleXVarChange = this.handleXVarChange.bind(this);
 		this.handleYVarChange = this.handleYVarChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -48,16 +52,46 @@ export default class Graph extends React.Component {
 
 	// handle state change in variable drowdown
 	handleXVarChange(newVar) {
-		this.setState({
-			xVar: newVar
-		});
+		if (newVar === 'GDPIndustryComp' || newVar === 'IndustryGDP') {
+			this.setState({
+				xVar: newVar,
+		   	 	needsXIndustryDropdown: true
+		    });
+	    } else {
+	    	this.setState({
+				xVar: newVar,
+		   	 	needsXIndustryDropdown: false
+		    });
+	    }
 	}
 
 	// handle state change in variable drowdown
 	handleYVarChange(newVar) {
+		if (newVar === 'GDPIndustryComp' || newVar === 'IndustryGDP') {
+			this.setState({
+				yVar: newVar,
+		   	 	needsYIndustryDropdown: true
+		    });
+	    } else {
+	    	this.setState({
+				yVar: newVar,
+		   	 	needsYIndustryDropdown: false
+		    });
+	    }
+	}
+
+	// handle state change in variable drowdown
+	handleXIndustryChange(newIndustry) {
 		this.setState({
-			yVar: newVar
-		});
+			xIndustry: newIndustry
+	    });
+	}
+
+	// handle state change in variable drowdown
+	handleYIndustryChange(newIndustry) {
+		this.setState({
+			yIndustry: newIndustry
+	    });
 	}
 
 	handleClick = () => {
@@ -80,9 +114,6 @@ export default class Graph extends React.Component {
 	      xQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPIndustryComp') {
 	      xQueryURL = '/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1;
-	      this.setState({
-	   	 	needsIndustry: true
-	      });
 	    } else if (this.state.xVar === 'IndustryGDP') {
 	      xQueryURL = '/industry-gdp-county'  + '?year=' + this.state.year + '&industry1=' + this.state.industry1 + '&industry2=' + this.state.industry2;
 	    }
@@ -174,6 +205,18 @@ export default class Graph extends React.Component {
     }
 
 	render() {
+		let XIndustryDropdown;
+		if (this.state.needsXIndustryDropdown) {
+			XIndustryDropdown = <IndustryDropdown
+            					id='x-industry-dropdown'
+           						handleIndustryChange={this.handleXIndustryChange}/>;
+		}
+		let YIndustryDropdown;
+		if (this.state.needsYIndustryDropdown) {
+			YIndustryDropdown = <IndustryDropdown
+            					id='y-industry-dropdown'
+           						handleIndustryChange={this.handleYIndustryChange}/>;
+		}
 		return (
 			<div>
 				<Plot
@@ -198,13 +241,14 @@ export default class Graph extends React.Component {
           			handleXVarChange={this.handleXVarChange}
           			includeCategorical={true}
           		/>
+          		{XIndustryDropdown}
           		<YVariableDropdown
           			id='variable-dropdown'
           			handleYVarChange={this.handleYVarChange}
           			includeCategorical={true}
           		/>
+          		{YIndustryDropdown}
           		<button id='submit' onClick={this.handleClick}>Submit</button>
-
 		    </div>
 		)
 	}

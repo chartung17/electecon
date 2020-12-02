@@ -36,8 +36,6 @@ export default class YVariableDropdown extends React.Component {
       selectedVar: e.target.value
     });
     this.props.handleYVarChange(e.target.value);
-    // this.props.handleYVarChange(e.target.value);
-    // this.props.handleVarChange(e.target.value);
   }
 
   render() {
