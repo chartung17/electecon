@@ -1,5 +1,4 @@
 import React from 'react';
-import {GRAPH_ENDPOINT as ENDPOINT} from '../App'; // CHANGE to GRAPH_ENDPOINT
 
 export default class IndustryDropdown extends React.Component {
   constructor(props) {
@@ -64,7 +63,7 @@ export default class IndustryDropdown extends React.Component {
   render() {
     return (
       <div className='dropdown'>
-        <label for='vars'>Industry: </label>
+        <label htmlFor='vars'>Industry: </label>
         <select name='vars' value={this.state.selectedVar} onChange={this.handleChange}>
           {this.state.vars}
         </select>

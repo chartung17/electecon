@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import ScatterGraph from './ScatterGraph';
 import BarGraph from './BarGraph';
 
-import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
-
 /**
  * Display Trending page
  */

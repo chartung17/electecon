@@ -5,7 +5,7 @@ let years = [];
 let y;
 for (y = 2000; y <= 2018; y++) {
   let y_str = y.toString();
-  years.push(<option value={y_str}>{y_str}</option>);
+  years.push(<option value={y_str} key={y}>{y_str}</option>);
 }
 
 export default class YearDropdown extends React.Component {
@@ -44,7 +44,7 @@ export default class YearDropdown extends React.Component {
   render() {
     return (
       <div className='dropdown'>
-        <label for='years'>Year: </label>
+        <label htmlFor='years'>Year: </label>
         <select name='years' value={this.state.selectedYear} onChange={this.handleChange}>
           {this.state.years}
         </select>
