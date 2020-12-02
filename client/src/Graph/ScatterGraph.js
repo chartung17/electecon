@@ -31,17 +31,19 @@ export default class Graph extends React.Component {
 			needsXIndustryDropdown2: false,
 			needsYIndustryDropdown1: false,
 			needsYIndustryDropdown2: false,
-			xIndustry1: '', // SET DEFAULT LATER
-			xIndustry2: '', // SET DEFAULT LATER
-			yIndustry1: '', // SET DEFAULT LATER
-			yIndustry2: '', // SET DEFAULT LATER
+			xIndustry1: '',
+			xIndustry2: '',
+			yIndustry1: '',
+			yIndustry2: '',
 			xResult: [],
 			yResult: []
 		};
 
 		this.handleYearChange = this.handleYearChange.bind(this);
-		this.handleXIndustryChange = this.handleXIndustryChange.bind(this);
-		this.handleYIndustryChange = this.handleYIndustryChange.bind(this);
+		this.handleXIndustry1Change = this.handleXIndustry1Change.bind(this);
+		this.handleXIndustry2Change = this.handleXIndustry2Change.bind(this);
+		this.handleYIndustry1Change = this.handleYIndustry1Change.bind(this);
+		this.handleYIndustry2Change = this.handleYIndustry2Change.bind(this);
 		this.handleXVarChange = this.handleXVarChange.bind(this);
 		this.handleYVarChange = this.handleYVarChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -101,16 +103,30 @@ export default class Graph extends React.Component {
 	}
 
 	// handle state change in variable drowdown
-	handleXIndustryChange(newIndustry) {
+	handleXIndustry1Change(newIndustry) {
 		this.setState({
-			xIndustry: newIndustry
+			xIndustry1: newIndustry
 	    });
 	}
 
 	// handle state change in variable drowdown
-	handleYIndustryChange(newIndustry) {
+	handleXIndustry2Change(newIndustry) {
 		this.setState({
-			yIndustry: newIndustry
+			xIndustry2: newIndustry
+	    });
+	}
+
+	// handle state change in variable drowdown
+	handleYIndustry1Change(newIndustry) {
+		this.setState({
+			yIndustry1: newIndustry
+	    });
+	}
+
+	// handle state change in variable drowdown
+	handleYIndustry2Change(newIndustry) {
+		this.setState({
+			yIndustry2: newIndustry
 	    });
 	}
 
@@ -230,12 +246,12 @@ export default class Graph extends React.Component {
 		if (this.state.needsXIndustryDropdown1) {
 			XIndustryDropdown1 = <IndustryDropdown
             					id='x-industry-dropdown'
-           						handleIndustryChange={this.handleXIndustryChange}/>;
+           						handleIndustryChange={this.handleXIndustry1Change}/>;
 		}
 		if (this.state.needsXIndustryDropdown2) {
 			XIndustryDropdown2 = <IndustryDropdown
             					id='x-industry-dropdown'
-           						handleIndustryChange={this.handleXIndustryChange}/>;
+           						handleIndustryChange={this.handleXIndustry2Change}/>;
 		}
 
 		let YIndustryDropdown1;
@@ -243,12 +259,12 @@ export default class Graph extends React.Component {
 		if (this.state.needsYIndustryDropdown1) {
 			YIndustryDropdown1 = <IndustryDropdown
             					id='y-industry-dropdown'
-           						handleIndustryChange={this.handleYIndustryChange}/>;
+           						handleIndustryChange={this.handleYIndustry1Change}/>;
 		}
 		if (this.state.needsYIndustryDropdown2) {
 			YIndustryDropdown2 = <IndustryDropdown
             					id='y-industry-dropdown'
-           						handleIndustryChange={this.handleYIndustryChange}/>;
+           						handleIndustryChange={this.handleYIndustry2Change}/>;
 		}
 
 		return (
