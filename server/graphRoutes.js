@@ -74,6 +74,15 @@ let util = require('./helpers')
 //     execQuery(q, res);
 // }
 
+function getCounties(req, res) {
+    const q = `
+    SELECT NAME AS Z
+    FROM County
+    ORDER BY FIPS
+    `;
+    execQuery(q, res);
+}
+
 function getGDPGrowthSince2001(req, res) {
     const q = `
     WITH GDP2018 AS (
@@ -255,6 +264,7 @@ function getIndustryGDPByCounty(req, res) {
 
 
 module.exports = {
+    getCounties: getCounties,
     getGDPIndustryComp: getGDPIndustryComp,
     getTotalGDPByCounty: getTotalGDPByCounty,
     getIndustryGDPByCounty: getIndustryGDPByCounty,

@@ -53,6 +53,7 @@ router.get(API_V1 + '/trends/state-industry', trendRoutes.getStateIndustryGDP);
 router.get(API_V1 + '/trends/national-industry', trendRoutes.getNationalIndustryGDP);
 
 // Graph page routes
+router.get(API_V1 + '/graph/counties', graphRoutes.getCounties);
 router.get(API_V1 + '/graph/gdp-growth-since-2001', graphRoutes.getGDPGrowthSince2001);
 router.get(API_V1 + '/graph/gdp-growth-since-last-election', graphRoutes.getGDPGrowthSinceLastElection);
 router.get(API_V1 + '/graph/gdp-industry-comp', graphRoutes.getGDPIndustryComp);
