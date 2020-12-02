@@ -6,7 +6,7 @@ export default class IndustryDropdown extends React.Component {
     super(props);
     this.state = {
       vars: [],
-      selectedVar: 'PrivateIndustries'
+      selectedVar: '2'
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -14,39 +14,39 @@ export default class IndustryDropdown extends React.Component {
   // add variables to dropdown
   componentDidMount() {
     var vars = [];
-    vars.push(<option value='PrivateIndustries' selected>Private industries</option>);
-    vars.push(<option value='Agriculture' selected>Agriculture, forestry, fishing and hunting</option>);
-    vars.push(<option value='Mining'>Mining, quarrying, and oil and gas extraction</option>);
-    vars.push(<option value='utilities'>Utilities</option>);
-    vars.push(<option value='Construction'>Construction</option>);
-    vars.push(<option value='Manufacturing'>Manufacturing</option>);
-    vars.push(<option value='DurableGoods'>Durable goods manufacturing</option>);
-    vars.push(<option value='NondurableGoods'>Nondurable goods manufacturing</option>);
-    vars.push(<option value='WholesaleTrade'>Wholesale trade</option>);
-    vars.push(<option value='RetailTrade'>Retail trade</option>);
-    vars.push(<option value='Transportation&Warehousing'>Transportation and warehousing</option>);
-    vars.push(<option value='information'>Information</option>);
-    vars.push(<option value='FinanceCategory'>Finance, insurance, real estate, rental, and leasing</option>);
-    vars.push(<option value='Finance&Insurance'>Finance and insurance</option>);
-    vars.push(<option value='RealEstate'>Real estate and rental and leasing</option>);
-    vars.push(<option value='Professional&BusinessServices'>Professional and business services</option>);
-    vars.push(<option value='Prof/scientific/tech'>Professional, scientific, and technical services</option>);
-    vars.push(<option value='Management'>Management of companies and enterprises</option>);
-    vars.push(<option value='Admin'>Administrative and support and waste management and remediation services</option>);
-    vars.push(<option value='Educational/Healthcare/social'>Educational services, health care, and social assistance</option>);
-    vars.push(<option value='Educational'>Educational services</option>);
-    vars.push(<option value='Healthcare'>Health care and social assistance</option>);
-    vars.push(<option value='ArtsCategory'>Arts, entertainment, recreation, accommodation, and food services</option>);
-    vars.push(<option value='Arts/entertainment/rec'>Arts, entertainment, and recreation</option>);
-    vars.push(<option value='Accommodation/Food'>Accommodation and food services</option>);
-    vars.push(<option value='OtherServices'>Other services (except government and government enterprises)</option>);
-    vars.push(<option value='Government'>Government and government enterprises</option>);
-    vars.push(<option value='NaturalResources'>Natural resources and mining</option>);
-    vars.push(<option value='Trade'>Trade</option>);
-    vars.push(<option value='Transportation&Utilities'>Transportation and utilities</option>);
-    vars.push(<option value='Manufacturing&Information'>Manufacturing and information</option>);
-    vars.push(<option value='PrivateGoods'>Private goods-producing industries 2/</option>);
-    vars.push(<option value='PrivateServices'>Private services-providing industries 3/</option>);
+    vars.push(<option value='2'>Private industries</option>);
+    vars.push(<option value='3'>Agriculture, forestry, fishing and hunting</option>);
+    vars.push(<option value='6'>Mining, quarrying, and oil and gas extraction</option>);
+    vars.push(<option value='10'>Utilities</option>);
+    vars.push(<option value='11'>Construction</option>);
+    vars.push(<option value='12'>Manufacturing</option>);
+    vars.push(<option value='13'>Durable goods manufacturing</option>);
+    vars.push(<option value='25'>Nondurable goods manufacturing</option>);
+    vars.push(<option value='34'>Wholesale trade</option>);
+    vars.push(<option value='35'>Retail trade</option>);
+    vars.push(<option value='36'>Transportation and warehousing</option>);
+    vars.push(<option value='45'>Information</option>);
+    vars.push(<option value='50'>Finance, insurance, real estate, rental, and leasing</option>);
+    vars.push(<option value='51'>Finance and insurance</option>);
+    vars.push(<option value='56'>Real estate and rental and leasing</option>);
+    vars.push(<option value='59'>Professional and business services</option>);
+    vars.push(<option value='60'>Professional, scientific, and technical services</option>);
+    vars.push(<option value='64'>Management of companies and enterprises</option>);
+    vars.push(<option value='65'>Administrative and support and waste management and remediation services</option>);
+    vars.push(<option value='68'>Educational services, health care, and social assistance</option>);
+    vars.push(<option value='69'>Educational services</option>);
+    vars.push(<option value='70'>Health care and social assistance</option>);
+    vars.push(<option value='75'>Arts, entertainment, recreation, accommodation, and food services</option>);
+    vars.push(<option value='76'>Arts, entertainment, and recreation</option>);
+    vars.push(<option value='79'>Accommodation and food services</option>);
+    vars.push(<option value='82'>Other services (except government and government enterprises)</option>);
+    vars.push(<option value='83'>Government and government enterprises</option>);
+    vars.push(<option value='87'>Natural resources and mining</option>);
+    vars.push(<option value='88'>Trade</option>);
+    vars.push(<option value='89'>Transportation and utilities</option>);
+    vars.push(<option value='90'>Manufacturing and information</option>);
+    vars.push(<option value='91'>Private goods-producing industries 2/</option>);
+    vars.push(<option value='92'>Private services-providing industries 3/</option>);
 
     this.setState({
         vars: vars

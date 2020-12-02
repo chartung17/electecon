@@ -131,13 +131,21 @@ function getGDPIndustryComp(req, res) {
       SELECT FIPS, GDP
       FROM GDP
       WHERE INDUSTRY_ID = ${pool.escape(req.query.industry1)} AND YEAR = ${pool.escape(req.query.year)}
+    ), Industry1ALL AS (
+      SELECT R.FIPS, R.GDP
+      FROM County C LEFT OUTER JOIN Industry1 R ON C.FIPS = R.FIPS
+      ORDER BY C.FIPS
     ), Industry2 AS (
       SELECT FIPS, GDP
       FROM GDP
       WHERE INDUSTRY_ID = ${pool.escape(req.query.industry2)} AND YEAR = ${pool.escape(req.query.year)}
+    ), Industry2ALL AS (
+      SELECT R.FIPS, R.GDP
+      FROM County C LEFT OUTER JOIN Industry2 R ON C.FIPS = R.FIPS
+      ORDER BY C.FIPS
     )
-    SELECT o.GDP AS GDP1, t.GDP AS GDP2
-    FROM Industry1 o JOIN Industry2 t ON o.FIPS = t.FIPS
+    SELECT (o.GDP - t.GDP) AS Z
+    FROM Industry1ALL o JOIN Industry2ALL t ON o.FIPS = t.FIPS
     `;
     execQuery(q, res);
 }
@@ -253,7 +261,7 @@ function getIndustryGDPByCounty(req, res) {
     WITH IndustryGDP AS (
       SELECT GDP, FIPS
       FROM GDP
-      WHERE INDUSTRY_ID = ${pool.escape(req.query.industry)} AND YEAR = ${pool.escape(req.query.year)}
+      WHERE INDUSTRY_ID = ${req.query.industry1} AND YEAR = ${req.query.year}
     )
     SELECT R.GDP AS Z
     FROM County C LEFT OUTER JOIN IndustryGDP R ON C.FIPS = R.FIPS
