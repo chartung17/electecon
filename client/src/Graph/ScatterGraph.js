@@ -134,48 +134,48 @@ export default class Graph extends React.Component {
 	handleClick = () => {
 		let xQueryURL = this.state.xQueryURL;
 	    if (this.state.xVar === 'Democrat') {
-	      xQueryURL = '/dem-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/dem-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Republican') {
-	      xQueryURL = '/rep-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/rep-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Green') {
-	      xQueryURL = '/green-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/green-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Other') {
-	      xQueryURL = '/other-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/other-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'RepDemDiff') {
-	      xQueryURL = '/rep-dem-diff' + '?year=' + this.state.year;
+	      xQueryURL = '/rep-dem-diff?year=' + this.state.year;
 	    } else if (this.state.xVar === 'TotalGDP') {
-	      xQueryURL = '/total-county-gdp' + '?year=' + this.state.year;
+	      xQueryURL = '/total-county-gdp?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPGrowthSince2001') {
 	      xQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.xVar === 'GDPGrowthSinceLastElection') {
-	      xQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
+	      xQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPIndustryComp') {
-	      xQueryURL = '/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.xIndustry1 + '&industry2=' + this.state.xIndustry2;
+	      xQueryURL = '/gdp-industry-comp?year=' + this.state.year + '&industry1=' + this.state.xIndustry1 + '&industry2=' + this.state.xIndustry2;
 	    } else if (this.state.xVar === 'IndustryGDP') {
-	      xQueryURL = '/industry-gdp-county' + '?year=' + this.state.year + '&industry1=' + this.state.xIndustry1;
+	      xQueryURL = '/industry-gdp-county?year=' + this.state.year + '&industry1=' + this.state.xIndustry1;
 	    }
 
 	    let yQueryURL = this.state.yQueryURL;
 	    if (this.state.yVar === 'Democrat') {
-	      yQueryURL = '/dem-votes' + '?year=' + this.state.year;
+	      yQueryURL = '/dem-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Republican') {
-	      yQueryURL = '/rep-votes' + '?year=' + this.state.year;
+	      yQueryURL = '/rep-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Green') {
-	      yQueryURL = '/green-votes' + '?year=' + this.state.year;
+	      yQueryURL = '/green-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Other') {
-	      yQueryURL = '/other-votes'  + '?year=' + this.state.year;
+	      yQueryURL = '/other-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'RepDemDiff') {
-	      yQueryURL = '/rep-dem-diff' + '?year=' + this.state.year;
+	      yQueryURL = '/rep-dem-diff?year=' + this.state.year;
 	    } else if (this.state.yVar === 'TotalGDP') {
-	      yQueryURL = '/total-county-gdp'  + '?year=' + this.state.year;
+	      yQueryURL = '/total-county-gdp?year=' + this.state.year;
 	    } else if (this.state.yVar === 'GDPGrowthSince2001') {
 	      yQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.yVar === 'GDPGrowthSinceLastElection') {
-	      yQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
+	      yQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year;
 	    } else if (this.state.yVar === 'GDPIndustryComp') {
-	      yQueryURL = '/gdp-industry-comp' + '?year=' + this.state.year + '&industry1=' + this.state.yIndustry1 + '&industry2=' + this.state.yIndustry2;
+	      yQueryURL = '/gdp-industry-comp?year=' + this.state.year + '&industry1=' + this.state.yIndustry1 + '&industry2=' + this.state.yIndustry2;
 	    } else if (this.state.yVar === 'IndustryGDP') {
-	      yQueryURL = '/industry-gdp-county' + '?year=' + this.state.year + '&industry1=' + this.state.yIndustry1;
+	      yQueryURL = '/industry-gdp-county?year=' + this.state.year + '&industry1=' + this.state.yIndustry1;
 	    }
 
 	    this.setState({
