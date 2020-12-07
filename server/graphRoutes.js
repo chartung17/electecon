@@ -234,15 +234,15 @@ function getIndustryGDPByCounty(req, res) {
 function getIndustryGDPBarGraph(req, res) {
     const q = `
     WITH Industry1GDP AS (
-      SELECT COUNT(GDP) AS sum1
+      SELECT SUM(GDP) AS sum1
       FROM GDP
       WHERE (INDUSTRY_ID = ${req.query.industry1} AND YEAR = ${req.query.year1})
     ), Industry2GDP AS (
-      SELECT COUNT(GDP) AS sum2
+      SELECT SUM(GDP) AS sum2
       FROM GDP
       WHERE (INDUSTRY_ID = ${req.query.industry2} AND YEAR = ${req.query.year2})
     ), Industry3GDP AS (
-      SELECT COUNT(GDP) AS sum3
+      SELECT SUM(GDP) AS sum3
       FROM GDP
       WHERE (INDUSTRY_ID = ${req.query.industry3} AND YEAR = ${req.query.year3})
     )

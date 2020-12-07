@@ -368,6 +368,9 @@ export default class Graph extends React.Component {
 					handleIndustryChange={this.handleIndustry3Change}
            		/>
           		<button id='submit' onClick={this.handleClick}>Submit</button>
+          		Year1: {this.state.year1}
+          		Year2: {this.state.year2}
+          		Year3: {this.state.year3}
 		    </div>
 		)
 	}
