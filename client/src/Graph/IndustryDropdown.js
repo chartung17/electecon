@@ -5,7 +5,7 @@ export default class IndustryDropdown extends React.Component {
     super(props);
     this.state = {
       vars: [],
-      selectedVar: '2'
+      selectedVar: '1'
     }
     this.handleChange = this.handleChange.bind(this);
   }

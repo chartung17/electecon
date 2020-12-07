@@ -65,6 +65,8 @@ router.get(API_V1 + '/graph/green-votes', graphRoutes.getGreenVotes);
 router.get(API_V1 + '/graph/other-votes', graphRoutes.getOtherVotes);
 router.get(API_V1 + '/graph/rep-dem-diff', graphRoutes.getRepDemDiff);
 
+// Bar graph routes
+router.get(API_V1 + '/graph/bar-industry-gdp', graphRoutes.getIndustryGDPBarGraph);
 
 // Put last
 router.use((req, res, next) => {

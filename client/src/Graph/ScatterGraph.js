@@ -37,8 +37,14 @@ export default class Graph extends React.Component {
 			yIndustry1: '',
 			yIndustry2: '',
 			xResult: [],
-			yResult: []
+			yResult: [],
+			errorMsg1: '',
+			errorMsg2: ''
+			// width: 0,
+			// height: 0
 		};
+
+		// this.updateDimensions = this.updateDimensions.bind(this);
 
 		this.handleYearChange = this.handleYearChange.bind(this);
 		this.handleXIndustry1Change = this.handleXIndustry1Change.bind(this);
@@ -178,6 +184,35 @@ export default class Graph extends React.Component {
 	      yQueryURL = '/industry-gdp-county?year=' + this.state.year + '&industry1=' + this.state.yIndustry1;
 	    }
 
+		let electionYears = ['2000', '2004', '2008', '2012', '2016'];
+	    if ((this.state.xVar) === 'TotalGDP' || (this.state.xVar === 'GDPGrowthSince2001') || (this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.xVar === 'GDPIndustryComp') || (this.state.xVar === 'IndustryGDP') ||
+	     (this.state.yVar === 'TotalGDP') || (this.state.yVar === 'GDPGrowthSince2001') || (this.state.yVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPIndustryComp') || (this.state.yVar === 'IndustryGDP')) {
+		      if (this.state.year === '2000') {
+		        this.setState({
+		          errorMsg1: 'GDP data is not available for the year 2000'
+		        });
+		      } else {
+		      	this.setState({
+		          errorMsg1: ''
+		        });
+		      }
+	    }
+	    if ((this.state.xVar === 'Democrat') || (this.state.xVar === 'Republican') || (this.state.xVar === 'Green') || (this.state.xVar === 'Other') || (this.state.xVar === 'RepDemDiff') ||
+	    	(this.state.yVar === 'Democrat') || (this.state.yVar === 'Republican') || (this.state.yVar === 'Green') || (this.state.yVar === 'Other') || (this.state.yVar === 'RepDemDiff')) {
+		    if (!electionYears.includes(this.state.year)) {
+		        this.setState({
+		          errorMsg2: 'Election data is not available for the year ' + this.state.year
+		        });
+		    } else {
+		      	this.setState({
+		          errorMsg2: ''
+		        });
+		    }
+	    }
+
+
+
+
 	    this.setState({
 	    	xQueryURL: xQueryURL,
 	    	yQueryURL: yQueryURL
@@ -239,7 +274,26 @@ export default class Graph extends React.Component {
             		});
             	}
             )
+        // this.updateDimensions();
+        // window.addEventListener('resize', this.updateDimensions);
     }
+
+ //    // update dimensions of map when window resized
+ //    updateDimensions() {
+	//     // let width = Math.min(window.innerWidth * 0.5, 1400);
+	//     // let height = width;
+	//     let height = Math.min(window.innerHeight * 0.9, 1400);
+	//     let width = height;
+	//     this.setState({
+	//       width: width,
+	//       height: height
+	//     });
+ //  	}
+
+ //    // remove event listener on unmount
+	// componentWillUnmount() {
+	// 	window.removeEventListener('resize', this.updateDimensions);
+	// }
 
 	render() {
 		let XIndustryDropdown1;
@@ -277,17 +331,25 @@ export default class Graph extends React.Component {
 			            y: this.state.yResult,
 			            type: 'scatter',
 			            mode: 'markers',
-			            marker: {color: 'red'},
+			            marker: {color: 'blue'},
 			           	text: this.state.labels
 			          }
 			        ]}
-			        layout={ {width: 1064, height: 798} }
+			        layout={ {width: 800, height: 800} }
+			        // layout = {{
+		         //      width: this.state.width,
+		         //      height: this.state.height,
+		         //      autosize: true
+		         //      // title: {text: this.state.title, y: 0.95},
+		         //    }}
 			    />
 			    <section className = 'selectors'>
 				    <YearDropdown
 	            		id='year-dropdown'
 	           			handleYearChange={this.handleYearChange}
 	          		/>
+	          		{this.state.errorMsg1}
+	          		{this.state.errorMsg2}
 	          		<XVariableDropdown
 	          			id='variable-dropdown'
 	          			handleXVarChange={this.handleXVarChange}

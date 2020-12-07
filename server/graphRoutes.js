@@ -231,6 +231,29 @@ function getIndustryGDPByCounty(req, res) {
     execQuery(q, res);
 }
 
+function getIndustryGDPBarGraph(req, res) {
+    const q = `
+    WITH Industry1GDP AS (
+      SELECT COUNT(GDP) AS sum1
+      FROM GDP
+      WHERE (INDUSTRY_ID = ${req.query.industry1} AND YEAR = ${req.query.year1})
+    ), Industry2GDP AS (
+      SELECT COUNT(GDP) AS sum2
+      FROM GDP
+      WHERE (INDUSTRY_ID = ${req.query.industry2} AND YEAR = ${req.query.year2})
+    ), Industry3GDP AS (
+      SELECT COUNT(GDP) AS sum3
+      FROM GDP
+      WHERE (INDUSTRY_ID = ${req.query.industry3} AND YEAR = ${req.query.year3})
+    )
+    SELECT sum1 AS Z FROM Industry1GDP
+    UNION ALL
+    SELECT sum2 AS Z FROM Industry2GDP
+    UNION ALL
+    SELECT sum3 AS Z FROM Industry3GDP
+    `;
+    execQuery(q, res);
+}
 
 module.exports = {
     getCounties: getCounties,
@@ -243,6 +266,7 @@ module.exports = {
     getOtherVotes: getOtherVotes,
     getRepDemDiff: getRepDemDiff,
     getGDPGrowthSince2001: getGDPGrowthSince2001,
-    getGDPGrowthSinceLastElection: getGDPGrowthSinceLastElection
+    getGDPGrowthSinceLastElection: getGDPGrowthSinceLastElection,
+    getIndustryGDPBarGraph: getIndustryGDPBarGraph
 }
 
