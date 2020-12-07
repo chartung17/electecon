@@ -29,7 +29,10 @@ export default class Graph extends React.Component {
 			industry2String: 'Private industries, 2016',
 			industry3String: 'Private industries, 2016',
 			xResult: ['Industry 1', 'Industry 2', 'Industry 3'],// ['Private industries, 2016','Private industries, 2016','Private industries, 2016'],
-			yResult: []
+			yResult: [],
+			errorMsg1: '',
+			errorMsg2: '',
+			errorMsg3: ''
 		};
 
 		this.handleYear1Change = this.handleYear1Change.bind(this);
@@ -294,6 +297,37 @@ export default class Graph extends React.Component {
 		// 	industry3String = 'Private services-providing industries 3, ' + this.state.year3;
 		// } 
 
+		if (this.state.year1 === '2000') {
+	        this.setState({
+	          errorMsg1: 'GDP data is not available for the year 2000'
+	        });
+	      } else {
+	      	this.setState({
+	          errorMsg1: ''
+	        });
+	    }
+
+	    if (this.state.year2 === '2000') {
+	        this.setState({
+	          errorMsg2: 'GDP data is not available for the year 2000'
+	        });
+	      } else {
+	      	this.setState({
+	          errorMsg2: ''
+	        });
+	    }
+
+	    if (this.state.year3 === '2000') {
+	        this.setState({
+	          errorMsg3: 'GDP data is not available for the year 2000'
+	        });
+	      } else {
+	      	this.setState({
+	          errorMsg3: ''
+	        });
+	    }
+
+
 		let yQueryURL = '/bar-industry-gdp?year1=' + this.state.year1 + '&year2=' + this.state.year2 + '&year3=' + this.state.year3 + '&industry1=' + this.state.industry1 + '&industry2=' + this.state.industry2 + '&industry3=' + this.state.industry3;
 
 	    this.setState({
@@ -347,14 +381,17 @@ export default class Graph extends React.Component {
             		id='year-dropdown-1'
            			handleYearChange={this.handleYear1Change}
           		/>
+          		{this.state.errorMsg1}
           		<YearDropdown
             		id='year-dropdown-2'
            			handleYearChange={this.handleYear2Change}
           		/>
+          		{this.state.errorMsg2}
           		<YearDropdown
             		id='year-dropdown-3'
            			handleYearChange={this.handleYear3Change}
           		/>
+          		{this.state.errorMsg3}
           		<IndustryDropdown
 					id='industry-dropdown-1'
 					handleIndustryChange={this.handleIndustry1Change}
