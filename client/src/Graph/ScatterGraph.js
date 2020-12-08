@@ -188,8 +188,8 @@ export default class Graph extends React.Component {
 		        this.setState({
 		          errorMsg1: 'GDP data is not available for the year 2000'
 		        });
-		      } else if ((this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPGrowthSinceLastElection')) {
-		      	if (this.state.year < 2005) {
+		      } else if (this.state.year < 2005) {
+		      	if ((this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPGrowthSinceLastElection')) {
 		      		this.setState({
 		      			errorMsg1: 'GDP data is not available for the year 2000 (the last election year)'
 		      		});
@@ -365,7 +365,7 @@ export default class Graph extends React.Component {
 	            		id='year-dropdown'
 	           			handleYearChange={this.handleYearChange}
 	          		/>
-	          		{this.state.errorMsg1}
+	          		{this.state.errorMsg1 + "\n"}
 	          		{this.state.errorMsg2}
 	          		<XVariableDropdown
 	          			id='variable-dropdown'
