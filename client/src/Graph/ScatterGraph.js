@@ -56,10 +56,10 @@ export default class Graph extends React.Component {
 	// handle state change in year dropdown
 	handleYearChange(newYear) {
 		let lastElectionYear;
-	    if (this.state.year % 4 === 0) {
-	    	lastElectionYear = this.state.year - 4;
+	    if (newYear % 4 === 0) {
+	    	lastElectionYear = newYear - 4;
 	    } else {
-	    	lastElectionYear = this.state.year - (this.state.year % 4);
+	    	lastElectionYear = newYear - (newYear % 4);
 	    }
 
     	this.setState({
@@ -206,7 +206,7 @@ export default class Graph extends React.Component {
 	    } else {
 	    	this.setState({
 	    		errorMsg1: ''
-			});	
+			});
 	    }
 
 	    if ((this.state.xVar === 'Democrat') || (this.state.xVar === 'Republican') || (this.state.xVar === 'Other') || (this.state.xVar === 'RepDemDiff') ||
@@ -223,7 +223,7 @@ export default class Graph extends React.Component {
 	    } else {
 	    	this.setState({
 	    		errorMsg2: ''
-			});	
+			});
 	    }
 
 	    this.setState({
@@ -330,7 +330,7 @@ export default class Graph extends React.Component {
 				           	text: this.state.labels
 				          }
 				        ]}
-				        layout={ {width: 800, height: 800} }
+				        layout={ {width: 800, height: 800, hovermode: 'closest'} }
 				    />
 			    </section>
 			    <section className='selector'>
