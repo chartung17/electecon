@@ -179,7 +179,7 @@ function getGreenVotes(req, res) {
   ), GreenVotes AS (
     SELECT FIPS, CANDIDATE_VOTES AS Green
     FROM Election NATURAL JOIN Candidate
-    WHERE YEAR = ${req.query.year} AND PARTY = 'green'
+    WHERE YEAR = ${req.query.year} AND PARTY = 'Green'
   ), Result AS (
     SELECT FIPS, ((Green / Total) * 100) AS Z
     FROM TotalVotes NATURAL JOIN GreenVotes
