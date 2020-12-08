@@ -16,7 +16,6 @@ export default class XVariableDropdown extends React.Component {
     vars.push(<option value='RepDemDiff' key='1'>% Republican votes - % Democrat votes</option>);
     vars.push(<option value='Democrat' key='2'>% votes for Democrat</option>);
     vars.push(<option value='Republican' key='3'>% votes for Republican</option>);
-    vars.push(<option value='Green' key='4'>% votes for Green</option>);
     vars.push(<option value='Other' key='5'>% votes for Other</option>);
     vars.push(<option value='TotalGDP' key='6'>Total GDP</option>);
     vars.push(<option value='GDPGrowthSince2001' key='7'>GDP Growth since 2001</option>);

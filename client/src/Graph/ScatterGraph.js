@@ -22,7 +22,8 @@ export default class Graph extends React.Component {
 
 		this.state = {
 			year: '2016',
-			nextYear: '2016',
+			// nextYear: '2016',
+			lastElectionYear: '2012',
 			xVar: 'Democrat',
 			yVar: 'Democrat',
 			xQueryURL: '/dem-votes?year=2016',
@@ -32,10 +33,10 @@ export default class Graph extends React.Component {
 			needsXIndustryDropdown2: false,
 			needsYIndustryDropdown1: false,
 			needsYIndustryDropdown2: false,
-			xIndustry1: '',
-			xIndustry2: '',
-			yIndustry1: '',
-			yIndustry2: '',
+			xIndustry1: 1,
+			xIndustry2: 1,
+			yIndustry1: 1,
+			yIndustry2: 1,
 			xResult: [],
 			yResult: [],
 			errorMsg1: '',
@@ -143,8 +144,6 @@ export default class Graph extends React.Component {
 	      xQueryURL = '/dem-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Republican') {
 	      xQueryURL = '/rep-votes?year=' + this.state.year;
-	    } else if (this.state.xVar === 'Green') {
-	      xQueryURL = '/green-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Other') {
 	      xQueryURL = '/other-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'RepDemDiff') {
@@ -166,8 +165,6 @@ export default class Graph extends React.Component {
 	      yQueryURL = '/dem-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Republican') {
 	      yQueryURL = '/rep-votes?year=' + this.state.year;
-	    } else if (this.state.yVar === 'Green') {
-	      yQueryURL = '/green-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Other') {
 	      yQueryURL = '/other-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'RepDemDiff') {
@@ -191,14 +188,25 @@ export default class Graph extends React.Component {
 		        this.setState({
 		          errorMsg1: 'GDP data is not available for the year 2000'
 		        });
+		      } else if ((this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPGrowthSinceLastElection')) {
+		      	if (this.state.year < 2005) {
+		      		this.setState({
+		      			errorMsg1: 'GDP data is not available for the year 2000 (the last election year)'
+		      		});
+				}
 		      } else {
 		      	this.setState({
-		          errorMsg1: ''
-		        });
-		      }
+					errorMsg1: ''
+				});
+			}
+	    } else {
+	    	this.setState({
+	    		errorMsg1: ''
+			});	
 	    }
-	    if ((this.state.xVar === 'Democrat') || (this.state.xVar === 'Republican') || (this.state.xVar === 'Green') || (this.state.xVar === 'Other') || (this.state.xVar === 'RepDemDiff') ||
-	    	(this.state.yVar === 'Democrat') || (this.state.yVar === 'Republican') || (this.state.yVar === 'Green') || (this.state.yVar === 'Other') || (this.state.yVar === 'RepDemDiff')) {
+
+	    if ((this.state.xVar === 'Democrat') || (this.state.xVar === 'Republican') || (this.state.xVar === 'Other') || (this.state.xVar === 'RepDemDiff') ||
+	    	(this.state.yVar === 'Democrat') || (this.state.yVar === 'Republican') || (this.state.yVar === 'Other') || (this.state.yVar === 'RepDemDiff')) {
 		    if (!electionYears.includes(this.state.year)) {
 		        this.setState({
 		          errorMsg2: 'Election data is not available for the year ' + this.state.year
@@ -208,14 +216,23 @@ export default class Graph extends React.Component {
 		          errorMsg2: ''
 		        });
 		    }
+	    } else {
+	    	this.setState({
+	    		errorMsg2: ''
+			});	
 	    }
 
-
-
+	    let lastElectionYear;
+	    if (this.state.year % 4 === 0) {
+	    	lastElectionYear = this.state.year - 4;
+	    } else {
+	    	lastElectionYear = this.state.year - (this.state.year % 4);
+	    }
 
 	    this.setState({
 	    	xQueryURL: xQueryURL,
-	    	yQueryURL: yQueryURL
+	    	yQueryURL: yQueryURL,
+	    	lastElectionYear: lastElectionYear
 	    }, function() {
 	    	return this.componentDidMount();
 	    });
