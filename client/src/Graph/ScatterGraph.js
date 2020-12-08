@@ -153,7 +153,7 @@ export default class Graph extends React.Component {
 	    } else if (this.state.xVar === 'GDPGrowthSince2001') {
 	      xQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.xVar === 'GDPGrowthSinceLastElection') {
-	      xQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year;
+	      xQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year + '&lastElectionYear=' + this.state.lastElectionYear;
 	    } else if (this.state.xVar === 'GDPIndustryComp') {
 	      xQueryURL = '/gdp-industry-comp?year=' + this.state.year + '&industry1=' + this.state.xIndustry1 + '&industry2=' + this.state.xIndustry2;
 	    } else if (this.state.xVar === 'IndustryGDP') {
@@ -174,7 +174,7 @@ export default class Graph extends React.Component {
 	    } else if (this.state.yVar === 'GDPGrowthSince2001') {
 	      yQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.yVar === 'GDPGrowthSinceLastElection') {
-	      yQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year;
+	      yQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year + '&lastElectionYear=' + this.state.lastElectionYear;
 	    } else if (this.state.yVar === 'GDPIndustryComp') {
 	      yQueryURL = '/gdp-industry-comp?year=' + this.state.year + '&industry1=' + this.state.yIndustry1 + '&industry2=' + this.state.yIndustry2;
 	    } else if (this.state.yVar === 'IndustryGDP') {
