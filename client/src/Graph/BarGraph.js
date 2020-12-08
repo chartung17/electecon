@@ -3,6 +3,7 @@ import YearDropdown from './YearDropdown';
 import IndustryDropdown from './IndustryDropdown';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
+import './BarGraph.css';
 
 import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
 
@@ -364,50 +365,59 @@ export default class Graph extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<Plot
-			        data={[
-			          {
-			            x: this.state.xResult,
-			            y: this.state.yResult,
-			            type: 'bar',
-			            mode: 'markers',
-			            marker: {color: 'blue'},
-			          }
-			        ]}
-			        layout={ {width: 800, height: 800, title: 'A Fancy Plot'} }
-			    />
-			    <YearDropdown
-            		id='year-dropdown-1'
-           			handleYearChange={this.handleYear1Change}
-          		/>
-          		{this.state.errorMsg1}
-          		<YearDropdown
-            		id='year-dropdown-2'
-           			handleYearChange={this.handleYear2Change}
-          		/>
-          		{this.state.errorMsg2}
-          		<YearDropdown
-            		id='year-dropdown-3'
-           			handleYearChange={this.handleYear3Change}
-          		/>
-          		{this.state.errorMsg3}
-          		<IndustryDropdown
-					id='industry-dropdown-1'
-					handleIndustryChange={this.handleIndustry1Change}
-           		/>
-           		<IndustryDropdown
-					id='industry-dropdown-2'
-					handleIndustryChange={this.handleIndustry2Change}
-           		/>
-           		<IndustryDropdown
-					id='industry-dropdown-3'
-					handleIndustryChange={this.handleIndustry3Change}
-           		/>
+			<div className='page'>
+				<section className='graph'>
+					<Plot
+				        data={[
+				          {
+				            x: this.state.xResult,
+				            y: this.state.yResult,
+				            type: 'bar',
+				            mode: 'markers',
+				            marker: {color: 'blue'},
+				          }
+				        ]}
+				        layout={ {width: 800, height: 800, title: 'A Fancy Plot'} }
+				    />
+			    </section>
+
+			    <section className='selector'>
+	          		<IndustryDropdown
+						id='industry-dropdown-1'
+						handleIndustryChange={this.handleIndustry1Change}
+	           		/>
+				    <YearDropdown
+	            		id='year-dropdown-1'
+	           			handleYearChange={this.handleYear1Change}
+	          		/>
+	          		<p className='error'>{this.state.errorMsg1}</p>
+          		</section>
+
+          		<section className='selector'>
+	           		<IndustryDropdown
+						id='industry-dropdown-2'
+						handleIndustryChange={this.handleIndustry2Change}
+	           		/>
+	           		<YearDropdown
+	            		id='year-dropdown-2'
+	           			handleYearChange={this.handleYear2Change}
+	          		/>
+	          		<p className='error'>{this.state.errorMsg2}</p>
+          		</section>
+
+          		<section className='selector'>
+	           		<IndustryDropdown
+						id='industry-dropdown-3'
+						handleIndustryChange={this.handleIndustry3Change}
+	           		/>
+	          		<YearDropdown
+	            		id='year-dropdown-3'
+	           			handleYearChange={this.handleYear3Change}
+	          		/>
+	          		<p className='error'>{this.state.errorMsg3}</p>
+          		</section>
+
           		<button id='submit' onClick={this.handleClick}>Submit</button>
-          		Year1: {this.state.year1}
-          		Year2: {this.state.year2}
-          		Year3: {this.state.year3}
 		    </div>
 		)
 	}
