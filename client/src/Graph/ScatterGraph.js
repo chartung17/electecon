@@ -29,6 +29,7 @@ export default class Graph extends React.Component {
 			xQueryURL: '/dem-votes?year=2016',
 			yQueryURL: '/dem-votes?year=2016',
 			labels: [],
+      locations: [],
 			needsXIndustryDropdown1: false,
 			needsXIndustryDropdown2: false,
 			needsYIndustryDropdown1: false,
@@ -239,6 +240,7 @@ export default class Graph extends React.Component {
 		var xarr = [];
 		var yarr = [];
 		var labelsArr = [];
+    var locationsArr = [];
 
 		fetch(ENDPOINT.concat(this.state.xQueryURL))
             .then(res => res.json())
@@ -276,9 +278,11 @@ export default class Graph extends React.Component {
             .then(res => res.json())
             .then(
             	(result) => {
-    		      	labelsArr = result.map((rowObj, i) => rowObj.Z);
+                labelsArr = result.map((rowObj, i) => rowObj.Z);
+                locationsArr = result.map((rowObj, i) => rowObj.FIPS);
             		this.setState({
-            			labels: labelsArr
+            			labels: labelsArr,
+                  locations: locationsArr
             		});
             	},
             	(error) => {
@@ -327,10 +331,14 @@ export default class Graph extends React.Component {
 				            type: 'scatter',
 				            mode: 'markers',
 				            marker: {color: 'blue'},
-				           	text: this.state.labels
+				           	text: this.state.labels,
+                    customdata: this.state.locations
 				          }
 				        ]}
 				        layout={ {width: 800, height: 800, hovermode: 'closest'} }
+                onClick = {(data) => {
+                  window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].customdata + '#county-profile';
+                }}
 				    />
 			    </section>
 			    <section className='selector'>

@@ -5,13 +5,13 @@ let util = require('./helpers')
 
 /**
  * Get county nmaes (Format: City, STATE)
- * 
+ *
  * @param  {} req
  * @param  {} res
  */
 function getCounties(req, res) {
     const q = `
-    SELECT CONCAT(NAME, ', ', STATE) AS Z
+    SELECT FIPS, CONCAT(NAME, ', ', STATE) AS Z
     FROM County
     ORDER BY FIPS
     `;
@@ -246,4 +246,3 @@ module.exports = {
     getGDPGrowthSinceLastElection: getGDPGrowthSinceLastElection,
     getIndustryGDPBarGraph: getIndustryGDPBarGraph
 }
-
