@@ -377,7 +377,7 @@ export default class Graph extends React.Component {
 				            marker: {color: 'blue'},
 				          }
 				        ]}
-				        layout={ {width: 800, height: 800, title: 'A Fancy Plot'} }
+				        layout={ {width: 800, height: 800} }
 				    />
 			    </section>
 

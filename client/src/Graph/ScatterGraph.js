@@ -41,11 +41,7 @@ export default class Graph extends React.Component {
 			yResult: [],
 			errorMsg1: '',
 			errorMsg2: ''
-			// width: 0,
-			// height: 0
 		};
-
-		// this.updateDimensions = this.updateDimensions.bind(this);
 
 		this.handleYearChange = this.handleYearChange.bind(this);
 		this.handleXIndustry1Change = this.handleXIndustry1Change.bind(this);
@@ -59,8 +55,16 @@ export default class Graph extends React.Component {
 
 	// handle state change in year dropdown
 	handleYearChange(newYear) {
+		let lastElectionYear;
+	    if (this.state.year % 4 === 0) {
+	    	lastElectionYear = this.state.year - 4;
+	    } else {
+	    	lastElectionYear = this.state.year - (this.state.year % 4);
+	    }
+
     	this.setState({
-      		year: newYear
+      		year: newYear,
+      		lastElectionYear: lastElectionYear
     	});
   	}
 
@@ -222,17 +226,9 @@ export default class Graph extends React.Component {
 			});	
 	    }
 
-	    let lastElectionYear;
-	    if (this.state.year % 4 === 0) {
-	    	lastElectionYear = this.state.year - 4;
-	    } else {
-	    	lastElectionYear = this.state.year - (this.state.year % 4);
-	    }
-
 	    this.setState({
 	    	xQueryURL: xQueryURL,
-	    	yQueryURL: yQueryURL,
-	    	lastElectionYear: lastElectionYear
+	    	yQueryURL: yQueryURL
 	    }, function() {
 	    	return this.componentDidMount();
 	    });
@@ -291,26 +287,7 @@ export default class Graph extends React.Component {
             		});
             	}
             )
-        // this.updateDimensions();
-        // window.addEventListener('resize', this.updateDimensions);
     }
-
- //    // update dimensions of map when window resized
- //    updateDimensions() {
-	//     // let width = Math.min(window.innerWidth * 0.5, 1400);
-	//     // let height = width;
-	//     let height = Math.min(window.innerHeight * 0.9, 1400);
-	//     let width = height;
-	//     this.setState({
-	//       width: width,
-	//       height: height
-	//     });
- //  	}
-
- //    // remove event listener on unmount
-	// componentWillUnmount() {
-	// 	window.removeEventListener('resize', this.updateDimensions);
-	// }
 
 	render() {
 		let XIndustryDropdown1;
@@ -340,33 +317,29 @@ export default class Graph extends React.Component {
 		}
 
 		return (
-			<div className='graph'>
-				<Plot
-			        data={[
-			          {
-			            x: this.state.xResult,
-			            y: this.state.yResult,
-			            type: 'scatter',
-			            mode: 'markers',
-			            marker: {color: 'blue'},
-			           	text: this.state.labels
-			          }
-			        ]}
-			        layout={ {width: 800, height: 800} }
-			        // layout = {{
-		         //      width: this.state.width,
-		         //      height: this.state.height,
-		         //      autosize: true
-		         //      // title: {text: this.state.title, y: 0.95},
-		         //    }}
-			    />
-			    <section className = 'selectors'>
+			<div className='page'>
+				<section className='graph'>
+					<Plot
+				        data={[
+				          {
+				            x: this.state.xResult,
+				            y: this.state.yResult,
+				            type: 'scatter',
+				            mode: 'markers',
+				            marker: {color: 'blue'},
+				           	text: this.state.labels
+				          }
+				        ]}
+				        layout={ {width: 800, height: 800} }
+				    />
+			    </section>
+			    <section className='selector'>
 				    <YearDropdown
 	            		id='year-dropdown'
 	           			handleYearChange={this.handleYearChange}
-	          		/>
-	          		{this.state.errorMsg1 + "\n"}
-	          		{this.state.errorMsg2}
+	          		/><br />
+	          		<p className='error'>{this.state.errorMsg1 + "\n"}</p>
+	          		<p className='error'>{this.state.errorMsg2}</p>
 	          		<XVariableDropdown
 	          			id='variable-dropdown'
 	          			handleXVarChange={this.handleXVarChange}
@@ -381,8 +354,8 @@ export default class Graph extends React.Component {
 	          		/>
 	          		{YIndustryDropdown1}
 	          		{YIndustryDropdown2}
-          			<button id='submit' onClick={this.handleClick}>Submit</button>
           		</section>
+          		<button id='submit' onClick={this.handleClick}>Submit</button>
 		    </div>
 		)
 	}
