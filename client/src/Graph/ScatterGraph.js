@@ -352,8 +352,8 @@ export default class Graph extends React.Component {
 					<Plot
 				        data={[
 				          {
-				            x: finalYResult,
-				            y: finalXResult,
+				            x: finalXResult,
+				            y: finalYResult,
 				            type: 'scatter',
 				            mode: 'markers',
 				            marker: {color: 'blue'},
