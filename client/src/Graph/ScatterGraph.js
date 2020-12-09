@@ -192,20 +192,24 @@ export default class Graph extends React.Component {
 		let electionYears = ['2000', '2004', '2008', '2012', '2016'];
 	    if ((this.state.xVar) === 'TotalGDP' || (this.state.xVar === 'GDPGrowthSince2001') || (this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.xVar === 'GDPIndustryComp') || (this.state.xVar === 'IndustryGDP') ||
 	     (this.state.yVar === 'TotalGDP') || (this.state.yVar === 'GDPGrowthSince2001') || (this.state.yVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPIndustryComp') || (this.state.yVar === 'IndustryGDP')) {
-		      if (this.state.year === '2000') {
-		        this.setState({
-		          errorMsg1: 'GDP data is not available for the year 2000'
-		        });
-		      } else if (this.state.year < 2005) {
-		      	if ((this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPGrowthSinceLastElection')) {
+		      if (this.state.year < 2005) {
+		      	if (this.state.year === '2000') {
+			        this.setState({
+			          errorMsg1: 'GDP data is not available for the year 2000'
+			        });
+			    } else if ((this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPGrowthSinceLastElection')) {
 		      		this.setState({
 		      			errorMsg1: 'GDP data is not available for the year 2000 (the last election year)'
 		      		});
+				} else {
+					this.setState({
+						errorMsg1: ''
+					});
 				}
 		      } else {
-		      	this.setState({
-					errorMsg1: ''
-				});
+			      	this.setState({
+						errorMsg1: ''
+					});
 			}
 	    } else {
 	    	this.setState({
