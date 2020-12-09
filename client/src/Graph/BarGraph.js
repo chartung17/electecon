@@ -431,7 +431,6 @@ export default class Graph extends React.Component {
           		</section>
 
           		<button id='submit' onClick={this.handleClick}>Submit</button>
-          		{this.state.xResult}
 		    </div>
 		)
 	}
