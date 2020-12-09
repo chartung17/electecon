@@ -382,6 +382,7 @@ export default class Graph extends React.Component {
 				        layout={ {
 				        	width: dimension,
 				        	height: dimension,
+				        	title: 'Total GDP By Industry (in thousands of dollars)',
 				        	xaxis: {
 				        		automargin: true
 				        	}
