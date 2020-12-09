@@ -14,6 +14,10 @@ Plotly.register([
 ]);
 const Plot = createPlotlyComponent(Plotly);
 
+var fetch1Complete = false;
+var fetch2Complete = false;
+var fetch3Complete = false;
+
 export default class Graph extends React.Component {
 	constructor(props) {
 		super(props);
@@ -247,6 +251,7 @@ export default class Graph extends React.Component {
             .then(
             	(result) => {
     		      	xarr = result.map((rowObj, i) => rowObj.Z);
+    		      	fetch1Complete = true;
             		this.setState({
             			xResult: xarr
             		});
@@ -263,6 +268,7 @@ export default class Graph extends React.Component {
             .then(
             	(result) => {
     		      	yarr = result.map((rowObj, i) => rowObj.Z);
+    		      	fetch2Complete = true;
             		this.setState({
             			yResult: yarr
             		});
@@ -278,11 +284,12 @@ export default class Graph extends React.Component {
             .then(res => res.json())
             .then(
             	(result) => {
-                labelsArr = result.map((rowObj, i) => rowObj.Z);
-                locationsArr = result.map((rowObj, i) => rowObj.FIPS);
+	                labelsArr = result.map((rowObj, i) => rowObj.Z);
+	                locationsArr = result.map((rowObj, i) => rowObj.FIPS);
+	                fetch3Complete = true;
             		this.setState({
             			labels: labelsArr,
-				locations: locationsArr
+						locations: locationsArr
             		});
             	},
             	(error) => {
@@ -320,19 +327,33 @@ export default class Graph extends React.Component {
            						handleIndustryChange={this.handleYIndustry2Change}/>;
 		}
 
+		let finalXResult;
+		let finalYResult;
+		let finalLabels;
+		let finalLocations;
+		if ((fetch1Complete) && (fetch2Complete) && (fetch3Complete)){
+			finalXResult = this.state.xResult;
+			finalYResult = this.state.yResult;
+			finalLabels = this.state.labels;
+			finalLocations = this.state.locations;
+			fetch1Complete = false;
+			fetch2Complete = false;
+			fetch3Complete =  false;
+		}
+
 		return (
 			<div className='page'>
 				<section className='graph'>
 					<Plot
 				        data={[
 				          {
-				            x: this.state.xResult,
-				            y: this.state.yResult,
+				            x: finalYResult,
+				            y: finalXResult,
 				            type: 'scatter',
 				            mode: 'markers',
 				            marker: {color: 'blue'},
-				            text: this.state.labels,
-				            customdata: this.state.locations
+				            text: finalLabels,
+				            customdata: finalLocations
 				          }
 				        ]}
 				        layout={ {width: 800, height: 800, hovermode: 'closest'} }
