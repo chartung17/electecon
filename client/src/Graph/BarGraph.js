@@ -365,6 +365,8 @@ export default class Graph extends React.Component {
     }
 
 	render() {
+		let dimension = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.8;
+
 		return (
 			<div className='page'>
 				<section className='graph'>
@@ -379,8 +381,8 @@ export default class Graph extends React.Component {
 				          }
 				        ]}
 				        layout={ {
-				        	width: 800,
-				        	height: 800,
+				        	width: dimension,
+				        	height: dimension,
 				        	xaxis: {
 				        		automargin: true
 				        	}

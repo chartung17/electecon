@@ -341,6 +341,8 @@ export default class Graph extends React.Component {
 			fetch3Complete =  false;
 		}
 
+		let dimension = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.8;
+
 		return (
 			<div className='page'>
 				<section className='graph'>
@@ -356,7 +358,7 @@ export default class Graph extends React.Component {
 				            customdata: finalLocations
 				          }
 				        ]}
-				        layout={ {width: 800, height: 800, hovermode: 'closest'} }
+				        layout={ {width: dimension, height: dimension, hovermode: 'closest'} }
 				        onClick = {(data) => {
 				          window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].customdata + '#county-profile';
 				        }}
