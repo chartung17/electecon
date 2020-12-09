@@ -3,25 +3,20 @@
 }
 
 .page{
-  display: grid;
+  display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
 }
 
 .selector {
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  align-items: left;
-  justify-content: left;
-  align-self: right;
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-#year-dropdown::after{
-    content: "\a";
-    white-space: pre;
-}
 
 button {
 	width: 100px;

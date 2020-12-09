@@ -368,7 +368,7 @@ export default class Graph extends React.Component {
 				    <YearDropdown
 	            		id='year-dropdown'
 	           			handleYearChange={this.handleYearChange}
-	          		/><br />
+	          		/>
 	          		<p className='error'>{this.state.errorMsg1 + "\n"}</p>
 	          		<p className='error'>{this.state.errorMsg2}</p>
 	          		<XVariableDropdown
