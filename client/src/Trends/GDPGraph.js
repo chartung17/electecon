@@ -14,7 +14,7 @@ function GDPGraph(props) {
         )
     }
 
-    let formattedData = [['Year', 'GDP']];
+    let formattedData = [['Year', 'GDP (millions of dollars)']];
     for (let entry of props.gdpData) {
         formattedData.push([entry.YEAR, entry.GDP]);
     }
@@ -28,7 +28,7 @@ function GDPGraph(props) {
                 data={formattedData}
                 options={{
                     title: 'GDP Trends',
-                    vAxis: {title: 'GDP'},
+                    vAxis: {title: 'GDP (millions of dollars)'},
                     hAxis: {title: 'Year', format: '####', ticks: [2000, 2004, 2008, 2012, 2016], textStyle: {fontSize: 12}},
                     chartArea: {width: '60%', height: '70%'},
                 }}

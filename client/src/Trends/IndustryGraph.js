@@ -9,7 +9,7 @@ function IndustryGraph(props) {
         )
     }
 
-    let rawIndustryGDPdata = [['Year', 'industryGDP']];
+    let rawIndustryGDPdata = [['Year', 'industryGDP (millions of dollars)']];
     let proportionalGDPdata = [['Year', 'fraction of total GDP']];
     for (let i = 0; i < props.gdp.length; i++) {
         let industry = props.industryGDP[i];
@@ -42,7 +42,7 @@ function IndustryGraph(props) {
                     data={rawIndustryGDPdata}
                     options={{
                         title: 'Industry GDP Trends',
-                        vAxis: {title: 'GDP'},
+                        vAxis: {title: 'GDP (millions of dollars)'},
                         hAxis: {title: 'Year', format: '####', ticks: [2000, 2004, 2008, 2012, 2016], textStyle: {fontSize: 12}},
                         chartArea: {width: '60%', height: '70%'},
                     }}
