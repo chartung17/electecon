@@ -289,7 +289,7 @@ export default class Graph extends React.Component {
 	                fetch3Complete = true;
             		this.setState({
             			labels: labelsArr,
-						locations: locationsArr
+            			locations: locationsArr
             		});
             	},
             	(error) => {
