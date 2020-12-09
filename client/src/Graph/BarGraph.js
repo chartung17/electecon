@@ -29,7 +29,7 @@ export default class Graph extends React.Component {
 			industry1String: 'Private industries, 2016',
 			industry2String: 'Private industries, 2016',
 			industry3String: 'Private industries, 2016',
-			xResult: ['Industry 1', 'Industry 2', 'Industry 3'],// ['Private industries, 2016','Private industries, 2016','Private industries, 2016'],
+			xResult: ['Private industries, 2016','Private industries, 2016','Private industries, 2016'],
 			yResult: [],
 			errorMsg1: '',
 			errorMsg2: '',
@@ -88,215 +88,220 @@ export default class Graph extends React.Component {
 	}
 
 	handleClick = () => {
-		// let industry1String = this.state.industry1String;
 
-		// if (this.state.industry1 === '1') {
-		// 	industry1String = 'Private industries, ' + this.state.year1;
-		// } else if (this.state.industry1 === '2') {
-		// 	industry1String = 'Agriculture, forestry, fishing and hunting, ' + this.state.year1;
-		// } else if (this.state.industry1 === '3') {
-		// 	industry1String = 'Mining, quarrying, and oil and gas extraction, ' + this.state.year1;
-		// } else if (this.state.industry1 === '4') {
-		// 	industry1String = 'Utilities, ' + this.state.year1;
-		// } else if (this.state.industry1 === '5') {
-		// 	industry1String = 'Construction, ' + this.state.year1;
-		// } else if (this.state.industry1 === '6') {
-		// 	industry1String = 'Manufacturing, ' + this.state.year1;
-		// } else if (this.state.industry1 === '7') {
-		// 	industry1String = 'Durable goods manufacturing, ' + this.state.year1;
-		// } else if (this.state.industry1 === '8') {
-		// 	industry1String = 'Nondurable goods manufacturing, ' + this.state.year1;
-		// } else if (this.state.industry1 === '9') {
-		// 	industry1String = 'Wholesale trade, ' + this.state.year1;
-		// } else if (this.state.industry1 === '10') {
-		// 	industry1String = 'Retail trade, ' + this.state.year1;
-		// } else if (this.state.industry1 === '11') {
-		// 	industry1String = 'Transportation, ' + this.state.year1;
-		// } else if (this.state.industry1 === '12') {
-		// 	industry1String = 'Information, ' + this.state.year1;
-		// } else if (this.state.industry1 === '13') {
-		// 	industry1String = 'Finance, insurance, real estate, rental, and leasing, ' + this.state.year1;
-		// } else if (this.state.industry1 === '14') {
-		// 	industry1String = 'Finance and insurance, ' + this.state.year1;
-		// } else if (this.state.industry1 === '15') {
-		// 	industry1String = 'Real estate and rental and leasing, ' + this.state.year1;
-		// } else if (this.state.industry1 === '16') {
-		// 	industry1String = 'Professional and business services, ' + this.state.year1;
-		// } else if (this.state.industry1 === '17') {
-		// 	industry1String = 'Professional, scientific, and technical services, ' + this.state.year1;
-		// } else if (this.state.industry1 === '18') {
-		// 	industry1String = 'Management of companies and enterprises, ' + this.state.year1;
-		// } else if (this.state.industry1 === '19') {
-		// 	industry1String = 'Administrative and support and waste management and remediation services, ' + this.state.year1;
-		// } else if (this.state.industry1 === '20') {
-		// 	industry1String = 'Educational services, health care, and social assistance, ' + this.state.year1;
-		// } else if (this.state.industry1 === '21') {
-		// 	industry1String = 'Educational services, ' + this.state.year1;
-		// } else if (this.state.industry1 === '22') {
-		// 	industry1String = 'Health care and social assistance, ' + this.state.year1;
-		// } else if (this.state.industry1 === '23') {
-		// 	industry1String = 'Arts, entertainment, recreation, accommodation, and food services, ' + this.state.year1;
-		// } else if (this.state.industry1 === '24') {
-		// 	industry1String = 'Arts, entertainment, and recreation, ' + this.state.year1;
-		// } else if (this.state.industry1 === '25') {
-		// 	industry1String = 'Accommodation and food services, ' + this.state.year1;
-		// } else if (this.state.industry1 === '26') {
-		// 	industry1String = 'Other services (except government and government enterprises), ' + this.state.year1;
-		// } else if (this.state.industry1 === '27') {
-		// 	industry1String = 'Government and government enterprises, ' + this.state.year1;
-		// } else if (this.state.industry1 === '28') {
-		// 	industry1String = 'Natural resources and mining, ' + this.state.year1;
-		// } else if (this.state.industry1 === '29') {
-		// 	industry1String = 'Trade, ' + this.state.year1;
-		// } else if (this.state.industry1 === '30') {
-		// 	industry1String = 'Transportation and utilities, ' + this.state.year1;
-		// } else if (this.state.industry1 === '31') {
-		// 	industry1String = 'Manufacturing and information, ' + this.state.year1;
-		// } else if (this.state.industry1 === '32') {
-		// 	industry1String = 'Private goods-producing industries 2, ' + this.state.year1;
-		// } else if (this.state.industry1 === '33') {
-		// 	industry1String = 'Private services-providing industries 3, ' + this.state.year1;
-		// } 
+		// START 
 
-		// let industry2String = this.industry2String;
+		let industry1String = this.state.industry1String;
 
-		// if (this.state.industry2 === '1') {
-		// 	industry1String = 'Private industries, ' + this.state.year2;
-		// } else if (this.state.industry2 === '2') {
-		// 	industry2String = 'Agriculture, forestry, fishing and hunting, ' + this.state.year2;
-		// } else if (this.state.industry2 === '3') {
-		// 	industry2String = 'Mining, quarrying, and oil and gas extraction, ' + this.state.year2;
-		// } else if (this.state.industry2 === '4') {
-		// 	industry2String = 'Utilities, ' + this.state.year2;
-		// } else if (this.state.industry2 === '5') {
-		// 	industry2String = 'Construction, ' + this.state.year2;
-		// } else if (this.state.industry2 === '6') {
-		// 	industry2String = 'Manufacturing, ' + this.state.year2;
-		// } else if (this.state.industry2 === '7') {
-		// 	industry2String = 'Durable goods manufacturing, ' + this.state.year2;
-		// } else if (this.state.industry2 === '8') {
-		// 	industry2String = 'Nondurable goods manufacturing, ' + this.state.year2;
-		// } else if (this.state.industry2 === '9') {
-		// 	industry2String = 'Wholesale trade, ' + this.state.year2;
-		// } else if (this.state.industry2 === '10') {
-		// 	industry2String = 'Retail trade, ' + this.state.year2;
-		// } else if (this.state.industry2 === '11') {
-		// 	industry2String = 'Transportation, ' + this.state.year2;
-		// } else if (this.state.industry2 === '12') {
-		// 	industry2String = 'Information, ' + this.state.year2;
-		// } else if (this.state.industry2 === '13') {
-		// 	industry2String = 'Finance, insurance, real estate, rental, and leasing, ' + this.state.year2;
-		// } else if (this.state.industry2 === '14') {
-		// 	industry2String = 'Finance and insurance, ' + this.state.year2;
-		// } else if (this.state.industry2 === '15') {
-		// 	industry2String = 'Real estate and rental and leasing, ' + this.state.year2;
-		// } else if (this.state.industry2 === '16') {
-		// 	industry2String = 'Professional and business services, ' + this.state.year2;
-		// } else if (this.state.industry2 === '17') {
-		// 	industry2String = 'Professional, scientific, and technical services, ' + this.state.year2;
-		// } else if (this.state.industry2 === '18') {
-		// 	industry2String = 'Management of companies and enterprises, ' + this.state.year2;
-		// } else if (this.state.industry2 === '19') {
-		// 	industry2String = 'Administrative and support and waste management and remediation services, ' + this.state.year2;
-		// } else if (this.state.industry2 === '20') {
-		// 	industry2String = 'Educational services, health care, and social assistance, ' + this.state.year2;
-		// } else if (this.state.industry2 === '21') {
-		// 	industry2String = 'Educational services, ' + this.state.year2;
-		// } else if (this.state.industry2 === '22') {
-		// 	industry2String = 'Health care and social assistance, ' + this.state.year2;
-		// } else if (this.state.industry2 === '23') {
-		// 	industry2String = 'Arts, entertainment, recreation, accommodation, and food services, ' + this.state.year2;
-		// } else if (this.state.industry2 === '24') {
-		// 	industry2String = 'Arts, entertainment, and recreation, ' + this.state.year2;
-		// } else if (this.state.industry2 === '25') {
-		// 	industry2String = 'Accommodation and food services, ' + this.state.year2;
-		// } else if (this.state.industry2 === '26') {
-		// 	industry2String = 'Other services (except government and government enterprises), ' + this.state.year2;
-		// } else if (this.state.industry2 === '27') {
-		// 	industry2String = 'Government and government enterprises, ' + this.state.year2;
-		// } else if (this.state.industry2 === '28') {
-		// 	industry2String = 'Natural resources and mining, ' + this.state.year2;
-		// } else if (this.state.industry2 === '29') {
-		// 	industry2String = 'Trade, ' + this.state.year2;
-		// } else if (this.state.industry2 === '30') {
-		// 	industry2String = 'Transportation and utilities, ' + this.state.year2;
-		// } else if (this.state.industry2 === '31') {
-		// 	industry2String = 'Manufacturing and information, ' + this.state.year2;
-		// } else if (this.state.industry2 === '32') {
-		// 	industry2String = 'Private goods-producing industries 2, ' + this.state.year2;
-		// } else if (this.state.industry2 === '33') {
-		// 	industry2String = 'Private services-providing industries 3, ' + this.state.year2;
-		// } 
+		if (this.state.industry1 === '1') {
+			industry1String = 'Private industries, ' + this.state.year1;
+		} else if (this.state.industry1 === '2') {
+			industry1String = 'Agriculture, forestry, fishing and hunting, ' + this.state.year1;
+		} else if (this.state.industry1 === '3') {
+			industry1String = 'Mining, quarrying, and oil and gas extraction, ' + this.state.year1;
+		} else if (this.state.industry1 === '4') {
+			industry1String = 'Utilities, ' + this.state.year1;
+		} else if (this.state.industry1 === '5') {
+			industry1String = 'Construction, ' + this.state.year1;
+		} else if (this.state.industry1 === '6') {
+			industry1String = 'Manufacturing, ' + this.state.year1;
+		} else if (this.state.industry1 === '7') {
+			industry1String = 'Durable goods manufacturing, ' + this.state.year1;
+		} else if (this.state.industry1 === '8') {
+			industry1String = 'Nondurable goods manufacturing, ' + this.state.year1;
+		} else if (this.state.industry1 === '9') {
+			industry1String = 'Wholesale trade, ' + this.state.year1;
+		} else if (this.state.industry1 === '10') {
+			industry1String = 'Retail trade, ' + this.state.year1;
+		} else if (this.state.industry1 === '11') {
+			industry1String = 'Transportation, ' + this.state.year1;
+		} else if (this.state.industry1 === '12') {
+			industry1String = 'Information, ' + this.state.year1;
+		} else if (this.state.industry1 === '13') {
+			industry1String = 'Finance, insurance, real estate, rental, and leasing, ' + this.state.year1;
+		} else if (this.state.industry1 === '14') {
+			industry1String = 'Finance and insurance, ' + this.state.year1;
+		} else if (this.state.industry1 === '15') {
+			industry1String = 'Real estate and rental and leasing, ' + this.state.year1;
+		} else if (this.state.industry1 === '16') {
+			industry1String = 'Professional and business services, ' + this.state.year1;
+		} else if (this.state.industry1 === '17') {
+			industry1String = 'Professional, scientific, and technical services, ' + this.state.year1;
+		} else if (this.state.industry1 === '18') {
+			industry1String = 'Management of companies and enterprises, ' + this.state.year1;
+		} else if (this.state.industry1 === '19') {
+			industry1String = 'Administrative and support and waste management and remediation services, ' + this.state.year1;
+		} else if (this.state.industry1 === '20') {
+			industry1String = 'Educational services, health care, and social assistance, ' + this.state.year1;
+		} else if (this.state.industry1 === '21') {
+			industry1String = 'Educational services, ' + this.state.year1;
+		} else if (this.state.industry1 === '22') {
+			industry1String = 'Health care and social assistance, ' + this.state.year1;
+		} else if (this.state.industry1 === '23') {
+			industry1String = 'Arts, entertainment, recreation, accommodation, and food services, ' + this.state.year1;
+		} else if (this.state.industry1 === '24') {
+			industry1String = 'Arts, entertainment, and recreation, ' + this.state.year1;
+		} else if (this.state.industry1 === '25') {
+			industry1String = 'Accommodation and food services, ' + this.state.year1;
+		} else if (this.state.industry1 === '26') {
+			industry1String = 'Other services (except government and government enterprises), ' + this.state.year1;
+		} else if (this.state.industry1 === '27') {
+			industry1String = 'Government and government enterprises, ' + this.state.year1;
+		} else if (this.state.industry1 === '28') {
+			industry1String = 'Natural resources and mining, ' + this.state.year1;
+		} else if (this.state.industry1 === '29') {
+			industry1String = 'Trade, ' + this.state.year1;
+		} else if (this.state.industry1 === '30') {
+			industry1String = 'Transportation and utilities, ' + this.state.year1;
+		} else if (this.state.industry1 === '31') {
+			industry1String = 'Manufacturing and information, ' + this.state.year1;
+		} else if (this.state.industry1 === '32') {
+			industry1String = 'Private goods-producing industries 2, ' + this.state.year1;
+		} else if (this.state.industry1 === '33') {
+			industry1String = 'Private services-providing industries 3, ' + this.state.year1;
+		} 
 
-		// let industry3String = this.industry3String;
+		let industry2String = this.industry2String;
 
-		// if (this.state.industry3 === '1') {
-		// 	industry3String = 'Private industries, ' + this.state.year3;
-		// } else if (this.state.industry3 === '2') {
-		// 	industry3String = 'Agriculture, forestry, fishing and hunting, ' + this.state.year3;
-		// } else if (this.state.industry3 === '3') {
-		// 	industry3String = 'Mining, quarrying, and oil and gas extraction, ' + this.state.year3;
-		// } else if (this.state.industry3 === '4') {
-		// 	industry3String = 'Utilities, ' + this.state.year3;
-		// } else if (this.state.industry3 === '5') {
-		// 	industry3String = 'Construction, ' + this.state.year3;
-		// } else if (this.state.industry3 === '6') {
-		// 	industry3String = 'Manufacturing, ' + this.state.year3;
-		// } else if (this.state.industry3 === '7') {
-		// 	industry3String = 'Durable goods manufacturing, ' + this.state.year3;
-		// } else if (this.state.industry3 === '8') {
-		// 	industry3String = 'Nondurable goods manufacturing, ' + this.state.year3;
-		// } else if (this.state.industry3 === '9') {
-		// 	industry3String = 'Wholesale trade, ' + this.state.year3;
-		// } else if (this.state.industry3 === '10') {
-		// 	industry3String = 'Retail trade, ' + this.state.year3;
-		// } else if (this.state.industry3 === '11') {
-		// 	industry3String = 'Transportation, ' + this.state.year3;
-		// } else if (this.state.industry3 === '12') {
-		// 	industry3String = 'Information, ' + this.state.year3;
-		// } else if (this.state.industry3 === '13') {
-		// 	industry3String = 'Finance, insurance, real estate, rental, and leasing, ' + this.state.year3;
-		// } else if (this.state.industry3 === '14') {
-		// 	industry3String = 'Finance and insurance, ' + this.state.year3;
-		// } else if (this.state.industry3 === '15') {
-		// 	industry3String = 'Real estate and rental and leasing, ' + this.state.year3;
-		// } else if (this.state.industry3 === '16') {
-		// 	industry3String = 'Professional and business services, ' + this.state.year3;
-		// } else if (this.state.industry3 === '17') {
-		// 	industry3String = 'Professional, scientific, and technical services, ' + this.state.year3;
-		// } else if (this.state.industry3 === '18') {
-		// 	industry3String = 'Management of companies and enterprises, ' + this.state.year3;
-		// } else if (this.state.industry3 === '19') {
-		// 	industry3String = 'Administrative and support and waste management and remediation services, ' + this.state.year3;
-		// } else if (this.state.industry3 === '20') {
-		// 	industry3String = 'Educational services, health care, and social assistance, ' + this.state.year3;
-		// } else if (this.state.industry3 === '21') {
-		// 	industry3String = 'Educational services, ' + this.state.year3;
-		// } else if (this.state.industry3 === '22') {
-		// 	industry3String = 'Health care and social assistance, ' + this.state.year3;
-		// } else if (this.state.industry3 === '23') {
-		// 	industry3String = 'Arts, entertainment, recreation, accommodation, and food services, ' + this.state.year3;
-		// } else if (this.state.industry3 === '24') {
-		// 	industry3String = 'Arts, entertainment, and recreation, ' + this.state.year3;
-		// } else if (this.state.industry3 === '25') {
-		// 	industry3String = 'Accommodation and food services, ' + this.state.year3;
-		// } else if (this.state.industry3 === '26') {
-		// 	industry3String = 'Other services (except government and government enterprises), ' + this.state.year3;
-		// } else if (this.state.industry3 === '27') {
-		// 	industry3String = 'Government and government enterprises, ' + this.state.year3;
-		// } else if (this.state.industry3 === '28') {
-		// 	industry3String = 'Natural resources and mining, ' + this.state.year3;
-		// } else if (this.state.industry3 === '29') {
-		// 	industry3String = 'Trade, ' + this.state.year3;
-		// } else if (this.state.industry3 === '30') {
-		// 	industry3String = 'Transportation and utilities, ' + this.state.year3;
-		// } else if (this.state.industry3 === '31') {
-		// 	industry3String = 'Manufacturing and information, ' + this.state.year3;
-		// } else if (this.state.industry3 === '32') {
-		// 	industry3String = 'Private goods-producing industries 2, ' + this.state.year3;
-		// } else if (this.state.industry3 === '33') {
-		// 	industry3String = 'Private services-providing industries 3, ' + this.state.year3;
-		// } 
+		if (this.state.industry2 === '1') {
+			industry2String = 'Private industries, ' + this.state.year2;
+		} else if (this.state.industry2 === '2') {
+			industry2String = 'Agriculture, forestry, fishing and hunting, ' + this.state.year2;
+		} else if (this.state.industry2 === '3') {
+			industry2String = 'Mining, quarrying, and oil and gas extraction, ' + this.state.year2;
+		} else if (this.state.industry2 === '4') {
+			industry2String = 'Utilities, ' + this.state.year2;
+		} else if (this.state.industry2 === '5') {
+			industry2String = 'Construction, ' + this.state.year2;
+		} else if (this.state.industry2 === '6') {
+			industry2String = 'Manufacturing, ' + this.state.year2;
+		} else if (this.state.industry2 === '7') {
+			industry2String = 'Durable goods manufacturing, ' + this.state.year2;
+		} else if (this.state.industry2 === '8') {
+			industry2String = 'Nondurable goods manufacturing, ' + this.state.year2;
+		} else if (this.state.industry2 === '9') {
+			industry2String = 'Wholesale trade, ' + this.state.year2;
+		} else if (this.state.industry2 === '10') {
+			industry2String = 'Retail trade, ' + this.state.year2;
+		} else if (this.state.industry2 === '11') {
+			industry2String = 'Transportation, ' + this.state.year2;
+		} else if (this.state.industry2 === '12') {
+			industry2String = 'Information, ' + this.state.year2;
+		} else if (this.state.industry2 === '13') {
+			industry2String = 'Finance, insurance, real estate, rental, and leasing, ' + this.state.year2;
+		} else if (this.state.industry2 === '14') {
+			industry2String = 'Finance and insurance, ' + this.state.year2;
+		} else if (this.state.industry2 === '15') {
+			industry2String = 'Real estate and rental and leasing, ' + this.state.year2;
+		} else if (this.state.industry2 === '16') {
+			industry2String = 'Professional and business services, ' + this.state.year2;
+		} else if (this.state.industry2 === '17') {
+			industry2String = 'Professional, scientific, and technical services, ' + this.state.year2;
+		} else if (this.state.industry2 === '18') {
+			industry2String = 'Management of companies and enterprises, ' + this.state.year2;
+		} else if (this.state.industry2 === '19') {
+			industry2String = 'Administrative and support and waste management and remediation services, ' + this.state.year2;
+		} else if (this.state.industry2 === '20') {
+			industry2String = 'Educational services, health care, and social assistance, ' + this.state.year2;
+		} else if (this.state.industry2 === '21') {
+			industry2String = 'Educational services, ' + this.state.year2;
+		} else if (this.state.industry2 === '22') {
+			industry2String = 'Health care and social assistance, ' + this.state.year2;
+		} else if (this.state.industry2 === '23') {
+			industry2String = 'Arts, entertainment, recreation, accommodation, and food services, ' + this.state.year2;
+		} else if (this.state.industry2 === '24') {
+			industry2String = 'Arts, entertainment, and recreation, ' + this.state.year2;
+		} else if (this.state.industry2 === '25') {
+			industry2String = 'Accommodation and food services, ' + this.state.year2;
+		} else if (this.state.industry2 === '26') {
+			industry2String = 'Other services (except government and government enterprises), ' + this.state.year2;
+		} else if (this.state.industry2 === '27') {
+			industry2String = 'Government and government enterprises, ' + this.state.year2;
+		} else if (this.state.industry2 === '28') {
+			industry2String = 'Natural resources and mining, ' + this.state.year2;
+		} else if (this.state.industry2 === '29') {
+			industry2String = 'Trade, ' + this.state.year2;
+		} else if (this.state.industry2 === '30') {
+			industry2String = 'Transportation and utilities, ' + this.state.year2;
+		} else if (this.state.industry2 === '31') {
+			industry2String = 'Manufacturing and information, ' + this.state.year2;
+		} else if (this.state.industry2 === '32') {
+			industry2String = 'Private goods-producing industries 2, ' + this.state.year2;
+		} else if (this.state.industry2 === '33') {
+			industry2String = 'Private services-providing industries 3, ' + this.state.year2;
+		} 
+
+		let industry3String = this.industry3String;
+
+		if (this.state.industry3 === '1') {
+			industry3String = 'Private industries, ' + this.state.year3;
+		} else if (this.state.industry3 === '2') {
+			industry3String = 'Agriculture, forestry, fishing and hunting, ' + this.state.year3;
+		} else if (this.state.industry3 === '3') {
+			industry3String = 'Mining, quarrying, and oil and gas extraction, ' + this.state.year3;
+		} else if (this.state.industry3 === '4') {
+			industry3String = 'Utilities, ' + this.state.year3;
+		} else if (this.state.industry3 === '5') {
+			industry3String = 'Construction, ' + this.state.year3;
+		} else if (this.state.industry3 === '6') {
+			industry3String = 'Manufacturing, ' + this.state.year3;
+		} else if (this.state.industry3 === '7') {
+			industry3String = 'Durable goods manufacturing, ' + this.state.year3;
+		} else if (this.state.industry3 === '8') {
+			industry3String = 'Nondurable goods manufacturing, ' + this.state.year3;
+		} else if (this.state.industry3 === '9') {
+			industry3String = 'Wholesale trade, ' + this.state.year3;
+		} else if (this.state.industry3 === '10') {
+			industry3String = 'Retail trade, ' + this.state.year3;
+		} else if (this.state.industry3 === '11') {
+			industry3String = 'Transportation, ' + this.state.year3;
+		} else if (this.state.industry3 === '12') {
+			industry3String = 'Information, ' + this.state.year3;
+		} else if (this.state.industry3 === '13') {
+			industry3String = 'Finance, insurance, real estate, rental, and leasing, ' + this.state.year3;
+		} else if (this.state.industry3 === '14') {
+			industry3String = 'Finance and insurance, ' + this.state.year3;
+		} else if (this.state.industry3 === '15') {
+			industry3String = 'Real estate and rental and leasing, ' + this.state.year3;
+		} else if (this.state.industry3 === '16') {
+			industry3String = 'Professional and business services, ' + this.state.year3;
+		} else if (this.state.industry3 === '17') {
+			industry3String = 'Professional, scientific, and technical services, ' + this.state.year3;
+		} else if (this.state.industry3 === '18') {
+			industry3String = 'Management of companies and enterprises, ' + this.state.year3;
+		} else if (this.state.industry3 === '19') {
+			industry3String = 'Administrative and support and waste management and remediation services, ' + this.state.year3;
+		} else if (this.state.industry3 === '20') {
+			industry3String = 'Educational services, health care, and social assistance, ' + this.state.year3;
+		} else if (this.state.industry3 === '21') {
+			industry3String = 'Educational services, ' + this.state.year3;
+		} else if (this.state.industry3 === '22') {
+			industry3String = 'Health care and social assistance, ' + this.state.year3;
+		} else if (this.state.industry3 === '23') {
+			industry3String = 'Arts, entertainment, recreation, accommodation, and food services, ' + this.state.year3;
+		} else if (this.state.industry3 === '24') {
+			industry3String = 'Arts, entertainment, and recreation, ' + this.state.year3;
+		} else if (this.state.industry3 === '25') {
+			industry3String = 'Accommodation and food services, ' + this.state.year3;
+		} else if (this.state.industry3 === '26') {
+			industry3String = 'Other services (except government and government enterprises), ' + this.state.year3;
+		} else if (this.state.industry3 === '27') {
+			industry3String = 'Government and government enterprises, ' + this.state.year3;
+		} else if (this.state.industry3 === '28') {
+			industry3String = 'Natural resources and mining, ' + this.state.year3;
+		} else if (this.state.industry3 === '29') {
+			industry3String = 'Trade, ' + this.state.year3;
+		} else if (this.state.industry3 === '30') {
+			industry3String = 'Transportation and utilities, ' + this.state.year3;
+		} else if (this.state.industry3 === '31') {
+			industry3String = 'Manufacturing and information, ' + this.state.year3;
+		} else if (this.state.industry3 === '32') {
+			industry3String = 'Private goods-producing industries 2, ' + this.state.year3;
+		} else if (this.state.industry3 === '33') {
+			industry3String = 'Private services-providing industries 3, ' + this.state.year3;
+		} 
+
+		// END
 
 		if (this.state.year1 === '2000') {
 	        this.setState({
@@ -332,11 +337,13 @@ export default class Graph extends React.Component {
 		let yQueryURL = '/bar-industry-gdp?year1=' + this.state.year1 + '&year2=' + this.state.year2 + '&year3=' + this.state.year3 + '&industry1=' + this.state.industry1 + '&industry2=' + this.state.industry2 + '&industry3=' + this.state.industry3;
 
 	    this.setState({
-	    	yQueryURL: yQueryURL
-	    	// industry1String: industry1String,
-	    	// industry2String: industry2String,
-	    	// industry3String: industry3String,
-	    	// xResult: [industry1String, industry2String, industry3String]
+	    	yQueryURL: yQueryURL,
+	    	// START (and remove comma before)
+	    	industry1String: industry1String,
+	    	industry2String: industry2String,
+	    	industry3String: industry3String,
+	    	xResult: [industry1String, industry2String, industry3String]
+	    	// END
 	    }, function() {
 	    	return this.componentDidMount();
 	    });
@@ -377,7 +384,13 @@ export default class Graph extends React.Component {
 				            marker: {color: 'blue'},
 				          }
 				        ]}
-				        layout={ {width: 800, height: 800} }
+				        layout={ {
+				        	width: 800,
+				        	height: 800,
+				        	xaxis: {
+				        		automargin: true
+				        	}
+				        } }
 				    />
 			    </section>
 
@@ -418,6 +431,7 @@ export default class Graph extends React.Component {
           		</section>
 
           		<button id='submit' onClick={this.handleClick}>Submit</button>
+          		{this.state.xResult}
 		    </div>
 		)
 	}
