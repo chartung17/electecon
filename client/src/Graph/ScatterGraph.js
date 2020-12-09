@@ -73,7 +73,7 @@ export default class Graph extends React.Component {
     	});
   	}
 
-	// handle state change in variable drowdown
+	// handle state change in x variable drowdown
 	handleXVarChange(newVar) {
 		if (newVar === 'GDPIndustryComp') {
 			this.setState({
@@ -96,7 +96,7 @@ export default class Graph extends React.Component {
 	    }
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in y variable drowdown
 	handleYVarChange(newVar) {
 		if (newVar === 'GDPIndustryComp') {
 			this.setState({
@@ -119,28 +119,28 @@ export default class Graph extends React.Component {
 	    }
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in first industry dropdown for x-axis
 	handleXIndustry1Change(newIndustry) {
 		this.setState({
 			xIndustry1: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in second industry drowdown for x-axis
 	handleXIndustry2Change(newIndustry) {
 		this.setState({
 			xIndustry2: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in first industry dropdown for y-axis
 	handleYIndustry1Change(newIndustry) {
 		this.setState({
 			yIndustry1: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in second industry dropdown for y-axis
 	handleYIndustry2Change(newIndustry) {
 		this.setState({
 			yIndustry2: newIndustry

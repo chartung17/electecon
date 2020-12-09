@@ -45,42 +45,42 @@ export default class Graph extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	// handle state change in year dropdown
+	// handle state change in first year dropdown
 	handleYear1Change(newYear) {
     	this.setState({
       		year1: newYear
     	});
   	}
 
-  	// handle state change in year dropdown
+  	// handle state change in second year dropdown
 	handleYear2Change(newYear) {
     	this.setState({
       		year2: newYear
     	});
   	}
 
-  	// handle state change in year dropdown
+  	// handle state change in third year dropdown
 	handleYear3Change(newYear) {
     	this.setState({
       		year3: newYear
     	});
   	}
 
-	// handle state change in variable drowdown
+	// handle state change in first industry drowdown
 	handleIndustry1Change(newIndustry) {
 		this.setState({
 			industry1: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in second industry drowdown
 	handleIndustry2Change(newIndustry) {
 		this.setState({
 			industry2: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in third industry drowdown
 	handleIndustry3Change(newIndustry) {
 		this.setState({
 			industry3: newIndustry
@@ -88,8 +88,6 @@ export default class Graph extends React.Component {
 	}
 
 	handleClick = () => {
-
-		// START 
 
 		let industry1String = this.state.industry1String;
 
@@ -301,8 +299,6 @@ export default class Graph extends React.Component {
 			industry3String = 'Private services-providing industries 3, ' + this.state.year3;
 		} 
 
-		// END
-
 		if (this.state.year1 === '2000') {
 	        this.setState({
 	          errorMsg1: 'GDP data is not available for the year 2000'
@@ -338,12 +334,10 @@ export default class Graph extends React.Component {
 
 	    this.setState({
 	    	yQueryURL: yQueryURL,
-	    	// START (and remove comma before)
 	    	industry1String: industry1String,
 	    	industry2String: industry2String,
 	    	industry3String: industry3String,
 	    	xResult: [industry1String, industry2String, industry3String]
-	    	// END
 	    }, function() {
 	    	return this.componentDidMount();
 	    });

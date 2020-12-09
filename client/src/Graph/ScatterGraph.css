@@ -15,6 +15,7 @@
   width: 40%;
   align-items: left;
   justify-content: left;
+  align-self: right;
 }
 
 #year-dropdown::after{
