@@ -5,7 +5,6 @@ import XVariableDropdown from './XVariableDropdown';
 import YVariableDropdown from './YVariableDropdown';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
-import './ScatterGraph.css';
 
 import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
 
@@ -364,13 +363,13 @@ export default class Graph extends React.Component {
 				        }}
 				    />
 			    </section>
-			    <section className='selector'>
-				    <YearDropdown
+			    <section className='scatterSelector'>
+	          		<p className='error'>{this.state.errorMsg1 + "\n"}</p>
+	          		<p className='error'>{this.state.errorMsg2}</p>
+	          		<YearDropdown
 	            		id='year-dropdown'
 	           			handleYearChange={this.handleYearChange}
 	          		/>
-	          		<p className='error'>{this.state.errorMsg1 + "\n"}</p>
-	          		<p className='error'>{this.state.errorMsg2}</p>
 	          		<XVariableDropdown
 	          			id='variable-dropdown'
 	          			handleXVarChange={this.handleXVarChange}

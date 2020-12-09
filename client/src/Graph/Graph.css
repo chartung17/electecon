@@ -8,15 +8,22 @@
   align-items: center;
 }
 
-.selector {
+.scatterSelector {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 800px;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 }
 
+.barSelector {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
 
 button {
 	width: 100px;

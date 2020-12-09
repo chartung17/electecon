@@ -3,7 +3,6 @@ import YearDropdown from './YearDropdown';
 import IndustryDropdown from './IndustryDropdown';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
-import './BarGraph.css';
 
 import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
 
@@ -157,7 +156,7 @@ export default class Graph extends React.Component {
 			industry1String = 'Private goods-producing industries 2, ' + this.state.year1;
 		} else if (this.state.industry1 === '33') {
 			industry1String = 'Private services-providing industries 3, ' + this.state.year1;
-		} 
+		}
 
 		let industry2String = this.industry2String;
 
@@ -227,7 +226,7 @@ export default class Graph extends React.Component {
 			industry2String = 'Private goods-producing industries 2, ' + this.state.year2;
 		} else if (this.state.industry2 === '33') {
 			industry2String = 'Private services-providing industries 3, ' + this.state.year2;
-		} 
+		}
 
 		let industry3String = this.industry3String;
 
@@ -297,7 +296,7 @@ export default class Graph extends React.Component {
 			industry3String = 'Private goods-producing industries 2, ' + this.state.year3;
 		} else if (this.state.industry3 === '33') {
 			industry3String = 'Private services-providing industries 3, ' + this.state.year3;
-		} 
+		}
 
 		if (this.state.year1 === '2000') {
 	        this.setState({
@@ -390,7 +389,7 @@ export default class Graph extends React.Component {
 				    />
 			    </section>
 
-			    <section className='selector'>
+			    <section className='barSelector'>
 	          		<IndustryDropdown
 						id='industry-dropdown-1'
 						handleIndustryChange={this.handleIndustry1Change}
@@ -402,7 +401,7 @@ export default class Graph extends React.Component {
 	          		<p className='error'>{this.state.errorMsg1}</p>
           		</section>
 
-          		<section className='selector'>
+          		<section className='barSelector'>
 	           		<IndustryDropdown
 						id='industry-dropdown-2'
 						handleIndustryChange={this.handleIndustry2Change}
@@ -414,7 +413,7 @@ export default class Graph extends React.Component {
 	          		<p className='error'>{this.state.errorMsg2}</p>
           		</section>
 
-          		<section className='selector'>
+          		<section className='barSelector'>
 	           		<IndustryDropdown
 						id='industry-dropdown-3'
 						handleIndustryChange={this.handleIndustry3Change}
