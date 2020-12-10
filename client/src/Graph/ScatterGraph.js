@@ -5,7 +5,6 @@ import XVariableDropdown from './XVariableDropdown';
 import YVariableDropdown from './YVariableDropdown';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js/lib/core';
-import './ScatterGraph.css';
 
 import {GRAPH_ENDPOINT as ENDPOINT} from '../App';
 
@@ -13,6 +12,10 @@ Plotly.register([
   require('plotly.js/lib/scatter')
 ]);
 const Plot = createPlotlyComponent(Plotly);
+
+var fetch1Complete = false;
+var fetch2Complete = false;
+var fetch3Complete = false;
 
 export default class Graph extends React.Component {
 	constructor(props) {
@@ -22,22 +25,26 @@ export default class Graph extends React.Component {
 
 		this.state = {
 			year: '2016',
-			nextYear: '2016',
+			// nextYear: '2016',
+			lastElectionYear: '2012',
 			xVar: 'Democrat',
 			yVar: 'Democrat',
 			xQueryURL: '/dem-votes?year=2016',
 			yQueryURL: '/dem-votes?year=2016',
 			labels: [],
+			locations: [],
 			needsXIndustryDropdown1: false,
 			needsXIndustryDropdown2: false,
 			needsYIndustryDropdown1: false,
 			needsYIndustryDropdown2: false,
-			xIndustry1: '',
-			xIndustry2: '',
-			yIndustry1: '',
-			yIndustry2: '',
+			xIndustry1: 1,
+			xIndustry2: 1,
+			yIndustry1: 1,
+			yIndustry2: 1,
 			xResult: [],
-			yResult: []
+			yResult: [],
+			errorMsg1: '',
+			errorMsg2: ''
 		};
 
 		this.handleYearChange = this.handleYearChange.bind(this);
@@ -52,12 +59,20 @@ export default class Graph extends React.Component {
 
 	// handle state change in year dropdown
 	handleYearChange(newYear) {
+		let lastElectionYear;
+	    if (newYear % 4 === 0) {
+	    	lastElectionYear = newYear - 4;
+	    } else {
+	    	lastElectionYear = newYear - (newYear % 4);
+	    }
+
     	this.setState({
-      		year: newYear
+      		year: newYear,
+      		lastElectionYear: lastElectionYear
     	});
   	}
 
-	// handle state change in variable drowdown
+	// handle state change in x variable drowdown
 	handleXVarChange(newVar) {
 		if (newVar === 'GDPIndustryComp') {
 			this.setState({
@@ -80,7 +95,7 @@ export default class Graph extends React.Component {
 	    }
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in y variable drowdown
 	handleYVarChange(newVar) {
 		if (newVar === 'GDPIndustryComp') {
 			this.setState({
@@ -103,28 +118,28 @@ export default class Graph extends React.Component {
 	    }
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in first industry dropdown for x-axis
 	handleXIndustry1Change(newIndustry) {
 		this.setState({
 			xIndustry1: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in second industry drowdown for x-axis
 	handleXIndustry2Change(newIndustry) {
 		this.setState({
 			xIndustry2: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in first industry dropdown for y-axis
 	handleYIndustry1Change(newIndustry) {
 		this.setState({
 			yIndustry1: newIndustry
 	    });
 	}
 
-	// handle state change in variable drowdown
+	// handle state change in second industry dropdown for y-axis
 	handleYIndustry2Change(newIndustry) {
 		this.setState({
 			yIndustry2: newIndustry
@@ -134,48 +149,89 @@ export default class Graph extends React.Component {
 	handleClick = () => {
 		let xQueryURL = this.state.xQueryURL;
 	    if (this.state.xVar === 'Democrat') {
-	      xQueryURL = '/dem-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/dem-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Republican') {
-	      xQueryURL = '/rep-votes' + '?year=' + this.state.year;
-	    } else if (this.state.xVar === 'Green') {
-	      xQueryURL = '/green-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/rep-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'Other') {
-	      xQueryURL = '/other-votes' + '?year=' + this.state.year;
+	      xQueryURL = '/other-votes?year=' + this.state.year;
 	    } else if (this.state.xVar === 'RepDemDiff') {
-	      xQueryURL = '/rep-dem-diff' + '?year=' + this.state.year;
+	      xQueryURL = '/rep-dem-diff?year=' + this.state.year;
 	    } else if (this.state.xVar === 'TotalGDP') {
-	      xQueryURL = '/total-county-gdp' + '?year=' + this.state.year;
+	      xQueryURL = '/total-county-gdp?year=' + this.state.year;
 	    } else if (this.state.xVar === 'GDPGrowthSince2001') {
 	      xQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.xVar === 'GDPGrowthSinceLastElection') {
-	      xQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
+	      xQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year + '&lastElectionYear=' + this.state.lastElectionYear;
 	    } else if (this.state.xVar === 'GDPIndustryComp') {
-	      xQueryURL = '/gdp-industry-comp'  + '?year=' + this.state.year + '&industry1=' + this.state.xIndustry1 + '&industry2=' + this.state.xIndustry2;
+	      xQueryURL = '/gdp-industry-comp?year=' + this.state.year + '&industry1=' + this.state.xIndustry1 + '&industry2=' + this.state.xIndustry2;
 	    } else if (this.state.xVar === 'IndustryGDP') {
-	      xQueryURL = '/industry-gdp-county' + '?year=' + this.state.year + '&industry1=' + this.state.xIndustry1;
+	      xQueryURL = '/industry-gdp-county?year=' + this.state.year + '&industry1=' + this.state.xIndustry1;
 	    }
 
 	    let yQueryURL = this.state.yQueryURL;
 	    if (this.state.yVar === 'Democrat') {
-	      yQueryURL = '/dem-votes' + '?year=' + this.state.year;
+	      yQueryURL = '/dem-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Republican') {
-	      yQueryURL = '/rep-votes' + '?year=' + this.state.year;
-	    } else if (this.state.yVar === 'Green') {
-	      yQueryURL = '/green-votes' + '?year=' + this.state.year;
+	      yQueryURL = '/rep-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'Other') {
-	      yQueryURL = '/other-votes'  + '?year=' + this.state.year;
+	      yQueryURL = '/other-votes?year=' + this.state.year;
 	    } else if (this.state.yVar === 'RepDemDiff') {
-	      yQueryURL = '/rep-dem-diff' + '?year=' + this.state.year;
+	      yQueryURL = '/rep-dem-diff?year=' + this.state.year;
 	    } else if (this.state.yVar === 'TotalGDP') {
-	      yQueryURL = '/total-county-gdp'  + '?year=' + this.state.year;
+	      yQueryURL = '/total-county-gdp?year=' + this.state.year;
 	    } else if (this.state.yVar === 'GDPGrowthSince2001') {
 	      yQueryURL = '/gdp-growth-since-2001';
 	    } else if (this.state.yVar === 'GDPGrowthSinceLastElection') {
-	      yQueryURL = '/gdp-growth-since-last-election'  + '?year=' + this.state.year;
+	      yQueryURL = '/gdp-growth-since-last-election?year=' + this.state.year + '&lastElectionYear=' + this.state.lastElectionYear;
 	    } else if (this.state.yVar === 'GDPIndustryComp') {
-	      yQueryURL = '/gdp-industry-comp' + '?year=' + this.state.year + '&industry1=' + this.state.yIndustry1 + '&industry2=' + this.state.yIndustry2;
+	      yQueryURL = '/gdp-industry-comp?year=' + this.state.year + '&industry1=' + this.state.yIndustry1 + '&industry2=' + this.state.yIndustry2;
 	    } else if (this.state.yVar === 'IndustryGDP') {
-	      yQueryURL = '/industry-gdp-county' + '?year=' + this.state.year + '&industry1=' + this.state.yIndustry1;
+	      yQueryURL = '/industry-gdp-county?year=' + this.state.year + '&industry1=' + this.state.yIndustry1;
+	    }
+
+		let electionYears = ['2000', '2004', '2008', '2012', '2016'];
+	    if ((this.state.xVar) === 'TotalGDP' || (this.state.xVar === 'GDPGrowthSince2001') || (this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.xVar === 'GDPIndustryComp') || (this.state.xVar === 'IndustryGDP') ||
+	     (this.state.yVar === 'TotalGDP') || (this.state.yVar === 'GDPGrowthSince2001') || (this.state.yVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPIndustryComp') || (this.state.yVar === 'IndustryGDP')) {
+		      if (this.state.year < 2005) {
+		      	if (this.state.year === '2000') {
+			        this.setState({
+			          errorMsg1: 'GDP data is not available for the year 2000'
+			        });
+			    } else if ((this.state.xVar === 'GDPGrowthSinceLastElection') || (this.state.yVar === 'GDPGrowthSinceLastElection')) {
+		      		this.setState({
+		      			errorMsg1: 'GDP data is not available for the year 2000 (the last election year)'
+		      		});
+				} else {
+					this.setState({
+						errorMsg1: ''
+					});
+				}
+		      } else {
+			      	this.setState({
+						errorMsg1: ''
+					});
+			}
+	    } else {
+	    	this.setState({
+	    		errorMsg1: ''
+			});
+	    }
+
+	    if ((this.state.xVar === 'Democrat') || (this.state.xVar === 'Republican') || (this.state.xVar === 'Other') || (this.state.xVar === 'RepDemDiff') ||
+	    	(this.state.yVar === 'Democrat') || (this.state.yVar === 'Republican') || (this.state.yVar === 'Other') || (this.state.yVar === 'RepDemDiff')) {
+		    if (!electionYears.includes(this.state.year)) {
+		        this.setState({
+		          errorMsg2: 'Election data is not available for the year ' + this.state.year
+		        });
+		    } else {
+		      	this.setState({
+		          errorMsg2: ''
+		        });
+		    }
+	    } else {
+	    	this.setState({
+	    		errorMsg2: ''
+			});
 	    }
 
 	    this.setState({
@@ -191,12 +247,14 @@ export default class Graph extends React.Component {
 		var xarr = [];
 		var yarr = [];
 		var labelsArr = [];
+		var locationsArr = [];
 
 		fetch(ENDPOINT.concat(this.state.xQueryURL))
             .then(res => res.json())
             .then(
             	(result) => {
     		      	xarr = result.map((rowObj, i) => rowObj.Z);
+    		      	fetch1Complete = true;
             		this.setState({
             			xResult: xarr
             		});
@@ -213,6 +271,7 @@ export default class Graph extends React.Component {
             .then(
             	(result) => {
     		      	yarr = result.map((rowObj, i) => rowObj.Z);
+    		      	fetch2Complete = true;
             		this.setState({
             			yResult: yarr
             		});
@@ -228,9 +287,12 @@ export default class Graph extends React.Component {
             .then(res => res.json())
             .then(
             	(result) => {
-    		      	labelsArr = result.map((rowObj, i) => rowObj.Z);
+	                labelsArr = result.map((rowObj, i) => rowObj.Z);
+	                locationsArr = result.map((rowObj, i) => rowObj.FIPS);
+	                fetch3Complete = true;
             		this.setState({
-            			labels: labelsArr
+            			labels: labelsArr,
+            			locations: locationsArr
             		});
             	},
             	(error) => {
@@ -268,23 +330,47 @@ export default class Graph extends React.Component {
            						handleIndustryChange={this.handleYIndustry2Change}/>;
 		}
 
+		let finalXResult;
+		let finalYResult;
+		let finalLabels;
+		let finalLocations;
+		if ((fetch1Complete) && (fetch2Complete) && (fetch3Complete)){
+			finalXResult = this.state.xResult;
+			finalYResult = this.state.yResult;
+			finalLabels = this.state.labels;
+			finalLocations = this.state.locations;
+			fetch1Complete = false;
+			fetch2Complete = false;
+			fetch3Complete =  false;
+		}
+
+		let dimension = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.8;
+
 		return (
-			<div className='graph'>
-				<Plot
-			        data={[
-			          {
-			            x: this.state.xResult,
-			            y: this.state.yResult,
-			            type: 'scatter',
-			            mode: 'markers',
-			            marker: {color: 'red'},
-			           	text: this.state.labels
-			          }
-			        ]}
-			        layout={ {width: 1064, height: 798} }
-			    />
-			    <section className = 'selectors'>
-				    <YearDropdown
+			<div className='page'>
+				<section className='graph'>
+					<Plot
+				        data={[
+				          {
+				            x: finalXResult,
+				            y: finalYResult,
+				            type: 'scatter',
+				            mode: 'markers',
+				            marker: {color: 'blue'},
+				            text: finalLabels,
+				            customdata: finalLocations
+				          }
+				        ]}
+				        layout={ {width: dimension, height: dimension, hovermode: 'closest'} }
+				        onClick = {(data) => {
+				          window.location.href = process.env.PUBLIC_URL + '/county/' + data.points[0].customdata + '#county-profile';
+				        }}
+				    />
+			    </section>
+			    <section className='scatterSelector'>
+	          		<p className='error'>{this.state.errorMsg1 + "\n"}</p>
+	          		<p className='error'>{this.state.errorMsg2}</p>
+	          		<YearDropdown
 	            		id='year-dropdown'
 	           			handleYearChange={this.handleYearChange}
 	          		/>
@@ -302,8 +388,8 @@ export default class Graph extends React.Component {
 	          		/>
 	          		{YIndustryDropdown1}
 	          		{YIndustryDropdown2}
-          			<button id='submit' onClick={this.handleClick}>Submit</button>
           		</section>
+          		<button id='submit' onClick={this.handleClick}>Submit</button>
 		    </div>
 		)
 	}

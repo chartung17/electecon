@@ -61,10 +61,11 @@ router.get(API_V1 + '/graph/total-county-gdp', graphRoutes.getTotalGDPByCounty);
 router.get(API_V1 + '/graph/industry-gdp-county', graphRoutes.getIndustryGDPByCounty);
 router.get(API_V1 + '/graph/dem-votes', graphRoutes.getDemVotes);
 router.get(API_V1 + '/graph/rep-votes', graphRoutes.getRepVotes);
-router.get(API_V1 + '/graph/green-votes', graphRoutes.getGreenVotes);
 router.get(API_V1 + '/graph/other-votes', graphRoutes.getOtherVotes);
 router.get(API_V1 + '/graph/rep-dem-diff', graphRoutes.getRepDemDiff);
 
+// Bar graph routes
+router.get(API_V1 + '/graph/bar-industry-gdp', graphRoutes.getIndustryGDPBarGraph);
 
 // Put last
 router.use((req, res, next) => {

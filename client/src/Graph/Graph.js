@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import ScatterGraph from './ScatterGraph';
 import BarGraph from './BarGraph';
+import './Graph.css';
 
 /**
  * Display Trending page
  */
 function Graph() {
-  
+
   const [granularity, setGranularity] = useState(null);
 
   document.title = `Graph`;
@@ -25,7 +26,7 @@ function Graph() {
     </div>
   );
 
-  
+
 }
 
 export default Graph;
