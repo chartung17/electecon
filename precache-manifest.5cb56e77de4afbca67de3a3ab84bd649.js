@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "667c61c3cf1262f60d0267acc03d4f80",
+    "revision": "5bbbb38e584b33a354982e2db34bfa18",
     "url": "/electecon/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/electecon/static/css/2.8aa5a7f8.chunk.css"
   },
   {
-    "revision": "5488b1640788417e0e7a",
+    "revision": "40021cbb91bdfbdcdfab",
     "url": "/electecon/static/css/main.87b334bf.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/electecon/static/js/2.f2f029ea.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5488b1640788417e0e7a",
-    "url": "/electecon/static/js/main.5bfedd2a.chunk.js"
+    "revision": "40021cbb91bdfbdcdfab",
+    "url": "/electecon/static/js/main.3f25cb2e.chunk.js"
   },
   {
     "revision": "df10cfc2a003c21bd415",

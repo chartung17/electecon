@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/electecon/static/css/main.87b334bf.chunk.css",
-    "main.js": "/electecon/static/js/main.5bfedd2a.chunk.js",
-    "main.js.map": "/electecon/static/js/main.5bfedd2a.chunk.js.map",
+    "main.js": "/electecon/static/js/main.3f25cb2e.chunk.js",
+    "main.js.map": "/electecon/static/js/main.3f25cb2e.chunk.js.map",
     "runtime-main.js": "/electecon/static/js/runtime-main.da545f23.js",
     "runtime-main.js.map": "/electecon/static/js/runtime-main.da545f23.js.map",
     "static/css/2.8aa5a7f8.chunk.css": "/electecon/static/css/2.8aa5a7f8.chunk.css",
     "static/js/2.f2f029ea.chunk.js": "/electecon/static/js/2.f2f029ea.chunk.js",
     "static/js/2.f2f029ea.chunk.js.map": "/electecon/static/js/2.f2f029ea.chunk.js.map",
     "index.html": "/electecon/index.html",
-    "precache-manifest.a3ba10644fa0a0290d7b9d8237002267.js": "/electecon/precache-manifest.a3ba10644fa0a0290d7b9d8237002267.js",
+    "precache-manifest.5cb56e77de4afbca67de3a3ab84bd649.js": "/electecon/precache-manifest.5cb56e77de4afbca67de3a3ab84bd649.js",
     "service-worker.js": "/electecon/service-worker.js",
     "static/css/2.8aa5a7f8.chunk.css.map": "/electecon/static/css/2.8aa5a7f8.chunk.css.map",
     "static/css/main.87b334bf.chunk.css.map": "/electecon/static/css/main.87b334bf.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.8aa5a7f8.chunk.css",
     "static/js/2.f2f029ea.chunk.js",
     "static/css/main.87b334bf.chunk.css",
-    "static/js/main.5bfedd2a.chunk.js"
+    "static/js/main.3f25cb2e.chunk.js"
   ]
 }
