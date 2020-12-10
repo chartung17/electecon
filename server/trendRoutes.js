@@ -4,7 +4,7 @@ let util = require('./helpers')
 
 /**
  * Get the Abbreviations for all states
- * 
+ *
  * @param  {} req
  * @param  {} res
  */
@@ -93,7 +93,7 @@ function getNationalGDP(req, res) {
 
 function getCountyIndustryGDP(req, res) {
   const q = `
-  Select g.YEAR, g.GDP / 1000
+  Select g.YEAR, g.GDP / 1000 as 'GDP'
   From GDP g
   Where g.FIPS = ${pool.escape(req.query.fips)} AND g.INDUSTRY_ID = ${pool.escape(req.query.industry)};`;
   execQuery(q, res);
