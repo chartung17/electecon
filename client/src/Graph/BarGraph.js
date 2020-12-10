@@ -28,7 +28,7 @@ export default class Graph extends React.Component {
 			industry1String: 'Private industries, 2016',
 			industry2String: 'Private industries, 2016',
 			industry3String: 'Private industries, 2016',
-			xResult: ['Private industries, 2016','Private industries, 2016','Private industries, 2016'],
+			xResult: ['Private industries, 2016','Private industries, 2016 ','Private industries, 2016  '],
 			yResult: [],
 			errorMsg1: '',
 			errorMsg2: '',
@@ -336,7 +336,7 @@ export default class Graph extends React.Component {
 	    	industry1String: industry1String,
 	    	industry2String: industry2String,
 	    	industry3String: industry3String,
-	    	xResult: [industry1String, industry2String, industry3String]
+	    	xResult: [industry1String, industry2String + ' ', industry3String + '  ']
 	    }, function() {
 	    	return this.componentDidMount();
 	    });
