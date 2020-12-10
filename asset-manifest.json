@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/election-app/static/css/main.14345fe9.chunk.css",
-    "main.js": "/election-app/static/js/main.f6b19a97.chunk.js",
-    "main.js.map": "/election-app/static/js/main.f6b19a97.chunk.js.map",
-    "runtime-main.js": "/election-app/static/js/runtime-main.a02a53fc.js",
-    "runtime-main.js.map": "/election-app/static/js/runtime-main.a02a53fc.js.map",
-    "static/css/2.8aa5a7f8.chunk.css": "/election-app/static/css/2.8aa5a7f8.chunk.css",
-    "static/js/2.baf76230.chunk.js": "/election-app/static/js/2.baf76230.chunk.js",
-    "static/js/2.baf76230.chunk.js.map": "/election-app/static/js/2.baf76230.chunk.js.map",
-    "index.html": "/election-app/index.html",
-    "precache-manifest.4034f1838ec005ed5c2bd2045754338a.js": "/election-app/precache-manifest.4034f1838ec005ed5c2bd2045754338a.js",
-    "service-worker.js": "/election-app/service-worker.js",
-    "static/css/2.8aa5a7f8.chunk.css.map": "/election-app/static/css/2.8aa5a7f8.chunk.css.map",
-    "static/css/main.14345fe9.chunk.css.map": "/election-app/static/css/main.14345fe9.chunk.css.map",
-    "static/js/2.baf76230.chunk.js.LICENSE.txt": "/election-app/static/js/2.baf76230.chunk.js.LICENSE.txt"
+    "main.css": "/electecon/static/css/main.87b334bf.chunk.css",
+    "main.js": "/electecon/static/js/main.5bfedd2a.chunk.js",
+    "main.js.map": "/electecon/static/js/main.5bfedd2a.chunk.js.map",
+    "runtime-main.js": "/electecon/static/js/runtime-main.da545f23.js",
+    "runtime-main.js.map": "/electecon/static/js/runtime-main.da545f23.js.map",
+    "static/css/2.8aa5a7f8.chunk.css": "/electecon/static/css/2.8aa5a7f8.chunk.css",
+    "static/js/2.f2f029ea.chunk.js": "/electecon/static/js/2.f2f029ea.chunk.js",
+    "static/js/2.f2f029ea.chunk.js.map": "/electecon/static/js/2.f2f029ea.chunk.js.map",
+    "index.html": "/electecon/index.html",
+    "precache-manifest.a3ba10644fa0a0290d7b9d8237002267.js": "/electecon/precache-manifest.a3ba10644fa0a0290d7b9d8237002267.js",
+    "service-worker.js": "/electecon/service-worker.js",
+    "static/css/2.8aa5a7f8.chunk.css.map": "/electecon/static/css/2.8aa5a7f8.chunk.css.map",
+    "static/css/main.87b334bf.chunk.css.map": "/electecon/static/css/main.87b334bf.chunk.css.map",
+    "static/js/2.f2f029ea.chunk.js.LICENSE.txt": "/electecon/static/js/2.f2f029ea.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.a02a53fc.js",
+    "static/js/runtime-main.da545f23.js",
     "static/css/2.8aa5a7f8.chunk.css",
-    "static/js/2.baf76230.chunk.js",
-    "static/css/main.14345fe9.chunk.css",
-    "static/js/main.f6b19a97.chunk.js"
+    "static/js/2.f2f029ea.chunk.js",
+    "static/css/main.87b334bf.chunk.css",
+    "static/js/main.5bfedd2a.chunk.js"
   ]
 }
