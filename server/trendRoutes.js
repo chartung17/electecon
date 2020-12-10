@@ -68,6 +68,15 @@ function getNationalElectionResults(req, res) {
     execQuery(q, res);
 }
 
+function getCountyGDP(req, res) {
+  const q = `
+  SELECT YEAR, GDP / 1000 as 'GDP'
+  FROM GDP
+  WHERE INDUSTRY_ID=0
+    AND FIPS=${pool.escape(req.query.fips)};`;
+  execQuery(q, res);
+}
+
 function getStateGDP(req, res) {
   const q = `
   With STATE_COUNTIES AS (
@@ -127,6 +136,7 @@ module.exports = {
     getStates: getStates,
     getStateElectionResults: getStateElectionResults,
     getNationalElectionResults: getNationalElectionResults,
+    getCountyGDP: getCountyGDP,
     getStateGDP: getStateGDP,
     getNationalGDP: getNationalGDP,
     getCountyIndustryGDP: getCountyIndustryGDP,
