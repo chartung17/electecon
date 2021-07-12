@@ -1,3 +1,5 @@
+Note: this app was completed in Fall 2020, and our AWS credits have since expired, so the app is currently unable to access our database.
+
 #### Running the app online:
 The app may be found at https://chartung17.github.io/electecon/. Note that the web server sleeps after 30 minutes of activity; it may take a minute to load the homepage if the server is asleep.
 
